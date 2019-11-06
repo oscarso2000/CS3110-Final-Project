@@ -5,9 +5,15 @@ run :
 connect : 
 	telnet localhost 9000
 
-oscar : 
+oscar : messenger
 	ocamlfind ocamlopt -package lwt,lwt.unix,logs,str,logs.lwt -linkpkg -o messenger ./oscartest.ml
 	./messenger
 
-tushar : tusharmessager
-	ocamlfind ocamlopt -package unix -linkpkg -o tusharmessager ./tushartest.ml
+tushar : messenger
+	ocamlfind ocamlopt -package unix -linkpkg -o messenger ./tushartest.ml
+	./messenger
+
+download : 
+	opam update
+	opam upgrade
+	opam install lwt logs 
