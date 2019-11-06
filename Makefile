@@ -13,3 +13,6 @@ tushar : messenger
 
 install : 
 	opam install lwt logs
+
+zip :
+	zip final.zip *.ml* Makefile
