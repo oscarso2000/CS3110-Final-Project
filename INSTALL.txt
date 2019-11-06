@@ -2,6 +2,7 @@
 Installation Instructions:
 
   - To install the required packages, run `make install`
+  - If that doesn't work, try running `opam update` then `opam upgrade` and then run `make install` again
 
 Build Instructions:
 
