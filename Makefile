@@ -12,6 +12,4 @@ tushar : messenger
 	ocamlfind ocamlopt -package unix -linkpkg -o messenger ./tushartest.ml
 
 install : 
-	opam update
-	opam upgrade
 	opam install lwt logs
