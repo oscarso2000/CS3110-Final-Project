@@ -3,4 +3,6 @@ Final Project for CS 3110: Data Structures and Functional Programming
 
 ocamlfind ocamlopt -package lwt,lwt.unix,logs,str,logs.lwt -linkpkg -o messenger ./oscartest.ml
 
+ocamlfind ocamlopt -package unix -linkpkg -o tusharmessager ./tushartest.ml
+
 telnet localhost 9000
