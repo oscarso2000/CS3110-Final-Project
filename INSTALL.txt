@@ -1,0 +1,9 @@
+
+Installation Instructions:
+
+  - To install the required packages, run `make install`
+
+Build Instructions:
+
+  - To build the system, run `make oscar`
+  - To run the system, run `make` or `make run`

@@ -7,13 +7,11 @@ connect :
 
 oscar : messenger
 	ocamlfind ocamlopt -package lwt,lwt.unix,logs,str,logs.lwt -linkpkg -o messenger ./oscartest.ml
-	./messenger
 
 tushar : messenger
 	ocamlfind ocamlopt -package unix -linkpkg -o messenger ./tushartest.ml
-	./messenger
 
-download : 
+install : 
 	opam update
 	opam upgrade
-	opam install lwt logs 
+	opam install lwt logs
