@@ -22,4 +22,27 @@ let read_from_file fl =
   let n = Unix.read fl (Bytes.of_string str) 2 10 in 
   Printf.printf "We and got the string %s\n" str
 
+let explode s =
+  let rec exp i l =
+    if i < 0 then l else exp (i - 1) (s.[i] :: l) in
+  exp (String.length s - 1) []
+
+let implode l =
+  let res = String.create (List.length l) in
+  let rec imp i = function
+    | [] -> res
+    | c :: l -> res.[i] <- c; imp (i + 1) l in
+  imp 0 l
+
+let to_ascii_add_0 ch = 
+  (Int.to_string (Char.code ch)) ^ "0"
+
+let rec str_map f = function
+  | []-> ""
+  | h::t -> (f h) ^ (str_map f t)
+
+
+let encrpyt_file_write fl (str:string) = 
+  let int_str = int_of_string (str_map to_ascii_add_0 (explode str)) = 1
+
 
