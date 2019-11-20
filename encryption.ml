@@ -22,11 +22,6 @@
  *
 *)
 
-(* TODO:
- * - implement [generate_prime] using probabilistic algorithm
- * - implement [generate_inverse] using Extended Euclidean algorithm
-*)
-
 (** [generate_prime] is a prime number. *)
 let generate_prime () =
   let small_primes = 
@@ -106,3 +101,50 @@ let encrypt m k p =
 let decrypt m ki c =
   mod_pow c m ki
 
+let explode s =
+  let rec exp i l =
+    if i < 0 then l else exp (i - 1) (s.[i] :: l) in
+  exp (String.length s - 1) []
+
+let ord str = 
+  let list = explode str in 
+  let numbers_list = List.rev(List.rev_map (fun x -> Char.code x) list) in 
+  String.concat "" (List.map string_of_int numbers_list)
+
+let ord_opposite str = 
+  let list = explode str in 
+  let rec helper list = 
+    match list with 
+    | [] -> "" 
+    | h1::h2::t -> h1^h2
+    | _ -> ""
+  in helper list (*NOT DONE*)
+
+
+
+let fst x = 
+  match x with 
+  | (a,b,c) -> a
+
+let snd x = 
+  match x with 
+  | (a,b,c) -> b
+
+let thrd x = 
+  match x with 
+  | (a,b,c) -> c
+
+
+let run = 
+  let receiver = generate_keys () in
+  let () = print_string "Enter your message: " in
+  let input = read_line () in 
+  let upper = String.uppercase_ascii input in 
+  let numbers = ord upper in 
+  let encrypted = encrypt (fst receiver) (snd receiver) (int_of_string numbers) in  
+  let decrypted = decrypt (fst receiver) (thrd receiver) (encrypted) in 
+  let message = ord_opposite (string_of_int decrypted) in 
+  (print_endline ("Your ASCII code is: " ^ numbers); 
+   print_endline ("Your Encrypted Message is: " ^ (string_of_int encrypted));
+   print_endline ("Your Decrypted Code is: " ^ (string_of_int decrypted));
+   print_endline ("Your Decrypted Message is: " ^ message);)
