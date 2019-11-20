@@ -22,6 +22,23 @@ let read_from_file fl =
   let n = Unix.read fl (Bytes.of_string str) 2 10 in 
   Printf.printf "We and got the string %s\n" str
 
+let clean_write () =
+  let mode = [Unix.O_WRONLY;Unix.O_CREAT;Unix.O_TRUNC] in
+  let f = Unix.openfile "file" mode 0o666 in
+  let s = "0123456789\n0123456789\n" in
+  let n = Unix.write f (Bytes.of_string s) 0 (String.length s) 
+  in Unix.close f
+
+(* use function set_binary_mode_in*)
+let read_binary_file () = 
+  let f = Unix.openfile "file" [Unix.O_RDONLY;Unix.O_NONBLOCK] 0 in
+  let c = Unix.in_channel_of_descr f in
+  let s = input_line c
+  in print_string s
+
+
+
+
 let explode s =
   let rec exp i l =
     if i < 0 then l else exp (i - 1) (s.[i] :: l) in
@@ -41,8 +58,7 @@ let rec str_map f = function
   | []-> ""
   | h::t -> (f h) ^ (str_map f t)
 
-
+(*
 let encrpyt_file_write fl (str:string) = 
   let int_str = int_of_string (str_map to_ascii_add_0 (explode str)) = 1
-
-
+*)
