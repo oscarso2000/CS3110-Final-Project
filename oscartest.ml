@@ -1,5 +1,6 @@
 open Lwt
 open Str
+open Encryption
 
 let messages = ref ""
 let names = ref []

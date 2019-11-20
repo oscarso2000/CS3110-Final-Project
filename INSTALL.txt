@@ -8,3 +8,11 @@ Build Instructions:
 
   - To build the system, run `make oscar`
   - To run the system, run `make` or `make run`
+  - On a new tab on terminal, under the same folder, run `make connect`
+  - You can have as many client tabs opened interacting with each other as you want.
+
+Process:
+  - For the client: (This is currently a group chat)
+    - Input name, you will get ID
+    - Input `read`, you will get a history of messages displayed, empty if none. 
+    - If your ID is 1, type "1: send my message here", if you want to send a message 

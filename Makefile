@@ -18,4 +18,8 @@ install :
 	opam install lwt logs
 
 zip :
-	zip final.zip *.ml* Makefile INSTALL*
+	zip final.zip *.mli *.ml* Makefile INSTALL*
+
+rsa :
+	ocamlopt -c encryption.mli encryption.ml
+	ocamlopt -o rsatest  encryption.ml encryption.mli
