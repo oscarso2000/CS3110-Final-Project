@@ -11,6 +11,9 @@ oscar :
 tushar : 
 	ocamlfind ocamlopt -package unix -linkpkg -o messenger ./tushartest.ml
 
+aidan :
+	ocamlfind ocamlopt -package unix -linkpkg -o messenger ./aidanswackyocamladventure.ml
+
 install : 
 	opam install lwt logs
 
