@@ -12,11 +12,14 @@ let rights_list = [Unix.O_RDWR;Unix.O_APPEND;Unix.O_CREAT; Unix.O_TRUNC]
 let test_file = Unix.openfile "test1" rights_list 0o644 
 let words = "hello world" 
 
-let write_to_file mode fl (str:string) = 
-  let opfl = Unix.openfile fl mode 0o644 in
-  let n = Unix.write opfl (Bytes.of_string str) 0 (String.length str)
+let write_to_file fl (str:string) = 
+  let n = Unix.write test_file (Bytes.of_string str) 0 (String.length str)
   in Printf.printf "We wrote %s to the file\n" (str)
 
 
+let read_from_file fl = 
+  let str = String.make 20 '.' in
+  let n = Unix.read fl (Bytes.of_string str) 2 10 in 
+  Printf.printf "We and got the string %s\n" str
 
 
