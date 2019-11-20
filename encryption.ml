@@ -69,7 +69,6 @@ let generate_unit m =
     using the Extended Euclidean algorithm. *)
 let generate_inverse n m =
   let rec extended_euclid r r' t t' : int =
-    print_endline ((string_of_int r)^" "^(string_of_int r')^" "^(string_of_int t)^" "^(string_of_int t'));
     if r' = 0 then
       if r > 1 then failwith ((string_of_int n)^" is non-invertible") else
       if t < 0 then t + m else t
@@ -98,10 +97,6 @@ let mod_pow x m k =
     if d = 0 then acc else to_binary (d lsr 1) ((d land 1) :: acc)
   in
 
-  ignore (to_binary k [] |> List.map (fun x -> print_endline (string_of_int x)));
-  print_endline "---";
-  ignore (modular_exponents k [] |> List.map (fun x -> print_endline (string_of_int x)));
-
   let rec compute acc = function
     | (1, v)::y -> compute ((acc * v) mod m) y
     | (0, _)::y -> compute acc y
@@ -117,7 +112,7 @@ let generate_keys () =
   let t = (p-1) * (q-1) in
   let k = generate_unit t in
   let ki = generate_inverse k t in
-  (m, k, ki, p, q)
+  (m, k, ki)
 
 (** [encrypt m k p] is an RSA-encrypted ciphertext of [p] 
     using the public key [m, k]. *)
