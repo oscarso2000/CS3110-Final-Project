@@ -1,3 +1,16 @@
+MODULES=encryption authors 
+OBJECTS=$(MODULES:=.cmo)
+TEST=test.byte
+OCAMLBUILD=ocamlbuild -use-ocamlfind
+
+default: build
+	utop
+
+build:
+	$(OCAMLBUILD) $(OBJECTS)
+
+test:
+	$(OCAMLBUILD) -tag debug $(TEST) && ./$(TEST)
 
 run : 
 	./messenger
@@ -8,18 +21,12 @@ connect :
 oscar :
 	ocamlfind ocamlopt -package lwt,lwt.unix,logs,str,logs.lwt -linkpkg -o messenger ./oscartest.ml
 
-tushar : 
-	ocamlfind ocamlopt -package unix -linkpkg -o messenger ./tushartest.ml
-
-aidan :
-	ocamlfind ocamlopt -package unix -linkpkg -o messenger ./aidanswackyocamladventure.ml
-
 install : 
-	opam install lwt logs
+	opam install lwt logs extlib
 
 zip :
-	zip final.zip *.mli *.ml* Makefile INSTALL*
+	zip final.zip *.ml* _tags Makefile INSTALL*
 
-rsa :
-	ocamlopt -c encryption.mli encryption.ml
-	ocamlopt -o rsatest  encryption.ml encryption.mli
+clean:
+	ocamlbuild -clean
+	rm -rf final.zip
