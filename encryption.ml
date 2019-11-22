@@ -1,7 +1,5 @@
 open Oscartest
 
-(** @author Tushar Khan (tak62) *)
-
 (* RSA ENCRYPTION
  * 
  * VARIABLES
