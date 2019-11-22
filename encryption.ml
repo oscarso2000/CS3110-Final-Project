@@ -1,3 +1,4 @@
+open Oscartest
 
 (** @author Tushar Khan (tak62) *)
 
@@ -34,7 +35,7 @@
 (** [primes1] is a list of one million primes in the interval 
     [961748941, 982451653], which spans exactly 1000000 primes. *)
 let primes1 = 
-  let filename = "primes1.txt" in print_endline ("Parsing "^filename^" ...");
+  let filename = "primes50.txt" in print_endline ("Parsing "^filename^" ...");
   let channel = open_in filename in
 
   (** [parse_primes1 acc] is a list of the numbers from 'primes1.txt'. *)

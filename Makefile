@@ -19,6 +19,7 @@ connect :
 	telnet localhost 9000
 
 oscar :
+	ocamlopt -c encryption.mli encryption.ml
 	ocamlfind ocamlopt -package lwt,lwt.unix,logs,str,logs.lwt -linkpkg -o messenger ./oscartest.ml
 
 install : 
