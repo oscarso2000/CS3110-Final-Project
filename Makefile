@@ -20,7 +20,7 @@ connect :
 
 oscar :
 	ocamlopt -c encryption.mli encryption.ml
-	ocamlfind ocamlopt -package lwt,lwt.unix,logs,str,logs.lwt -linkpkg -o messenger ./oscartest.ml
+	ocamlfind ocamlopt -package lwt,lwt.unix,logs,str,logs.lwt -linkpkg -o messenger ./encryption.ml ./oscartest.ml
 
 install : 
 	opam install lwt logs extlib

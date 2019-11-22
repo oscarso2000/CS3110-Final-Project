@@ -1,5 +1,3 @@
-open Oscartest
-
 (* RSA ENCRYPTION
  * 
  * VARIABLES
