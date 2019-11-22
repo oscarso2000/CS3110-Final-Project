@@ -7,7 +7,7 @@ Installation Instructions:
 Build Instructions:
 
   - To build the system, run `make oscar`
-  - To run the system, run `make` or `make run`
+  - To run the system, run `make run`
   - On a new tab on terminal, under the same folder, run `make connect`
   - You can have as many client tabs opened interacting with each other as you want.
 
@@ -16,3 +16,6 @@ Process:
     - Input name, you will get ID
     - Input `read`, you will get a history of messages displayed, empty if none. 
     - If your ID is 1, type "1: send my message here", if you want to send a message 
+    - Input `recent`, you will get the most recent line of message.
+
+This file now includes backend encryption. It won't be noticeable in the UI, but the code generates a key from encryption.ml and utilizes it to encrypt the message which is saved in a mutable variable for list of lists so that the middle man will not understand anything even if they access the variable. Then, when read/recent is called, it decrypts the message again. 

@@ -34,24 +34,37 @@ let rec print_list = function
   | [] -> ()
   | e::l -> print_endline e ; print_string " " ; print_list l
 
+let decryption_stuff encrypted_message = 
+  let decrypted = List.map (fun x -> Encryption.decrypt (fst key) (thrd key) x) encrypted_message in 
+  let decrypted_message = List.map (fun x -> char_of_int x) decrypted in 
+  let final_string cl = String.concat "" (List.map (String.make 1) cl) in 
+  "\n" ^ final_string decrypted_message
+
 let handle_message msg =
   let arrays = Str.split_delim (Str.regexp " ") msg in
   if List.length arrays = 1 then
     match String.lowercase_ascii(List.hd arrays) with
-    | "read" ->  !messages
+    | "read" -> 
+      let new_string = ref "" in  
+      let iterator () = 
+        for variable = 0 to List.length !enc - 1 do
+          let encrypted_message = List.nth !enc (variable) in 
+          new_string := !new_string ^ decryption_stuff encrypted_message
+        done
+      in 
+      iterator (); !new_string ^ "\n"
     | "recent" -> 
       let encrypted_message = List.nth !enc (List.length !enc -1) in 
-      let decrypted = List.map (fun x -> Encryption.decrypt (fst key) (thrd key) x) encrypted_message in 
-      let decrypted_message = List.map (fun x -> char_of_int x) decrypted in 
-      let final_string cl = String.concat "" (List.map (String.make 1) cl) in 
-      "\n" ^ final_string decrypted_message
+      decryption_stuff encrypted_message ^ "\n"
     (* old: !messages *)
     | _ -> "Unknown command"
   else
     match arrays with
     | h::"send"::t when  List.length arrays > 2 ->   
-      let index = int_of_string
-          (String.sub (h) 0 (String.length h)) in 
+      let index = 
+        try 
+          int_of_string (String.sub (h) 0 (String.length h - 1))
+        with _ -> int_of_string (String.sub (h) 0 (String.length h)) in
       let new_message_with_send = Str.string_after msg ((String.index (msg ^ " ") ' ') + 1) in 
       let new_message = Str.string_after new_message_with_send ((String.index (new_message_with_send ^ " ") ' ') + 1) in
       let user = List.nth !names (index-1) in
@@ -60,7 +73,7 @@ let handle_message msg =
       let exploded_ascii = List.map (fun x -> Char.code x) exploded in
       let encrypted_explode = List.map (fun x -> Encryption.encrypt (fst key) (snd key) x) exploded_ascii in 
       enc := !enc @ [encrypted_explode];
-      messages := !messages ^ "\n" ^ final_message; "Message Sent \n"
+      messages := !messages ^ "\n" ^ final_message; "Message Sent \n" (*for keeping track purposes*)
     | _      -> "Unknown command"
 
 let rec handle_connection ic oc num ()=

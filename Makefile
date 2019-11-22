@@ -26,7 +26,7 @@ install :
 	opam install lwt logs extlib
 
 zip :
-	zip final.zip *.ml* _tags Makefile INSTALL*
+	zip final.zip *.ml* *.mli*  _tags Makefile INSTALL*
 
 clean:
 	ocamlbuild -clean
