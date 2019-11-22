@@ -31,7 +31,7 @@
 (** [primes1] is a list of one million primes in the interval 
     [961748941, 982451653], which spans exactly 1000000 primes. *)
 let primes1 = 
-  let filename = "primes50.txt" in 
+  let filename = "primes1.txt" in 
   print_endline ("Parsing "^filename^" ..."); 
   print_endline "Messenger App Opened";
   let channel = open_in filename in
