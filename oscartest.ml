@@ -110,7 +110,7 @@ let decryption_stuff encrypted_message =
     let new_index = String.index new_combined ' ' + 1 in 
     let gotten_emoji = 
     try Reproduce.reproduce_emoji (String.sub new_combined (new_index) 
-                (String.length new_combined - index_of_space)) 
+                (String.length new_combined - index_of_space + 1)) 
     with _ -> Emoji.question_mark in 
     String.sub combined 0 (index_of_space - 1) ^ " " ^ gotten_emoji
     else
