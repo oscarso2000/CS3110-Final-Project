@@ -44,6 +44,7 @@ let handle_message msg =
   let arrays = Str.split_delim (Str.regexp " ") msg in
   if List.length arrays = 1 then
     match String.lowercase_ascii(List.hd arrays) with
+    | "quit" -> (string_of_int (Sys.command "^C") ^ " Quitting Now")
     | "read" -> 
       let new_string = ref "" in  
       let iterator () = 
