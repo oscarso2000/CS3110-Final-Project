@@ -23,6 +23,11 @@ oscar :
 	ocamlfind ocamlopt -package emoji,uutf,cohttp-lwt-unix,lambdasoup,lwt,lwt.unix,logs,str,logs.lwt -linkpkg -o messenger ./reproduce.ml ./encryption.ml ./oscartest.ml
 
 install : 
+	opam update
+	opam upgrade
+	opam install emoji
+	opam install cohttp-lwt-unix
+	opam install lambdasoup
 	opam install lwt logs extlib
 
 zip :
