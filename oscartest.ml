@@ -1,16 +1,29 @@
 open Lwt
 open Str
 open Encryption
+open Emoji
+open Cohttp_lwt_unix
+open Cohttp_lwt__Body
+open Soup
+open Lwt.Infix
 
 let messages = ref ""
 let names = ref [] 
 let enc = ref [] 
+let emojis = ref []
 
 let listen_address = Unix.inet_addr_loopback
 let port = 9000
 let backlog = 10
 let key = Encryption.generate_keys () (* (m,k,ki) *)
 (*Currently only works for 2 users*)
+
+(* let e = !emojis in  
+   begin
+    match e with 
+    |[] -> "a" 
+    | h::t -> h 
+   end *) (*TESTS EMOJI PARSED ONLINE*) 
 
 let fst key = 
   match key with 
@@ -29,10 +42,43 @@ let explode s =
     if i < 0 then l else exp (i - 1) (s.[i] :: l) in
   exp (String.length s - 1) []
 
+(*FOR EMOJIS*)
+let program =
+  (* Cohttp_lwt_unix.Client.get
+      ("http://www.unicode.org/emoji/charts/emoji-list.html"
+       |> Uri.of_string) >>= fun (_, body) ->
+     Cohttp_lwt__Body.to_string body >>= fun html ->
+  *)
+  let soup = Soup.read_file "./emo.htm" |> Soup.parse in
+  let just_innards l =
+    l |> List.map (fun l -> l |> Soup.trimmed_texts |> String.concat "")
+  in
+  emojis := !emojis @ List.map (fun x -> String.lowercase_ascii x) 
+              (Soup.select "tbody > tr > td.name" soup |> Soup.to_list |> just_innards)
+
+let rec replace_with_underscore_words h = 
+  let exploded = explode h in 
+  let rec helper lst acc = 
+    match exploded with 
+    | [] -> acc
+    | h::t -> if h <> ' ' then helper t (acc ^ Char.escaped h) else helper t (acc ^ "_")
+  in helper exploded ""
+
+let replace_with_underscore_list () = 
+  let e = !emojis in 
+  let rec repl e acc= 
+    match e with 
+    | [] -> acc
+    | h::t -> repl t [replace_with_underscore_words h]@acc
+  in repl e []
+
+(*END EMOJIS*)
+
 (*For debugging purposes*)
 let rec print_list = function 
   | [] -> ()
   | e::l -> print_endline e ; print_string " " ; print_list l
+(*END*)
 
 let decryption_stuff encrypted_message = 
   let decrypted = List.map (fun x -> Encryption.decrypt (fst key) (thrd key) x) encrypted_message in 
@@ -44,7 +90,14 @@ let handle_message msg =
   let arrays = Str.split_delim (Str.regexp " ") msg in
   if List.length arrays = 1 then
     match String.lowercase_ascii(List.hd arrays) with
-    | "quit" -> (string_of_int (Sys.command "^C") ^ " Quitting Now")
+    | "test" -> 
+      let e = !emojis in  
+      begin
+        match e with 
+        |[] -> "a" 
+        | h::t -> h 
+      end 
+    | "quit" -> (string_of_int (Sys.command "^C") ^ " Quitting Now") (*fix*)
     | "read" -> 
       let new_string = ref "" in  
       let iterator () = 
@@ -61,20 +114,38 @@ let handle_message msg =
     | _ -> "Unknown command"
   else
     match arrays with
+    | h::"emoji"::t when  List.length arrays > 2 ->   
+      let index = 
+        try 
+          int_of_string (String.sub (h) 0 (String.length h - 1))
+        with _ -> int_of_string (String.sub (h) 0 (String.length h)) in
+      if try List.length !names < index  with _ -> true 
+      then "Error: User not Found. Remember to use the right number." else
+        let new_message_with_emoji = Str.string_after msg ((String.index (msg ^ " ") ' ') + 1) in 
+        let new_message = Str.string_after new_message_with_emoji ((String.index (new_message_with_emoji ^ " ") ' ') + 1) in
+        let user = List.nth !names (index-1) in
+        let final_message =  user ^ ": Emoji " ^ new_message in
+        let exploded = explode final_message in
+        let exploded_ascii = List.map (fun x -> Char.code x) exploded in
+        let encrypted_explode = List.map (fun x -> Encryption.encrypt (fst key) (snd key) x) exploded_ascii in 
+        enc := !enc @ [encrypted_explode];
+        messages := !messages ^ "\n" ^ final_message; "Message Sent \n" (*for keeping track purposes*)
     | h::"send"::t when  List.length arrays > 2 ->   
       let index = 
         try 
           int_of_string (String.sub (h) 0 (String.length h - 1))
         with _ -> int_of_string (String.sub (h) 0 (String.length h)) in
-      let new_message_with_send = Str.string_after msg ((String.index (msg ^ " ") ' ') + 1) in 
-      let new_message = Str.string_after new_message_with_send ((String.index (new_message_with_send ^ " ") ' ') + 1) in
-      let user = List.nth !names (index-1) in
-      let final_message =  user ^ ": " ^ new_message in
-      let exploded = explode final_message in
-      let exploded_ascii = List.map (fun x -> Char.code x) exploded in
-      let encrypted_explode = List.map (fun x -> Encryption.encrypt (fst key) (snd key) x) exploded_ascii in 
-      enc := !enc @ [encrypted_explode];
-      messages := !messages ^ "\n" ^ final_message; "Message Sent \n" (*for keeping track purposes*)
+      if try List.length !names < index  with _ -> true 
+      then "Error: User not Found. Remember to use the right number." else
+        let new_message_with_send = Str.string_after msg ((String.index (msg ^ " ") ' ') + 1) in 
+        let new_message = Str.string_after new_message_with_send ((String.index (new_message_with_send ^ " ") ' ') + 1) in
+        let user = List.nth !names (index-1) in
+        let final_message =  user ^ ": " ^ new_message in
+        let exploded = explode final_message in
+        let exploded_ascii = List.map (fun x -> Char.code x) exploded in
+        let encrypted_explode = List.map (fun x -> Encryption.encrypt (fst key) (snd key) x) exploded_ascii in 
+        enc := !enc @ [encrypted_explode];
+        messages := !messages ^ "\n" ^ final_message; "Message Sent \n" (*for keeping track purposes*)
     | _      -> "Unknown command"
 
 let rec handle_connection ic oc num ()=
@@ -115,13 +186,13 @@ let create_socket () =
    sock)
 
 let create_server sock =
-  let rec serve () =
-    Lwt_unix.accept sock >>= accept_connection >>= serve
-  in serve
+  let rec server () =
+    Lwt_unix.accept sock >>= accept_connection >>= server
+  in server
 
 let () =
   let () = Logs.set_reporter (Logs.format_reporter ()) in
   let () = Logs.set_level (Some Logs.Info) in
   let sock = create_socket () in
-  let serve = create_server sock in
-  Lwt_main.run @@ serve ()
+  let server = create_server sock in
+  Lwt_main.run @@ server ()
