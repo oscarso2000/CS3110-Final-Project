@@ -2,20 +2,42 @@
 Installation Instructions:
 
   - To install the required packages, run `make install`
-  - If that doesn't work, try running `opam update` then `opam upgrade` and then run `make install` again
+  - We have included `opam update` and `opam upgrade` inside the make install because we require the user to install the most recent Emoji package. 
 
 Build Instructions:
 
   - To build the system, run `make oscar`
   - To run the system, run `make run`
   - On a new tab on terminal, under the same folder, run `make connect`
+	Do make sure you give the server at least 5-10 seconds to start up before connecting. If not, it will possibly reject the client connection. But nothing will happen, just try connecting again if that occurs.
   - You can have as many client tabs opened interacting with each other as you want.
+
+Connecting from other computers:
+    - Although we do not have an internet connection setup, we would like to suggest you still trying to communicate between different computers using SSH. 
+    - On one computer, this will be where the local server is hosted, run `make run` to start the server.
+    - On a new tab on terminal, type `ipconfig getifaddr en0` (to find your IP address if you are connected to a wireless network) or `ipconfig getifaddr en1` (if you are connected to an Ethernet).
+    - This will provide the laptop's IP address for the other computers to SSH into. 
+    - To connect to the main computer, on another laptop, open terminal
+    - Then, input `ssh <username>@<IP address>`, where the username is for the server computer. 
+    - For example, Oscar's username for his computer is OscarSo and his IP is 168.23.55.77. (This is fake, don't try it) 
+    - Therefore, Tushar, on his computer terminal, would type `ssh OscarSo@168.23.55.77`.
+    - Input any prompts that the terminal tells you, including the password of the computer you are ssh-ing into if necessary. After successfully ssh-ing into the server computer, locate the directory in where our project is.
+    - Then, type `make run` on your own terminal. Communication would work even when apart. 
+
 
 Process:
   - For the client: (This is currently a group chat)
     - Input name, you will get ID
     - Input `read`, you will get a history of messages displayed, empty if none. 
     - If your ID is 1, type "1: send my message here", if you want to send a message 
+    - If your ID is 1, type "1: emoji ____" where ___ represents the emoji you want to send. It is in text. Eg. "1: emoji grinning_face".
+    - Input `emojis` to see a list of emojis that you can send.
     - Input `recent`, you will get the most recent line of message.
 
+Note: Some emojis are really new and the OCaml emoji files and my matching code don't include them. They will be replaced with a red question mark. 
+
 This file now includes backend encryption. It won't be noticeable in the UI, but the code generates a key from encryption.ml and utilizes it to encrypt the message which is saved in a mutable variable for list of lists so that the middle man will not understand anything even if they access the variable. Then, when read/recent is called, it decrypts the message again. 
+
+To view how encryption works:
+    - Open uTop
+    - Tushar will continue this...
