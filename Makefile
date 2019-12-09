@@ -39,6 +39,8 @@ zip :
 clean:
 	ocamlbuild -clean
 	rm -rf final.zip
+	rm -rf *.o
+	rm -rf *.cm*
 
 loc:
 	cloc --match-f="\.mli?$$" --not-match-f='^reproduce\.ml' .

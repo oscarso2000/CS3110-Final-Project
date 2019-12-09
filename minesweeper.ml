@@ -6,8 +6,8 @@ type result =
   | Incomplete
 
 type appearance =
-  | Hidden
   | Uncovered
+  | Hidden
   | Flag
 
 type contents = 
@@ -97,3 +97,15 @@ let flag t (x,y) : state =
 
 let uncover t (x,y) : state =
   failwith "Unimplemented"
+
+let to_string t =
+  let rec grid_str acc counter =
+    if counter = (fst dimensions) * (snd dimensions) then acc ^ "\n" else
+      let str = match List.nth t counter with
+        | Uncovered, Number n -> 
+        | Uncovered, Mine -> 
+        | Hidden, _ ->
+        | Flag, _ -> 
+
+          let print_game t =
+            t |> to_string |> print_string 
