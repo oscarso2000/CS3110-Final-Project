@@ -1,4 +1,4 @@
-MODULES=encryption authors 
+MODULES=encryption authors checkers
 OBJECTS=$(MODULES:=.cmo)
 TEST=test.byte
 OCAMLBUILD=ocamlbuild -use-ocamlfind
@@ -31,7 +31,7 @@ install :
 	opam install lwt logs extlib
 
 zip :
-	zip final.zip *.ml* *.mli*  _tags Makefile INSTALL*
+	zip final.zip *.ml* *.mli*  _tags Makefile *.txt
 
 clean:
 	ocamlbuild -clean
