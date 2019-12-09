@@ -2,6 +2,7 @@ open Gface
 
 type widget =
   {
+
     repaint : gctx -> unit;
     size : unit -> (int*int);
   }
