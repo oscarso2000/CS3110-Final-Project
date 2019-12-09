@@ -3,6 +3,14 @@
  *   and decrypts it with the RSA key when the user reads messages. *)
 val decryption_stuff : int list -> string
 
+(** [encrypt_emojis index new_message] encrypts the emoji message sequence
+ *   with the RSA keys generated at start of server. *)
+val encrypt_emojis : int -> string -> int list
+
+(** [encrypt_emojis index new_message] encrypts the message input by user
+ *   with the RSA keys generated at start of server. *)
+val encrypt_text : int -> string -> int list
+
 (** [handle_message ic oc msg] takes in input console, output console of Lwt_IO
  *   and message that user typed in and parses it to any commands listed. *)
 val handle_message : Lwt_io.input_channel -> 

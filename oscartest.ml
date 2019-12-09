@@ -140,6 +140,27 @@ let decryption_stuff encrypted_message =
   else
     combined
 
+let encrypt_emojis index new_message = 
+  let user = List.nth !names (index-1) in
+  let final_message =  user ^ ": Emoji " ^ new_message in
+  let helper_message = string_of_int index ^ ": Emoji" ^ new_message in
+  let exploded = explode final_message in
+  let exploded_ascii = List.map (fun x -> Char.code x) exploded in
+  List.map (fun x -> Encryption.encrypt 
+               (fst key) (snd key) x) exploded_ascii
+
+let encrypt_text index msg =
+  let new_message_with_send = 
+    Str.string_after msg ((String.index (msg ^ " ") ' ') + 1) in 
+  let new_message = Str.string_after new_message_with_send 
+      ((String.index (new_message_with_send ^ " ") ' ') + 1) in
+  let user = List.nth !names (index-1) in
+  let final_message =  user ^ ": " ^ new_message in
+  let helper_message = string_of_int index ^ ": " ^ new_message in
+  let exploded = explode final_message in
+  let exploded_ascii = List.map (fun x -> Char.code x) exploded in
+  List.map (fun x -> Encryption.encrypt (fst key) (snd key) x) exploded_ascii
+
 
 let rec handle_message ic oc msg =
   let arrays = Str.split_delim (Str.regexp " ") msg in
@@ -147,7 +168,7 @@ let rec handle_message ic oc msg =
     match String.lowercase_ascii(List.hd arrays) with
     | "emojis" -> print_emojis
     | "checkers" -> "Starting Checkers..."
-   (* | "quit" -> (string_of_int (Sys.command "^C") ^ " Quitting Now") (*fix*) *)
+    (* | "quit" -> (string_of_int (Sys.command "^C") ^ " Quitting Now") (*fix*) *)
     | "read" -> 
       if List.length !enc = 0 then
         "No Messages Yet"
@@ -184,17 +205,9 @@ let rec handle_message ic oc msg =
             ((String.index (new_message_with_emoji ^ " ") ' ') + 1) in
         if try (List.find (fun x -> x = new_message) !emojis) = new_message
           with Not_found -> false then
-          let user = List.nth !names (index-1) in
-          let final_message =  user ^ ": Emoji " ^ new_message in
-          let helper_message = string_of_int index ^ ": Emoji" ^ new_message in
-          let exploded = explode final_message in
-          let exploded_ascii = List.map (fun x -> Char.code x) exploded in
-          let encrypted_explode = 
-            List.map (fun x -> Encryption.encrypt 
-                         (fst key) (snd key) x) exploded_ascii in 
-          enc := !enc @ [encrypted_explode];
-          messages := !messages @ [helper_message]; 
-          "Please Enter Password Below"
+          let encrypted_explode = encrypt_emojis index new_message in
+              enc := !enc @ [encrypted_explode];
+            "Please Enter Password Below"
         else 
           "Emoji Does Not Exist. Did you remember the underscore?"
     | h::"emoji"::t when  List.length arrays > 3 -> 
@@ -206,19 +219,8 @@ let rec handle_message ic oc msg =
         with _ -> int_of_string (String.sub (h) 0 (String.length h)) in
       if try List.length !names < index  with _ -> true 
       then "Error: User not Found. Remember to use the right number." else
-        let new_message_with_send = 
-          Str.string_after msg ((String.index (msg ^ " ") ' ') + 1) in 
-        let new_message = Str.string_after new_message_with_send 
-            ((String.index (new_message_with_send ^ " ") ' ') + 1) in
-        let user = List.nth !names (index-1) in
-        let final_message =  user ^ ": " ^ new_message in
-        let helper_message = string_of_int index ^ ": " ^ new_message in
-        let exploded = explode final_message in
-        let exploded_ascii = List.map (fun x -> Char.code x) exploded in
-        let encrypted_explode = List.map (fun x -> 
-            Encryption.encrypt (fst key) (snd key) x) exploded_ascii in 
+        let encrypted_explode = encrypt_text index msg in 
         enc := !enc @ [encrypted_explode];
-        messages := !messages @[helper_message]; 
         "Please Enter Password Below"
     | _      -> "Unknown command"
 
