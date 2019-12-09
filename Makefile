@@ -27,6 +27,7 @@ install :
 	opam update
 	opam upgrade
 	opam install emoji
+	opam install graphics
 	opam install cohttp-lwt-unix
 	opam install lambdasoup
 	opam install lwt logs extlib
