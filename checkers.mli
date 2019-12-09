@@ -24,6 +24,10 @@ val get_square : state -> position -> square
     Raises Invalid_Pos if [pos] is not a valid position. *)
 val set_square : state -> position -> square -> state
 
+(** [winner t] is None if the game is not over. Otherwise, it is an option
+    containing the player that won. *)
+val winner : state -> player option
+
 (** [valid_move t pos1 pos2] is true iff moving the checker piece
     located at position [pos1] to position [pos2] is a valid move
     according to the rules of checkers. *)

@@ -49,8 +49,15 @@ let set_square t (x, y) sq : state =
                     (counter + 1) y
       in (fst t), update_squares [] 0 (snd t)
 
-let valid_move t (x1, y1) (x2, y2) : bool=
+let winner t =
+  let r_count = (snd t) |> List.filter (fun s -> s = Some Red) |> List.length in
+  let b_count = (snd t) |> List.filter (fun s -> s = Some Black) |> List.length in
+  if r_count = 0 && b_count > 0 then Some Black else
+  if b_count = 0 && r_count > 0 then Some Red else None
+
+let valid_move t (x1, y1) (x2, y2) : bool =
   try
+    winner t = None && (* game is not over *)
     get_square t (x1, y1) = Some (fst t) && (* pos1 has active player's piece *)
     get_square t (x2, y2) = None && (* pos2 is empty *)
 
@@ -91,7 +98,11 @@ let to_string t =
       in board_str (acc ^ prefix ^ str ^ suffix) (counter + 1)
   in
 
-  let turn_str = (if fst t = Red then "RED" else "BLACK") ^ " player's turn." in
+  let turn_str = 
+    match winner t with
+    | Some p -> (if p = Red then "RED" else "BLACK") ^ " wins!"
+    | None -> (if fst t = Red then "RED" else "BLACK") ^ " player's turn." 
+  in
 
   (first_row "   " 0) ^ (board_str "" 0) ^ turn_str
 

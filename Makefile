@@ -36,3 +36,6 @@ zip :
 clean:
 	ocamlbuild -clean
 	rm -rf final.zip
+
+loc:
+	cloc --match-f="\.mli?$$" --not-match-f='^reproduce\.ml' --counted='cloc.txt' .

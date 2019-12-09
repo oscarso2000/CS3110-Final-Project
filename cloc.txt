@@ -1,0 +1,19 @@
+./HTML Trial/_build/default/.ppx/e769ad9e8facb77dc224164771115c59/_ppx.ml
+./HTML Trial/_build/default/app.ml
+./HTML Trial/app.ml
+./HTML Trial/main.ml
+./authors.ml
+./authors.mli
+./checkers.ml
+./checkers.mli
+./compression.ml
+./encryption.ml
+./encryption.mli
+./gface.ml
+./gface.mli
+./oscartest backup.ml
+./oscartest.ml
+./oscartestold.ml
+./test.ml
+./widget.ml
+./widget.mli

@@ -1,0 +1,1 @@
+reproduce.ml is used to convert strings into emojis. As it matches well over 1000 emojis, each on their own line, we do not count that towards our LOC.
