@@ -5,12 +5,12 @@ type square = player option
 
 type position = int * int
 
-exception Invalid_pos
-
 (** AF: (p, [s0, s1, s2, ..., sn]) represents a checker board where each 
     [si] is a square and it is player [p]'s turn.
     RI: [n+1] must be a perfect square. *)
 type state = player * square list
+
+exception Invalid_pos
 
 (** [switch_player p] is the player that is not [p]. *)
 let switch_player p = 
