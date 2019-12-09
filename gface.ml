@@ -20,6 +20,11 @@ type lopt = (string * opt_val) list
 
 exception Optionerror
 
+type pos = int * int
+type dim = int * int
+
+
+
 
 
 let get_back_col gc = gc.backcol
@@ -44,9 +49,26 @@ let use_gc gc : unit =
   Graphics.set_line_width (get_lw gc);
   let (x,y) = get_pos gc in Graphics.moveto x y
 
+let translate gc (dx,dy) = 
+  {gc with x = gc.x + dx; y = gc.y + dy}
 
 let to_ocaml_coords gc (a,b) = 
   (gc.x + a, Graphics.size_y() -(gc.y+b))
 
 let to_local_coords gc (a,b) =
   (a - gc.x, (Graphics.size_y() - b) - gc.y)
+
+let draw_string gc pos str = 
+  use_gc gc;
+  let (_,h) = Graphics.text_size str in
+  let (x,y) = to_ocaml_coords gc pos in 
+  Graphics.moveto x (y-h);
+  Graphics.draw_string str
+
+let draw_line gc p1 p2 = 
+  use_gc gc;
+  let (x1,y1) = to_ocaml_coords gc p1 in
+  let (x2,y2) = to_ocaml_coords gc p2 in 
+  Graphics.moveto x1 y1;
+  Graphics.lineto x2 y2
+
