@@ -1,7 +1,42 @@
 ### Starting build.
-# Target: encryption.mli.depends, tags: { package(ANSITerminal), package(emoji,uutf,cohttp-lwt-unix,lambdasoup,lwt,lwt.unix,logs,str,logs.lwt,graphics), package(extlib), package(graphics), package(lwt), package(oUnit), package(unix), extension:mli, file:encryption.mli, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -package emoji,uutf,cohttp-lwt-unix,lambdasoup,lwt,lwt.unix,logs,str,logs.lwt,graphics -modules encryption.mli > encryption.mli.depends
-+ ocamlfind ocamldep -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -package emoji,uutf,cohttp-lwt-unix,lambdasoup,lwt,lwt.unix,logs,str,logs.lwt,graphics -modules encryption.mli > encryption.mli.depends
-ocamlfind: Package `graphics' not found
-Command exited with code 2.
-# Compilation unsuccessful.
+# Target: encryption.mli.depends, tags: { package(ANSITerminal), package(extlib), package(graphics), package(lwt), package(oUnit), package(unix), extension:mli, file:encryption.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -modules encryption.mli > encryption.mli.depends # cached
+# Target: encryption.cmi, tags: { package(ANSITerminal), package(extlib), package(graphics), package(lwt), package(oUnit), package(unix), byte, compile, extension:mli, file:encryption.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -o encryption.cmi encryption.mli # cached
+# Target: encryption.ml.depends, tags: { package(ANSITerminal), package(extlib), package(graphics), package(lwt), package(oUnit), package(unix), extension:ml, file:encryption.ml, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -modules encryption.ml > encryption.ml.depends # cached
+# Target: encryption.cmo, tags: { package(ANSITerminal), package(extlib), package(graphics), package(lwt), package(oUnit), package(unix), byte, compile, extension:cmo, extension:ml, file:encryption.cmo, file:encryption.ml, implem, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -o encryption.cmo encryption.ml # cached
+# Target: authors.mli.depends, tags: { package(ANSITerminal), package(extlib), package(graphics), package(lwt), package(oUnit), package(unix), extension:mli, file:authors.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -modules authors.mli > authors.mli.depends # cached
+# Target: authors.cmi, tags: { package(ANSITerminal), package(extlib), package(graphics), package(lwt), package(oUnit), package(unix), byte, compile, extension:mli, file:authors.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -o authors.cmi authors.mli # cached
+# Target: authors.ml.depends, tags: { package(ANSITerminal), package(extlib), package(graphics), package(lwt), package(oUnit), package(unix), extension:ml, file:authors.ml, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -modules authors.ml > authors.ml.depends # cached
+# Target: authors.cmo, tags: { package(ANSITerminal), package(extlib), package(graphics), package(lwt), package(oUnit), package(unix), byte, compile, extension:cmo, extension:ml, file:authors.cmo, file:authors.ml, implem, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -o authors.cmo authors.ml # cached
+# Target: checkers.mli.depends, tags: { package(ANSITerminal), package(extlib), package(graphics), package(lwt), package(oUnit), package(unix), extension:mli, file:checkers.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -modules checkers.mli > checkers.mli.depends # cached
+# Target: checkers.cmi, tags: { package(ANSITerminal), package(extlib), package(graphics), package(lwt), package(oUnit), package(unix), byte, compile, extension:mli, file:checkers.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -o checkers.cmi checkers.mli # cached
+# Target: checkers.ml.depends, tags: { package(ANSITerminal), package(extlib), package(graphics), package(lwt), package(oUnit), package(unix), extension:ml, file:checkers.ml, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -modules checkers.ml > checkers.ml.depends # cached
+# Target: checkers.cmo, tags: { package(ANSITerminal), package(extlib), package(graphics), package(lwt), package(oUnit), package(unix), byte, compile, extension:cmo, extension:ml, file:checkers.cmo, file:checkers.ml, implem, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -o checkers.cmo checkers.ml # cached
+# Target: gface.mli.depends, tags: { package(ANSITerminal), package(extlib), package(graphics), package(lwt), package(oUnit), package(unix), extension:mli, file:gface.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -modules gface.mli > gface.mli.depends # cached
+# Target: gface.cmi, tags: { package(ANSITerminal), package(extlib), package(graphics), package(lwt), package(oUnit), package(unix), byte, compile, extension:mli, file:gface.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -o gface.cmi gface.mli # cached
+# Target: gface.ml.depends, tags: { package(ANSITerminal), package(extlib), package(graphics), package(lwt), package(oUnit), package(unix), extension:ml, file:gface.ml, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -modules gface.ml > gface.ml.depends # cached
+# Target: gface.cmo, tags: { package(ANSITerminal), package(extlib), package(graphics), package(lwt), package(oUnit), package(unix), byte, compile, extension:cmo, extension:ml, file:gface.cmo, file:gface.ml, implem, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -o gface.cmo gface.ml # cached
+# Target: widget.mli.depends, tags: { package(ANSITerminal), package(extlib), package(graphics), package(lwt), package(oUnit), package(unix), extension:mli, file:widget.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -modules widget.mli > widget.mli.depends # cached
+# Target: widget.cmi, tags: { package(ANSITerminal), package(extlib), package(graphics), package(lwt), package(oUnit), package(unix), byte, compile, extension:mli, file:widget.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -o widget.cmi widget.mli # cached
+# Target: widget.ml.depends, tags: { package(ANSITerminal), package(extlib), package(graphics), package(lwt), package(oUnit), package(unix), extension:ml, file:widget.ml, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -modules widget.ml > widget.ml.depends # cached
+# Target: widget.cmo, tags: { package(ANSITerminal), package(extlib), package(graphics), package(lwt), package(oUnit), package(unix), byte, compile, extension:cmo, extension:ml, file:widget.cmo, file:widget.ml, implem, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package unix -package oUnit -package lwt -package extlib -package ANSITerminal -package graphics -o widget.cmo widget.ml # cached
+# Compilation successful.

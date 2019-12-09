@@ -7,6 +7,7 @@ open Cohttp_lwt__Body
 open Soup
 open Lwt.Infix
 open Reproduce
+open Checkers
 
 let messages = ref []
 let names = ref [] 
@@ -124,23 +125,23 @@ let decryption_stuff encrypted_message =
     String.sub combined 0 (index_of_space - 1) ^ " " ^ gotten_emoji
   else
     combined
-(*
-  let rec final_string list acc=
-    match list with 
-    | [] -> acc
-    | h::t -> 
-      let index_of_space = String.index h ' ' in 
-      if try String.sub h (index_of_space + 1) 5 = "Emoji" with _ -> false 
-      then "Emoji Function to be implemented" else
+
+(*Might not need in future*)
+let rec final_string list acc=
+  match list with 
+  | [] -> acc
+  | h::t -> 
+    let index_of_space = String.index h ' ' in 
+    if try String.sub h (index_of_space + 1) 5 = "Emoji" with _ -> false 
+    then "Emoji Function to be implemented" else
       final_string t (acc ^ h)
-  in final_string string_list ""
-*)
 
 let rec handle_message ic oc msg =
   let arrays = Str.split_delim (Str.regexp " ") msg in
   if List.length arrays = 1 then
     match String.lowercase_ascii(List.hd arrays) with
     | "emojis" -> print_emojis
+    | "checkers" -> "Starting Checkers..."
 (*
       let e = !emojis in  
       begin
@@ -224,6 +225,47 @@ let rec handle_message ic oc msg =
         "Please Enter Password Below"
     | _      -> "Unknown command"
 
+
+and handle_game ic oc game_state () = 
+  Lwt_io.write_line oc ("Example Input: `move 5 2 to 3 1`");
+  Lwt_io.write_line oc ("Type `close` to close game");
+  let t = game_state in 
+  Lwt_io.write_line oc (t |> Checkers.to_string);
+  Lwt_io.read_line_opt ic >>= 
+  (fun input -> 
+     match input with
+     | Some i when i = "close" ->
+       (Lwt_io.write_line oc ("Closing Checkers..."); 
+        handle_connection ic oc 2 ())
+     | Some i when i <> "" -> 
+       let arrays = Str.split_delim (Str.regexp " ") i in
+       if List.length arrays = 6 then 
+         begin
+           if List.nth arrays 0 = "move" && List.nth arrays 3 = "to" then 
+             try 
+               let a1 = int_of_string (List.nth arrays 1) in 
+               let a2 = int_of_string (List.nth arrays 2) in 
+               let b1 = int_of_string (List.nth arrays 4) in 
+               let b2 = int_of_string (List.nth arrays 5) in 
+               let new_t = Checkers.move t (a1,a2) (b1,b2) in 
+               handle_game ic oc new_t ()
+             with _ -> 
+               (Lwt_io.write_line oc ("Invalid Input");
+                handle_game ic oc t ())
+           else
+             ( Lwt_io.write_line oc ("Invalid Input");
+               handle_game ic oc t ())
+         end
+       else
+         (Lwt_io.write_line oc ("Invalid Input"); handle_game ic oc t ())
+     | Some _ -> (Lwt_io.write_line oc ("Invalid Input");
+                  Logs_lwt.info (fun m -> m "Nothing happened") 
+                  >>= handle_game ic oc t)
+     | None -> (Logs_lwt.info (fun m -> m "Connection closed") 
+                >>= return))
+
+(* There is currently a bug where anyone can join and create a new game and overwrite the old at anytime*)
+
 and handle_connection ic oc num () =
   let handle_name name = 
     names := !names@ [name];
@@ -259,6 +301,8 @@ and handle_connection ic oc num () =
           let reply = handle_message ic oc msg in
           if reply = "Please Enter Password Below" then
             Lwt_io.write_line oc reply >>= handle_connection ic oc 3
+          else if reply = "Starting Checkers..." then 
+            Lwt_io.write_line oc reply >>= handle_game ic oc (Checkers.new_game) 
           else
             Lwt_io.write_line oc reply >>= handle_connection ic oc 2
         | Some _ -> Logs_lwt.info (fun m -> m "Nothing happened") 
@@ -299,7 +343,7 @@ let accept_connection conn =
   let ic = Lwt_io.of_fd Lwt_io.Input fd in
   let oc = Lwt_io.of_fd Lwt_io.Output fd in
   Lwt.on_failure (handle_connection ic oc 0 ()) 
-  (fun e -> Logs.err (fun m -> m "%s" (Printexc.to_string e) ));
+    (fun e -> Logs.err (fun m -> m "%s" (Printexc.to_string e) ));
   Logs_lwt.info (fun m -> m "New connection") >>= return
 
 let create_socket () =
