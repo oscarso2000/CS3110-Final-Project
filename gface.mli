@@ -38,11 +38,20 @@ val use_gc : gctx -> unit
 (**[pos] is the abstract type representing the relative position of a widget *)
 type pos = int * int
 
-
+(**[to_ocaml_coords gc (a,b)] is the global coordinates of the local widget
+    coordinates [(a,b)] relative to the graphical context [gc] *)
 val to_ocaml_coords : gctx -> int * int -> int * int
+
+(**[to_loca_coords gc (a,b)] is the widget-local coordinates of the global
+   coordinates [(a,b)] relative to the graphical context [gc] *)
 val to_local_coords : gctx -> int * int -> int * int
 
+(**[draw_string gc pos str] writes the string [str] in the widget-local
+    coordinates [pos] relative to the graphical context [gc] *)
 val draw_string : gctx -> pos -> string -> unit
+
+(**[draw_line gc p1 p2] draws a line connecting the widget-local positions
+   [p1] and [p2] converted to global coordinates*)
 val draw_line : gctx -> pos -> pos -> unit
 
 (*
@@ -50,5 +59,6 @@ val draw_line : gctx -> pos -> pos -> unit
 val top_level : gctx
 *)
 
-(**[translate gc (a,b)] is a new graphics con*)
+(**[translate gc (a,b)] is a new graphics context which is [gc] shifted right
+   by [a] and up by [b]*)
 val translate : gctx -> int * int -> gctx

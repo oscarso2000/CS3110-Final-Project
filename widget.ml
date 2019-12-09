@@ -1,14 +1,12 @@
 open Gface
 
-(**[widget] is the abstract type representing an object in the graphics window
-   [repaint gc] is the graphical context gc redrawn with the desired widget
-   [size ()] is the dimensions of the widget*)
+
 type widget = {
   repaint : gctx -> unit;
   size : unit -> (int*int);
 }
 
-(**[space (a,b)] is blank widget of width [a] and height [b] *)
+
 let space (a,b) =
   {
     repaint = (fun _ -> ());
@@ -16,14 +14,14 @@ let space (a,b) =
   }
 
 
-(**[label str] is a widget is a widget containing the string [str] *)
+
 let label str =
   {
     repaint = (fun gc -> draw_string gc (get_pos gc) str);
     size = (fun () -> Graphics.text_size str);
   }
 
-(**[border w] is the widget [w] with a 1 pixel thick border drawn around it *)
+
 let border (w : widget) = 
   {
     repaint = (fun gc -> 
@@ -37,8 +35,7 @@ let border (w : widget) =
     size = (fun () -> let (w,h) = w.size () in (w+4,h+4));
   }
 
-(**[hpair w1 w2] is a new widget that places [w1] and [w2] next to each other
-   horizontally and at the same y position on screen *)
+
 let hpair w1 w2  = 
   {
     repaint = (fun gc -> 
