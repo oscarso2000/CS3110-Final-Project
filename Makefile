@@ -1,4 +1,4 @@
-MODULES=encryption authors 
+MODULES=encryption authors gface widget
 OBJECTS=$(MODULES:=.cmo)
 TEST=test.byte
 OCAMLBUILD=ocamlbuild -use-ocamlfind

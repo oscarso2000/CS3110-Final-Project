@@ -10,6 +10,18 @@ type gctx = {
   mutable y : int;
 }
 
+type opt_val = 
+  | Copt of Graphics.color
+  | Sopt of string
+  | Iopt of int
+  | Bopt of bool
+
+type lopt = (string * opt_val) list
+
+exception Optionerror
+
+
+
 let get_back_col gc = gc.backcol
 let get_fore_col gc = gc.forecol
 let get_font gc = gc.font
@@ -23,6 +35,7 @@ let set_font gc font = gc.font <- font
 let set_font_size gc ftsz = gc.font_size <- ftsz
 let set_lw gc lw = gc.lw <- lw
 let set_pos gc (a,b) = gc.x <- a; gc.y <-b
+
 
 let use_gc gc =
   Graphics.set_color (get_fore_col gc);
