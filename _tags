@@ -1,1 +1,1 @@
-true: package(unix), package(oUnit), package(lwt), package(extlib), package(ANSITerminal), package(graphics)
+true: package(unix), package(oUnit2), package(lwt), package(extlib), package(ANSITerminal), package(graphics)

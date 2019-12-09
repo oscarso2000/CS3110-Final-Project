@@ -9,6 +9,7 @@ open Lwt.Infix
 open Reproduce
 open Checkers
 
+(*Mutable variables that update as user's join and sends messages*)
 let messages = ref []
 let names = ref [] 
 let enc = ref []
@@ -19,7 +20,6 @@ let listen_address = Unix.inet_addr_loopback
 let port = 9000
 let backlog = 10
 let key = Encryption.generate_keys () (* (m,k,ki) *)
-(*Currently only works for 2 users*)
 
 (* let e = !emojis in  
    begin
@@ -28,27 +28,35 @@ let key = Encryption.generate_keys () (* (m,k,ki) *)
     | h::t -> h 
    end *) (*TESTS EMOJI PARSED ONLINE*) 
 
+(** [fst key] takes in the first element of the key triplet of RSA *)
 let fst key = 
   match key with 
   | (m,k,ki) -> m
 
+(** [snd key] takes in the second element of the key triplet of RSA *)
 let snd key = 
   match key with 
   | (m,k,ki) -> k
 
+(** [thrd key] takes in the third element of the key triplet of RSA *)
 let thrd key = 
   match key with 
   | (m,k,ki) -> ki
 
+(** [explode s] takes in a string s and converts it into a char list. *)
 let explode s =
   let rec exp i l =
     if i < 0 then l else exp (i - 1) (s.[i] :: l) in
   exp (String.length s - 1) []
 
 (*FOR EMOJIS*)
+(** [split_string s] takes in string s and 
+ *   splits it into a string list by spaces *)
 let split_string s = 
   s |> String.split_on_char ' ' |> List.filter (fun s -> s <> "")
 
+(** [program] web scrapes off emo.html and parses the text descriptions
+ * of each emoji and puts it into the emojis list *)
 let program =
   (* Cohttp_lwt_unix.Client.get
       ("http://www.unicode.org/emoji/charts/emoji-list.html"
@@ -69,6 +77,8 @@ let program =
     List.map (fun x -> String.concat "_" x) split_description in 
   emojis := !emojis @ underscore
 
+(** [replace_with_underscore_words h] is a helper function that takes
+ *  in a string and replaces spaces with underscores. *)
 let rec replace_with_underscore_words h = 
   let exploded = explode h in 
   let rec helper lst acc = 
@@ -80,6 +90,8 @@ let rec replace_with_underscore_words h =
       else helper t (acc ^ "_")
   in helper exploded ""
 
+(** [replace_with_underscore_list ()] is a unit function that works on 
+ *  the emojis list for underscores to make print_emojis work *)
 let replace_with_underscore_list () = 
   let e = !emojis in 
   let rec repl e acc= 
@@ -88,6 +100,8 @@ let replace_with_underscore_list () =
     | h::t -> repl t [replace_with_underscore_words h]@acc
   in repl e []
 
+(** [print_emojis] is a helper function that prints all emojis possible to send
+ *   when "emojis" is called from handle_message. *)
 let print_emojis =       
   let e = List.rev (!emojis) in 
   let rec helper e str=  
@@ -126,15 +140,6 @@ let decryption_stuff encrypted_message =
   else
     combined
 
-(*Might not need in future*)
-let rec final_string list acc=
-  match list with 
-  | [] -> acc
-  | h::t -> 
-    let index_of_space = String.index h ' ' in 
-    if try String.sub h (index_of_space + 1) 5 = "Emoji" with _ -> false 
-    then "Emoji Function to be implemented" else
-      final_string t (acc ^ h)
 
 let rec handle_message ic oc msg =
   let arrays = Str.split_delim (Str.regexp " ") msg in
@@ -142,15 +147,7 @@ let rec handle_message ic oc msg =
     match String.lowercase_ascii(List.hd arrays) with
     | "emojis" -> print_emojis
     | "checkers" -> "Starting Checkers..."
-(*
-      let e = !emojis in  
-      begin
-        match e with 
-        |[] -> "a" 
-        | h::t -> h 
-      end 
-*)
-    | "quit" -> (string_of_int (Sys.command "^C") ^ " Quitting Now") (*fix*)
+   (* | "quit" -> (string_of_int (Sys.command "^C") ^ " Quitting Now") (*fix*) *)
     | "read" -> 
       if List.length !enc = 0 then
         "No Messages Yet"
@@ -264,7 +261,6 @@ and handle_game ic oc game_state () =
      | None -> (Logs_lwt.info (fun m -> m "Connection closed") 
                 >>= return))
 
-(* There is currently a bug where anyone can join and create a new game and overwrite the old at anytime*)
 
 and handle_connection ic oc num () =
   let handle_name name = 
@@ -337,13 +333,13 @@ and handle_connection ic oc num () =
         | None -> handle_connection ic oc 3 ()
      ))
 
-
+(* Setting up sockets and connections *)
 let accept_connection conn =
   let fd, _ = conn in
   let ic = Lwt_io.of_fd Lwt_io.Input fd in
   let oc = Lwt_io.of_fd Lwt_io.Output fd in
   Lwt.on_failure (handle_connection ic oc 0 ()) 
-    (fun e -> Logs.err (fun m -> m "%s" (Printexc.to_string e) ));
+    (fun e -> Logs.err (fun m -> m "%s" (Printexc.to_string e)));
   Logs_lwt.info (fun m -> m "New connection") >>= return
 
 let create_socket () =
@@ -358,6 +354,7 @@ let create_server sock =
     Lwt_unix.accept sock >>= accept_connection >>= server
   in server
 
+(* This function runs the server based in localhost. *)
 let () =
   let () = Logs.set_reporter (Logs.format_reporter ()) in
   let () = Logs.set_level (Some Logs.Info) in
