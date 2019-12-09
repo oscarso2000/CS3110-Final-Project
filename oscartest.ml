@@ -227,7 +227,7 @@ let rec handle_message ic oc msg =
 
 
 and handle_game ic oc game_state () = 
-  Lwt_io.write_line oc ("Example Input: `move 5 2 to 3 1`");
+  Lwt_io.write_line oc ("\n Example Input: `move 5 2 to 3 1`");
   Lwt_io.write_line oc ("Type `close` to close game");
   let t = game_state in 
   Lwt_io.write_line oc (t |> Checkers.to_string);
