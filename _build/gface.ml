@@ -10,18 +10,11 @@ type gctx = {
   y : int;
 }
 
-type opt_val = 
-  | Copt of Graphics.color
-  | Sopt of string
-  | Iopt of int
-  | Bopt of bool
 
-type lopt = (string * opt_val) list
 
-exception Optionerror
 
 type pos = int * int
-type dim = int * int
+
 
 
 
@@ -52,12 +45,18 @@ let use_gc gc : unit =
 let translate gc (dx,dy) = 
   {gc with x = gc.x + dx; y = gc.y + dy}
 
+(**[to_ocaml_coords gc (a,b)] is the global coordinates of the local widget
+    coordinates [(a,b)] relative to the graphical context [gc] *)
 let to_ocaml_coords gc (a,b) = 
   (gc.x + a, Graphics.size_y() -(gc.y+b))
 
+(**[to_loca_coords gc (a,b)] is the widget-local coordinates of the global
+   coordinates [(a,b)] relative to the graphical context [gc] *)
 let to_local_coords gc (a,b) =
   (a - gc.x, (Graphics.size_y() - b) - gc.y)
 
+(**[draw_string gc pos str] writes the string [str] in the widget-local
+    coordinates [pos] relative to the graphical context [gc] *)
 let draw_string gc pos str = 
   use_gc gc;
   let (_,h) = Graphics.text_size str in
@@ -65,10 +64,13 @@ let draw_string gc pos str =
   Graphics.moveto x (y-h);
   Graphics.draw_string str
 
+(**[draw_line gc p1 p2] draws a line connecting the widget-local positions
+   [p1] and [p2] converted to global coordinates*)
 let draw_line gc p1 p2 = 
   use_gc gc;
   let (x1,y1) = to_ocaml_coords gc p1 in
   let (x2,y2) = to_ocaml_coords gc p2 in 
   Graphics.moveto x1 y1;
   Graphics.lineto x2 y2
+
 

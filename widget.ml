@@ -1,9 +1,11 @@
 open Gface
 
+
 type widget = {
   repaint : gctx -> unit;
   size : unit -> (int*int);
 }
+
 
 let space (a,b) =
   {
@@ -11,11 +13,14 @@ let space (a,b) =
     size = (fun _ -> (a,b));
   }
 
+
+
 let label str =
   {
     repaint = (fun gc -> draw_string gc (get_pos gc) str);
     size = (fun () -> Graphics.text_size str);
   }
+
 
 let border (w : widget) = 
   {
@@ -29,6 +34,7 @@ let border (w : widget) =
 
     size = (fun () -> let (w,h) = w.size () in (w+4,h+4));
   }
+
 
 let hpair w1 w2  = 
   {

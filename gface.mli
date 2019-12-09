@@ -1,10 +1,9 @@
 
 
-(**abstract type of a graphics context*)
+(**[gctx] is the abstract type of a graphics context. This may contain 
+   any information about a graphic*)
 type gctx 
 
-(**abtrasct type of creation options for graphical contexts*)
-type opt_val
 
 
 (**[get_back_col gc] is the background color of the graphics context [gc] *)
@@ -36,23 +35,23 @@ val set_pos : gctx -> int*int -> gctx
 (**[use_gc gc] applies the data within gc to the graphical window *)
 val use_gc : gctx -> unit
 
-(*
-val get_int : ('a * opt_val) list -> 'a -> int -> int
-val get_bool : ('a * opt_val) list -> 'a -> bool -> bool
-val get_string : ('a * opt_val) list -> 'a -> string -> string
-val get_color: ('a * opt_val) list -> 'a -> Graphics.color -> Graphics.color*)
-
-
-
-(**widget relative positionz *)
-
+(**[pos] is the abstract type representing the relative position of a widget *)
 type pos = int * int
-type dim = int * int
 
+(**[to_ocaml_coords gc (a,b)] is the global coordinates of the local widget
+    coordinates [(a,b)] relative to the graphical context [gc] *)
 val to_ocaml_coords : gctx -> int * int -> int * int
+
+(**[to_loca_coords gc (a,b)] is the widget-local coordinates of the global
+   coordinates [(a,b)] relative to the graphical context [gc] *)
 val to_local_coords : gctx -> int * int -> int * int
 
+(**[draw_string gc pos str] writes the string [str] in the widget-local
+    coordinates [pos] relative to the graphical context [gc] *)
 val draw_string : gctx -> pos -> string -> unit
+
+(**[draw_line gc p1 p2] draws a line connecting the widget-local positions
+   [p1] and [p2] converted to global coordinates*)
 val draw_line : gctx -> pos -> pos -> unit
 
 (*
@@ -60,5 +59,6 @@ val draw_line : gctx -> pos -> pos -> unit
 val top_level : gctx
 *)
 
-(**[translate gc (a,b)] is a new graphics con*)
+(**[translate gc (a,b)] is a new graphics context which is [gc] shifted right
+   by [a] and up by [b]*)
 val translate : gctx -> int * int -> gctx
