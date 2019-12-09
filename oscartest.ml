@@ -58,10 +58,14 @@ let program =
   let just_innards l =
     l |> List.map (fun l -> l |> Soup.trimmed_texts |> String.concat "")
   in
-  let descriptions = List.map (fun x -> String.lowercase_ascii x) 
-      (Soup.select "tbody > tr > td.name" soup |> Soup.to_list |> just_innards) in 
-  let split_description = List.map (fun x -> split_string x) descriptions in 
-  let underscore = List.map (fun x -> String.concat "_" x) split_description in 
+  let descriptions = 
+    List.map (fun x -> String.lowercase_ascii x) 
+      (Soup.select "tbody > tr > td.name" soup |> 
+       Soup.to_list |> just_innards) in 
+  let split_description = 
+    List.map (fun x -> split_string x) descriptions in 
+  let underscore = 
+    List.map (fun x -> String.concat "_" x) split_description in 
   emojis := !emojis @ underscore
 
 let rec replace_with_underscore_words h = 
@@ -69,7 +73,10 @@ let rec replace_with_underscore_words h =
   let rec helper lst acc = 
     match exploded with 
     | [] -> acc
-    | h::t -> if h <> ' ' then helper t (acc ^ Char.escaped h) else helper t (acc ^ "_")
+    | h::t -> 
+      if h <> ' ' then 
+        helper t (acc ^ Char.escaped h) 
+      else helper t (acc ^ "_")
   in helper exploded ""
 
 let replace_with_underscore_list () = 
@@ -99,7 +106,8 @@ let rec print_list = function
 (*END*)
 
 let decryption_stuff encrypted_message = 
-  let decrypted = List.map (fun x -> Encryption.decrypt (fst key) (thrd key) x) encrypted_message in 
+  let decrypted = List.map (fun x -> Encryption.decrypt 
+                               (fst key) (thrd key) x) encrypted_message in 
   let decrypted_message = List.map (fun x -> char_of_int x) decrypted in 
   let string_list = (List.map (String.make 1) decrypted_message) in
   let combined = String.concat "" string_list in 
@@ -109,8 +117,9 @@ let decryption_stuff encrypted_message =
            (String.length combined - index_of_space) in 
     let new_index = String.index new_combined ' ' + 1 in 
     let gotten_emoji = 
-      try Reproduce.reproduce_emoji (String.sub new_combined (new_index) 
-                                       (String.length new_combined - index_of_space + 1)) 
+      try Reproduce.reproduce_emoji 
+            (String.sub new_combined (new_index) 
+               (String.length new_combined - index_of_space + 1)) 
       with _ -> Emoji.question_mark in 
     String.sub combined 0 (index_of_space - 1) ^ " " ^ gotten_emoji
   else
@@ -149,7 +158,8 @@ let rec handle_message ic oc msg =
         let iterator () = 
           for variable = 0 to List.length !enc - 1 do
             let encrypted_message = List.nth !enc (variable) in 
-            new_string := !new_string ^ decryption_stuff encrypted_message ^ "\n"
+            new_string := !new_string ^ 
+                          decryption_stuff encrypted_message ^ "\n"
           done
         in 
         iterator (); !new_string
@@ -170,8 +180,10 @@ let rec handle_message ic oc msg =
         with _ -> int_of_string (String.sub (h) 0 (String.length h)) in
       if try List.length !names < index  with _ -> true 
       then "Error: User not Found. Remember to use the right number." else
-        let new_message_with_emoji = Str.string_after msg ((String.index (msg ^ " ") ' ') + 1) in 
-        let new_message = Str.string_after new_message_with_emoji ((String.index (new_message_with_emoji ^ " ") ' ') + 1) in
+        let new_message_with_emoji = 
+          Str.string_after msg ((String.index (msg ^ " ") ' ') + 1) in 
+        let new_message = Str.string_after new_message_with_emoji 
+            ((String.index (new_message_with_emoji ^ " ") ' ') + 1) in
         if try (List.find (fun x -> x = new_message) !emojis) = new_message
           with Not_found -> false then
           let user = List.nth !names (index-1) in
@@ -179,10 +191,14 @@ let rec handle_message ic oc msg =
           let helper_message = string_of_int index ^ ": Emoji" ^ new_message in
           let exploded = explode final_message in
           let exploded_ascii = List.map (fun x -> Char.code x) exploded in
-          let encrypted_explode = List.map (fun x -> Encryption.encrypt (fst key) (snd key) x) exploded_ascii in 
+          let encrypted_explode = 
+            List.map (fun x -> Encryption.encrypt 
+                         (fst key) (snd key) x) exploded_ascii in 
           enc := !enc @ [encrypted_explode];
-          messages := !messages @ [helper_message]; "Please Enter Password Below" (*for keeping track purposes*)
-        else "Emoji Does Not Exist. Did you remember the underscore?"
+          messages := !messages @ [helper_message]; 
+          "Please Enter Password Below"
+        else 
+          "Emoji Does Not Exist. Did you remember the underscore?"
     | h::"emoji"::t when  List.length arrays > 3 -> 
       "Please send one emoji at a time."
     | h::"send"::t when  List.length arrays > 2 ->   
@@ -192,16 +208,20 @@ let rec handle_message ic oc msg =
         with _ -> int_of_string (String.sub (h) 0 (String.length h)) in
       if try List.length !names < index  with _ -> true 
       then "Error: User not Found. Remember to use the right number." else
-        let new_message_with_send = Str.string_after msg ((String.index (msg ^ " ") ' ') + 1) in 
-        let new_message = Str.string_after new_message_with_send ((String.index (new_message_with_send ^ " ") ' ') + 1) in
+        let new_message_with_send = 
+          Str.string_after msg ((String.index (msg ^ " ") ' ') + 1) in 
+        let new_message = Str.string_after new_message_with_send 
+            ((String.index (new_message_with_send ^ " ") ' ') + 1) in
         let user = List.nth !names (index-1) in
         let final_message =  user ^ ": " ^ new_message in
         let helper_message = string_of_int index ^ ": " ^ new_message in
         let exploded = explode final_message in
         let exploded_ascii = List.map (fun x -> Char.code x) exploded in
-        let encrypted_explode = List.map (fun x -> Encryption.encrypt (fst key) (snd key) x) exploded_ascii in 
+        let encrypted_explode = List.map (fun x -> 
+            Encryption.encrypt (fst key) (snd key) x) exploded_ascii in 
         enc := !enc @ [encrypted_explode];
-        messages := !messages @[helper_message]; "Please Enter Password Below" (*for keeping track purposes*)
+        messages := !messages @[helper_message]; 
+        "Please Enter Password Below"
     | _      -> "Unknown command"
 
 and handle_connection ic oc num () =
@@ -223,7 +243,8 @@ and handle_connection ic oc num () =
         | None -> handle_connection ic oc 0 ()
         | Some n -> handle_name n))
   else if num = 1 then 
-    (Lwt_io.write_line oc "What is your password (Please keep it short and simple): "; 
+    (Lwt_io.write_line oc 
+       "What is your password (Please keep it short and simple): "; 
      Lwt_io.read_line_opt ic >>= 
      (fun password ->
         match password with
@@ -240,8 +261,10 @@ and handle_connection ic oc num () =
             Lwt_io.write_line oc reply >>= handle_connection ic oc 3
           else
             Lwt_io.write_line oc reply >>= handle_connection ic oc 2
-        | Some _ -> Logs_lwt.info (fun m -> m "Nothing happened") >>= handle_connection ic oc 2
-        | None -> Logs_lwt.info (fun m -> m "Connection closed") >>= return))
+        | Some _ -> Logs_lwt.info (fun m -> m "Nothing happened") 
+          >>= handle_connection ic oc 2
+        | None -> Logs_lwt.info (fun m -> m "Connection closed") 
+          >>= return))
   else
     (Lwt_io.read_line_opt ic >>= 
      (fun pass ->
@@ -262,7 +285,10 @@ and handle_connection ic oc num () =
             begin
               match x with 
               | [] -> handle_connection ic oc 2 ()
-              | h::t -> enc := (List.rev t); Lwt_io.write_line oc "Invalid Password" >>= handle_connection ic oc 2
+              | h::t -> 
+                enc := (List.rev t); 
+                Lwt_io.write_line oc "Invalid Password" 
+                >>= handle_connection ic oc 2
             end
         | None -> handle_connection ic oc 3 ()
      ))
@@ -272,7 +298,8 @@ let accept_connection conn =
   let fd, _ = conn in
   let ic = Lwt_io.of_fd Lwt_io.Input fd in
   let oc = Lwt_io.of_fd Lwt_io.Output fd in
-  Lwt.on_failure (handle_connection ic oc 0 ()) (fun e -> Logs.err (fun m -> m "%s" (Printexc.to_string e) ));
+  Lwt.on_failure (handle_connection ic oc 0 ()) 
+  (fun e -> Logs.err (fun m -> m "%s" (Printexc.to_string e) ));
   Logs_lwt.info (fun m -> m "New connection") >>= return
 
 let create_socket () =
