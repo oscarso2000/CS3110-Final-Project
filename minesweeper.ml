@@ -102,10 +102,12 @@ let to_string t =
   let rec grid_str acc counter =
     if counter = (fst dimensions) * (snd dimensions) then acc ^ "\n" else
       let str = match List.nth t counter with
-        | Uncovered, Number n -> 
-        | Uncovered, Mine -> 
-        | Hidden, _ ->
-        | Flag, _ -> 
+        | Uncovered, Number n -> ""
+        | Uncovered, Mine -> ""
+        | Hidden, _ -> ""
+        | Flag, _ -> ""
+      in ""
+  in ""
 
-          let print_game t =
-            t |> to_string |> print_string 
+let print_game t =
+  t |> to_string |> print_string 
