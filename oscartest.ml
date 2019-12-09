@@ -8,9 +8,10 @@ open Soup
 open Lwt.Infix
 open Reproduce
 
-let messages = ref ""
+let messages = ref []
 let names = ref [] 
-let enc = ref [] 
+let enc = ref []
+let passwords = ref []
 let emojis = ref []
 
 let listen_address = Unix.inet_addr_loopback
@@ -109,11 +110,11 @@ let decryption_stuff encrypted_message =
            (String.length combined - index_of_space) in 
     let new_index = String.index new_combined ' ' + 1 in 
     let gotten_emoji = 
-    try Reproduce.reproduce_emoji (String.sub new_combined (new_index) 
-                (String.length new_combined - index_of_space + 1)) 
-    with _ -> Emoji.question_mark in 
+      try Reproduce.reproduce_emoji (String.sub new_combined (new_index) 
+                                       (String.length new_combined - index_of_space + 1)) 
+      with _ -> Emoji.question_mark in 
     String.sub combined 0 (index_of_space - 1) ^ " " ^ gotten_emoji
-    else
+  else
     combined
 (*
   let rec final_string list acc=
@@ -127,7 +128,7 @@ let decryption_stuff encrypted_message =
   in final_string string_list ""
 *)
 
-let handle_message msg =
+let rec handle_message ic oc msg =
   let arrays = Str.split_delim (Str.regexp " ") msg in
   if List.length arrays = 1 then
     match String.lowercase_ascii(List.hd arrays) with
@@ -142,17 +143,23 @@ let handle_message msg =
 *)
     | "quit" -> (string_of_int (Sys.command "^C") ^ " Quitting Now") (*fix*)
     | "read" -> 
-      let new_string = ref "" in  
-      let iterator () = 
-        for variable = 0 to List.length !enc - 1 do
-          let encrypted_message = List.nth !enc (variable) in 
-          new_string := !new_string ^ decryption_stuff encrypted_message ^ "\n"
-        done
-      in 
-      iterator (); !new_string
+      if List.length !enc = 0 then
+        "No Messages Yet"
+      else
+        let new_string = ref "" in  
+        let iterator () = 
+          for variable = 0 to List.length !enc - 1 do
+            let encrypted_message = List.nth !enc (variable) in 
+            new_string := !new_string ^ decryption_stuff encrypted_message ^ "\n"
+          done
+        in 
+        iterator (); !new_string
     | "recent" -> 
-      let encrypted_message = List.nth !enc (List.length !enc -1) in 
-      decryption_stuff encrypted_message ^ "\n"
+      if List.length !enc = 0 then
+        "No Messages Yet"
+      else
+        let encrypted_message = List.nth !enc (List.length !enc -1) in 
+        decryption_stuff encrypted_message ^ "\n"
     (* old: !messages *)
     | _ -> "Unknown command"
   else
@@ -170,11 +177,12 @@ let handle_message msg =
           with Not_found -> false then
           let user = List.nth !names (index-1) in
           let final_message =  user ^ ": Emoji " ^ new_message in
+          let helper_message = string_of_int index ^ ": Emoji" ^ new_message in
           let exploded = explode final_message in
           let exploded_ascii = List.map (fun x -> Char.code x) exploded in
           let encrypted_explode = List.map (fun x -> Encryption.encrypt (fst key) (snd key) x) exploded_ascii in 
           enc := !enc @ [encrypted_explode];
-          messages := !messages ^ "\n" ^ final_message; "Message Sent" (*for keeping track purposes*)
+          messages := !messages @ [helper_message]; "Please Enter Password Below" (*for keeping track purposes*)
         else "Emoji Does Not Exist. Did you remember the underscore?"
     | h::"emoji"::t when  List.length arrays > 3 -> 
       "Please send one emoji at a time."
@@ -189,18 +197,24 @@ let handle_message msg =
         let new_message = Str.string_after new_message_with_send ((String.index (new_message_with_send ^ " ") ' ') + 1) in
         let user = List.nth !names (index-1) in
         let final_message =  user ^ ": " ^ new_message in
+        let helper_message = string_of_int index ^ ": " ^ new_message in
         let exploded = explode final_message in
         let exploded_ascii = List.map (fun x -> Char.code x) exploded in
         let encrypted_explode = List.map (fun x -> Encryption.encrypt (fst key) (snd key) x) exploded_ascii in 
         enc := !enc @ [encrypted_explode];
-        messages := !messages ^ "\n" ^ final_message; "Message Sent" (*for keeping track purposes*)
+        messages := !messages @[helper_message]; "Please Enter Password Below" (*for keeping track purposes*)
     | _      -> "Unknown command"
 
-let rec handle_connection ic oc num ()=
+and handle_connection ic oc num () =
   let handle_name name = 
     names := !names@ [name];
     Lwt_io.write_line oc ("Your ID is: " ^ string_of_int (List.length !names));
     handle_connection ic oc 1 ();
+  in
+  let handle_password password = 
+    passwords := !passwords @ [password];
+    Lwt_io.write_line oc ("Your Password is: " ^ password);
+    handle_connection ic oc 2 ();
   in
   if num = 0 then 
     (Lwt_io.write_line oc "What is your name: "; 
@@ -209,15 +223,51 @@ let rec handle_connection ic oc num ()=
         match name with
         | None -> handle_connection ic oc 0 ()
         | Some n -> handle_name n))
+  else if num = 1 then 
+    (Lwt_io.write_line oc "What is your password (Please keep it short and simple): "; 
+     Lwt_io.read_line_opt ic >>= 
+     (fun password ->
+        match password with
+        | None -> handle_connection ic oc 1 ()
+        | Some n -> handle_password n))
+  else if num = 2 then 
+    (Lwt_io.write_line oc "What would you like to do? \n";
+     Lwt_io.read_line_opt ic >>=
+     (fun msg ->
+        match msg with
+        | Some msg when msg <> "" -> 
+          let reply = handle_message ic oc msg in
+          if reply = "Please Enter Password Below" then
+            Lwt_io.write_line oc reply >>= handle_connection ic oc 3
+          else
+            Lwt_io.write_line oc reply >>= handle_connection ic oc 2
+        | Some _ -> Logs_lwt.info (fun m -> m "Nothing happened") >>= handle_connection ic oc 2
+        | None -> Logs_lwt.info (fun m -> m "Connection closed") >>= return))
   else
-    Lwt_io.read_line_opt ic >>=
-    (fun msg ->
-       match msg with
-       | Some msg when msg <> "" ->
-         let reply = handle_message msg in
-         Lwt_io.write_line oc reply >>= handle_connection ic oc 1
-       | Some _ -> Logs_lwt.info (fun m -> m "Nothing happened") >>= handle_connection ic oc 1
-       | None -> Logs_lwt.info (fun m -> m "Connection closed") >>= return)
+    (Lwt_io.read_line_opt ic >>= 
+     (fun pass ->
+        match pass with 
+        | Some p ->
+          let recent = List.nth (List.rev !messages) 0 in 
+          let arrays = Str.split_delim (Str.regexp " ") recent in
+          let h = List.nth arrays 0 in
+          let index = 
+            try 
+              int_of_string (String.sub (h) 0 (String.length h - 1))
+            with _ -> int_of_string (String.sub (h) 0 (String.length h)) in
+          if p = List.nth !passwords (index-1) then 
+            let reply = "Message Sent" in 
+            Lwt_io.write_line oc reply >>= handle_connection ic oc 2
+          else 
+            let x = List.rev !enc in 
+            begin
+              match x with 
+              | [] -> handle_connection ic oc 2 ()
+              | h::t -> enc := (List.rev t); Lwt_io.write_line oc "Invalid Password" >>= handle_connection ic oc 2
+            end
+        | None -> handle_connection ic oc 3 ()
+     ))
+
 
 let accept_connection conn =
   let fd, _ = conn in
