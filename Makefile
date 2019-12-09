@@ -20,6 +20,7 @@ connect :
 
 oscar :
 	ocamlopt -c encryption.mli encryption.ml
+	ocamlfind ocamlopt -package emoji -c reproduce.mli reproduce.ml
 	ocamlfind ocamlopt -package emoji,uutf,cohttp-lwt-unix,lambdasoup,lwt,lwt.unix,logs,str,logs.lwt -linkpkg -o messenger ./reproduce.ml ./encryption.ml ./oscartest.ml
 
 install : 

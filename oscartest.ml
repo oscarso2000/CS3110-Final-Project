@@ -88,8 +88,7 @@ let print_emojis =
     | h::t -> helper t str^h^"\n" 
   in helper e ""
 
-(*Hard Coding Emojis into Messenger for Comparison*)
-
+(*Hard Coding Emojis into Messenger for Comparison -> See reproduce.ml*)
 
 (*END EMOJIS*)
 
