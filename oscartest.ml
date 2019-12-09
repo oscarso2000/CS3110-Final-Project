@@ -120,6 +120,23 @@ let rec print_list = function
   | e::l -> print_endline e ; print_string " " ; print_list l
 (*END*)
 
+(** [text_emoji_handling str] takes in a user text and changes some 
+ *  standard symbols into emojis if any. *)
+let text_emoji_handling str = 
+  let array = Str.split_delim (Str.regexp " ") str in
+  let matched = List.map (fun x -> 
+      if x = ":)" then Emoji.smiling_face 
+      else if x = ";)" then Emoji.winking_face 
+      else if x = ":|" then Emoji.neutral_face
+      else if x = ":(" then Emoji.disappointed_face
+      else if x = "<3" then Emoji.sparkling_heart
+      else if x = ":'(" then Emoji.crying_face
+      else if x = "</3" then Emoji.broken_heart
+      else x) array 
+  in 
+  String.concat " " matched
+
+
 let decryption_stuff encrypted_message = 
   let decrypted = List.map (fun x -> Encryption.decrypt 
                                (fst key) (thrd key) x) encrypted_message in 
@@ -138,7 +155,7 @@ let decryption_stuff encrypted_message =
       with _ -> Emoji.question_mark in 
     String.sub combined 0 (index_of_space - 1) ^ " " ^ gotten_emoji
   else
-    combined
+    text_emoji_handling combined
 
 let encrypt_emojis index new_message = 
   let user = List.nth !names (index-1) in
@@ -146,6 +163,7 @@ let encrypt_emojis index new_message =
   let helper_message = string_of_int index ^ ": Emoji" ^ new_message in
   let exploded = explode final_message in
   let exploded_ascii = List.map (fun x -> Char.code x) exploded in
+  messages := !messages @ [helper_message];
   List.map (fun x -> Encryption.encrypt 
                (fst key) (snd key) x) exploded_ascii
 
@@ -159,6 +177,7 @@ let encrypt_text index msg =
   let helper_message = string_of_int index ^ ": " ^ new_message in
   let exploded = explode final_message in
   let exploded_ascii = List.map (fun x -> Char.code x) exploded in
+  messages := !messages @ [helper_message];
   List.map (fun x -> Encryption.encrypt (fst key) (snd key) x) exploded_ascii
 
 
@@ -206,8 +225,8 @@ let rec handle_message ic oc msg =
         if try (List.find (fun x -> x = new_message) !emojis) = new_message
           with Not_found -> false then
           let encrypted_explode = encrypt_emojis index new_message in
-              enc := !enc @ [encrypted_explode];
-            "Please Enter Password Below"
+          enc := !enc @ [encrypted_explode];
+          "Please Enter Password Below"
         else 
           "Emoji Does Not Exist. Did you remember the underscore?"
     | h::"emoji"::t when  List.length arrays > 3 -> 
