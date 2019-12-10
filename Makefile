@@ -61,4 +61,4 @@ clean:
 	rm -rf *.cm*
 
 loc:
-	cloc --match-f="\.mli?$$" --not-match-f='^reproduce\.ml' .
+	cloc --match-f="\.mli?$$" --found 'LOC-files.txt' --exclude-dir='_build' --not-match-f='^reproduce\.ml' .
