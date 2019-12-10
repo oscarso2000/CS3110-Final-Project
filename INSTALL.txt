@@ -4,16 +4,18 @@ Installation Instructions:
   - To install the required packages, run `make install`
   - We have included `opam update` and `opam upgrade` inside the make install because we require the user to install the most recent Emoji package. 
 
+
 Build Instructions:
 
-  - To build the system, run `make build`. If this doesn't work somehow, theres a backup version `make oscar`.
+  - To build the system, run `make build`. After, run `make oscar`.
   - To run the system, run `make run`
   - On a new tab on terminal, under the same folder, run `make connect`
 	Do make sure you give the server at least 5-10 seconds to start up before connecting. If not, it will possibly reject the client connection. But nothing will happen, just try connecting again if that occurs.
-  - You can have as many client tabs opened interacting with each other as you want.
+  - You can have as many client tabs opened interacting with each other as you want. If not, follow "Connecting from other computers" below to communicate between different computers. 
   - For testing, run `make test`
   - There also exists a `make docs` to extract HTML.
   - If folder is very messy, run `make clean`.
+
 
 Connecting from other computers:
     - Although we do not have an internet connection setup, we would like to suggest you still trying to communicate between different computers using SSH. 

@@ -1,5 +1,0 @@
-(executable
-	(name main)
-	(libraries incr_dom)
-	(js_of_ocaml)
-	(preprocess (pps ppx_jane js_of_ocaml-ppx)))
