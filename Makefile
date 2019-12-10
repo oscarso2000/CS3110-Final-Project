@@ -60,4 +60,4 @@ clean:
 	rm -rf *.cm*
 
 loc:
-	cloc --match-f="\.mli?$$" --not-match-f='^reproduce\.ml'.
+	cloc --match-f="\.mli?$$" --not-match-f='^reproduce\.ml' .

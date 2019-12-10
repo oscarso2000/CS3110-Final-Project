@@ -1,3 +1,6 @@
+(*This file utilizes some functions in oscartest.ml, changed up in some ways
+ *to take in input instead of the mutable list variables, so that testing 
+ *will work on these helper functions *)
 open Emoji
 
 (** [explode s] takes in a string s and converts it into a char list. *)
