@@ -256,8 +256,7 @@ let rec handle_message input_console output_console msg =
     | _      -> "Unknown command"
 
 
-and handle_game input_console output_console game_state num () = 
-  if num = 0 then 
+and handle_checkers input_console output_console game_state () = 
     (Lwt_io.write_line output_console ("\nExample Input: `move 5 2 to 3 1`");
      Lwt_io.write_line output_console ("Type `close` to close game");
      let t = game_state in 
@@ -279,23 +278,25 @@ and handle_game input_console output_console game_state num () =
                   let b1 = int_of_string (List.nth arrays 4) in 
                   let b2 = int_of_string (List.nth arrays 5) in 
                   let new_t = Checkers.move t (a1,a2) (b1,b2) in 
-                  handle_game input_console output_console new_t 0 ()
+                  handle_checkers input_console output_console new_t ()
                 with _ -> 
                   (Lwt_io.write_line output_console ("Invalid Input");
-                   handle_game input_console output_console t 0 ())
+                   handle_checkers input_console output_console t ())
               else
                 ( Lwt_io.write_line output_console ("Invalid Input");
-                  handle_game input_console output_console t 0 ())
+                  handle_checkers input_console output_console t ())
             end
           else
             (Lwt_io.write_line output_console ("Invalid Input"); 
-             handle_game input_console output_console t 0 ())
+             handle_checkers input_console output_console t ())
         | Some _ -> (Lwt_io.write_line output_console ("Invalid Input");
                      Logs_lwt.info (fun m -> m "Nothing happened") 
-                     >>= handle_game input_console output_console t 0)
+                     >>= handle_checkers input_console output_console t)
         | None -> (Logs_lwt.info (fun m -> m "Connection closed") 
                    >>= return)))
-  else  
+
+
+and handle_minesweeper input_console output_console game_state () = 
     (Lwt_io.write_line output_console ("\nExample Input: `uncover 5 2`");
      Lwt_io.write_line output_console ("Type `close` to close game");
      let t = game_state in 
@@ -315,20 +316,20 @@ and handle_game input_console output_console game_state num () =
                   let a1 = int_of_string (List.nth arrays 1) in 
                   let a2 = int_of_string (List.nth arrays 2) in 
                   let new_t = Minesweeper.uncover t (a1,a2) in 
-                  handle_game input_console output_console new_t 1 ()
+                  handle_minesweeper input_console output_console new_t ()
                 with _ -> 
                   (Lwt_io.write_line output_console ("Invalid Input");
-                   handle_game input_console output_console t 1 ())
+                   handle_minesweeper input_console output_console t ())
               else
                 ( Lwt_io.write_line output_console ("Invalid Input");
-                  handle_game input_console output_console t 1 ())
+                  handle_minesweeper input_console output_console t ())
             end
           else
             (Lwt_io.write_line output_console ("Invalid Input"); 
-             handle_game input_console output_console t 1 ())
+             handle_minesweeper input_console output_console t ())
         | Some _ -> (Lwt_io.write_line output_console ("Invalid Input");
                      Logs_lwt.info (fun m -> m "Nothing happened") 
-                     >>= handle_game input_console output_console t 1)
+                     >>= handle_minesweeper input_console output_console t)
         | None -> (Logs_lwt.info (fun m -> m "Connection closed") 
                    >>= return)))
 
@@ -395,10 +396,10 @@ and handle_connection input_console output_console num () =
             handle_connection input_console output_console 3
           else if reply = "Starting Checkers..." then 
             Lwt_io.write_line output_console reply >>= 
-            handle_game input_console output_console (Checkers.new_game) 0
+            handle_checkers input_console output_console (Checkers.new_game)
           else if reply = "Starting Minesweeper..." then 
-            Lwt_io write_line output_console reply >>=
-            handle_game input_console output_console (Minesweeper.new_game) 1
+            Lwt_io.write_line output_console reply >>=
+            handle_minesweeper input_console output_console (Minesweeper.new_game)
           else
             Lwt_io.write_line output_console reply >>= 
             handle_connection input_console output_console 2

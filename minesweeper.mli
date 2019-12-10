@@ -16,7 +16,7 @@ type box = appearance * contents
 
 type position = int * int
 
-type state
+type state = box list
 
 exception Invalid_pos
 

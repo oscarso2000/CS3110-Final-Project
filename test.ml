@@ -1,3 +1,17 @@
+(** Test Plan: 
+ * For testing, we made sure to test as many cases as possible.
+ * We first created tests for the checkers game, then created
+ * tests for oscartest.ml. However, given that the app requires
+ * pre-inputed files, we had to rewrite functions differently in
+ * order to test the helper functions. Thus, we have Testhelper.ml. 
+ * We also tested some of the reproduce.ml emojis just to make sure that 
+ * the function was working as intended. Lastly, we just made sure to test
+ * anything else that we knew could have some problems.
+ * However, we also did A LOT of front-end user testing. Given the app was 
+ * created since MS1, we have tried to constantly break the app. 
+ * Thus, we have added a lot of try and catches to ensure that the user
+ * can't, for most cases, break the system. *)
+
 open OUnit2
 open Checkers
 open Testhelper

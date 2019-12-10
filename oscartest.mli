@@ -18,10 +18,17 @@ val encrypt_text : int -> string -> int list
 val handle_message : Lwt_io.input_channel -> 
   Lwt_io.output_channel -> string -> string
 
-(** [handle_game ic oc game_state ()] handles the checkers game and sees
+(** [handle_checkers ic oc game_state ()] handles the checkers game and sees
  *  if user input for playing is valid or not. *)
-val handle_game : Lwt_io.input_channel ->
+val handle_checkers : Lwt_io.input_channel ->
   Lwt_io.output_channel -> Checkers.state -> unit -> unit Lwt.t
+
+(** [handle_minesweeper ic oc game_state ()] handles the minesweeper game 
+ *  and sees if user input for playing is valid or not. *)
+val handle_minesweeper : Lwt_io.input_channel ->
+  Lwt_io.output_channel ->
+  (Minesweeper.appearance * Minesweeper.contents) list ->
+  unit -> unit Lwt.t
 
 (** [handle_connection ic oc num ()] handles connection to see which state the 
  *  app should be in for the user independently. *)
