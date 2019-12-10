@@ -130,6 +130,10 @@ let text_emoji_handling str =
       else if x = "<3" then Emoji.sparkling_heart
       else if x = ":'(" then Emoji.crying_face
       else if x = "</3" then Emoji.broken_heart
+      else if x = ":D" then Emoji.grinning_face
+      else if x = "(^^^)" then Emoji.shark
+      else if x = ":o" || x = ":O" then Emoji.astonished_face
+      else if x = ":\\" then Emoji.slightly_frowning_face
       else x) array 
   in 
   String.concat " " matched
@@ -306,8 +310,9 @@ and handle_connection input_console output_console num () =
                 match response with 
                 | Some p -> let index = counting name !names 0 in 
                   if p = List.nth !passwords index then 
-                    (Lwt_io.write_line output_console ("Welcome Back " ^ name ^ "!");
-                    handle_connection input_console output_console 2 ())
+                    (Lwt_io.write_line output_console 
+                       ("Welcome Back " ^ name ^ "!");
+                     handle_connection input_console output_console 2 ())
                   else
                     (Lwt_io.write_line output_console ("Wrong Password");
                      handle_connection input_console output_console 0 ())

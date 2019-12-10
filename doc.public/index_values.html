@@ -1,0 +1,404 @@
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Encryption" rel="Chapter" href="Encryption.html">
+<link title="Authors" rel="Chapter" href="Authors.html">
+<link title="Checkers" rel="Chapter" href="Checkers.html">
+<link title="Minesweeper" rel="Chapter" href="Minesweeper.html">
+<link title="Gface" rel="Chapter" href="Gface.html">
+<link title="Widget" rel="Chapter" href="Widget.html">
+<link title="Oscartest" rel="Chapter" href="Oscartest.html">
+<link title="Testhelper" rel="Chapter" href="Testhelper.html"><title>Index of values</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;</div>
+<h1>Index of values</h1>
+<table>
+<tr><td align="left"><div>A</div></td></tr>
+<tr><td><a href="Oscartest.html#VALaccept_connection">accept_connection</a> [<a href="Oscartest.html">Oscartest</a>]</td>
+<td><div class="info">
+<p><code class="code">accept_connection conn</code> accepts or rejects the connection caused by user</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>B</div></td></tr>
+<tr><td><a href="Widget.html#VALborder">border</a> [<a href="Widget.html">Widget</a>]</td>
+<td></td></tr>
+<tr><td align="left"><div>C</div></td></tr>
+<tr><td><a href="Testhelper.html#VALcounting">counting</a> [<a href="Testhelper.html">Testhelper</a>]</td>
+<td><div class="info">
+<p><code class="code">counting x lst c</code> is a tail-recursive function that 
+ returns the index of the first element in list lst
+   that is equal to x where c is the accumulator.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Oscartest.html#VALcreate_server">create_server</a> [<a href="Oscartest.html">Oscartest</a>]</td>
+<td><div class="info">
+<p><code class="code">create_server sock</code> generates server for the app</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Oscartest.html#VALcreate_socket">create_socket</a> [<a href="Oscartest.html">Oscartest</a>]</td>
+<td><div class="info">
+<p><code class="code">create_socket ()</code> creates the socket to accept connections</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>D</div></td></tr>
+<tr><td><a href="Encryption.html#VALdecrypt">decrypt</a> [<a href="Encryption.html">Encryption</a>]</td>
+<td><div class="info">
+<p><code class="code">decrypt m ki c</code> is an RSA-decrypted plaintext of <code class="code">c</code> 
+    using the private key <code class="code">ki</code> if <code class="code">c</code> was computed using the modulus <code class="code">m</code>.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Oscartest.html#VALdecryption_stuff">decryption_stuff</a> [<a href="Oscartest.html">Oscartest</a>]</td>
+<td><div class="info">
+<p><code class="code">decryption_stuff encrypted_message</code> takes in the character encrypted array
+   and decrypts it with the RSA key when the user reads messages.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Minesweeper.html#VALdimensions">dimensions</a> [<a href="Minesweeper.html">Minesweeper</a>]</td>
+<td><div class="info">
+<p><code class="code">dimensions</code> is the dimensions of the grid.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Gface.html#VALdraw_line">draw_line</a> [<a href="Gface.html">Gface</a>]</td>
+<td><div class="info">
+<p><code class="code">draw_line gc p1 p2</code> draws a line connecting the widget-local positions
+   <code class="code">p1</code> and <code class="code">p2</code> converted to global coordinates</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Gface.html#VALdraw_string">draw_string</a> [<a href="Gface.html">Gface</a>]</td>
+<td><div class="info">
+<p><code class="code">draw_string gc pos str</code> writes the string <code class="code">str</code> in the widget-local
+    coordinates <code class="code">pos</code> relative to the graphical context <code class="code">gc</code></p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>E</div></td></tr>
+<tr><td><a href="Encryption.html#VALencrypt">encrypt</a> [<a href="Encryption.html">Encryption</a>]</td>
+<td><div class="info">
+<p><code class="code">encrypt m k p</code> is an RSA-encrypted ciphertext of <code class="code">p</code> 
+    using the public key <code class="code">m, k</code>.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Oscartest.html#VALencrypt_emojis">encrypt_emojis</a> [<a href="Oscartest.html">Oscartest</a>]</td>
+<td><div class="info">
+<p><code class="code">encrypt_emojis index new_message</code> encrypts the emoji message sequence
+   with the RSA keys generated at start of server.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Oscartest.html#VALencrypt_text">encrypt_text</a> [<a href="Oscartest.html">Oscartest</a>]</td>
+<td><div class="info">
+<p><code class="code">encrypt_emojis index new_message</code> encrypts the message input by user
+   with the RSA keys generated at start of server.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Testhelper.html#VALexplode">explode</a> [<a href="Testhelper.html">Testhelper</a>]</td>
+<td></td></tr>
+<tr><td><a href="Oscartest.html#VALexplode">explode</a> [<a href="Oscartest.html">Oscartest</a>]</td>
+<td></td></tr>
+<tr><td align="left"><div>F</div></td></tr>
+<tr><td><a href="Minesweeper.html#VALflag">flag</a> [<a href="Minesweeper.html">Minesweeper</a>]</td>
+<td><div class="info">
+<p><code class="code">flag t pos</code> is the state <code class="code">t</code> with the box at position <code class="code">pos</code> marked as a
+    flag if it has not yet been uncovered.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>G</div></td></tr>
+<tr><td><a href="Minesweeper.html#VALgame_result">game_result</a> [<a href="Minesweeper.html">Minesweeper</a>]</td>
+<td><div class="info">
+<p><code class="code">game_result t</code> is <code class="code">Win</code> if the player has won, <code class="code">Lose</code> if the player has
+    lost, and <code class="code">Incomplete</code> if the game is not finished.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Encryption.html#VALgenerate_keys">generate_keys</a> [<a href="Encryption.html">Encryption</a>]</td>
+<td></td></tr>
+<tr><td><a href="Gface.html#VALget_back_col">get_back_col</a> [<a href="Gface.html">Gface</a>]</td>
+<td><div class="info">
+<p><code class="code">get_back_col gc</code> is the background color of the graphics context <code class="code">gc</code></p>
+
+</div>
+</td></tr>
+<tr><td><a href="Minesweeper.html#VALget_box">get_box</a> [<a href="Minesweeper.html">Minesweeper</a>]</td>
+<td><div class="info">
+<p><code class="code">get_box t pos</code> is the box located at position <code class="code">pos</code> in state <code class="code">t</code>.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Gface.html#VALget_font">get_font</a> [<a href="Gface.html">Gface</a>]</td>
+<td><div class="info">
+<p><code class="code">get_font_size gc</code> is the font_size of the graphics context <code class="code">gc</code></p>
+
+</div>
+</td></tr>
+<tr><td><a href="Gface.html#VALget_font_size">get_font_size</a> [<a href="Gface.html">Gface</a>]</td>
+<td><div class="info">
+<p><code class="code">get_lw gc</code> is the line width of the graphics context <code class="code">gc</code></p>
+
+</div>
+</td></tr>
+<tr><td><a href="Gface.html#VALget_fore_col">get_fore_col</a> [<a href="Gface.html">Gface</a>]</td>
+<td><div class="info">
+<p><code class="code">get_font gc</code> is the font of the graphics context <code class="code">gc</code></p>
+
+</div>
+</td></tr>
+<tr><td><a href="Gface.html#VALget_lw">get_lw</a> [<a href="Gface.html">Gface</a>]</td>
+<td><div class="info">
+<p><code class="code">get_pos gc</code> is the (x,y) coordinate of the top left corner of <code class="code">gc</code></p>
+
+</div>
+</td></tr>
+<tr><td><a href="Gface.html#VALget_pos">get_pos</a> [<a href="Gface.html">Gface</a>]</td>
+<td></td></tr>
+<tr><td><a href="Checkers.html#VALget_square">get_square</a> [<a href="Checkers.html">Checkers</a>]</td>
+<td><div class="info">
+<p><code class="code">get_square t pos</code> is the square located at position <code class="code">pos</code> in state <code class="code">t</code>.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>H</div></td></tr>
+<tr><td><a href="Oscartest.html#VALhandle_connection">handle_connection</a> [<a href="Oscartest.html">Oscartest</a>]</td>
+<td><div class="info">
+<p><code class="code">handle_connection ic oc num ()</code> handles connection to see which state the 
+  app should be in for the user independently.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Oscartest.html#VALhandle_game">handle_game</a> [<a href="Oscartest.html">Oscartest</a>]</td>
+<td><div class="info">
+<p><code class="code">handle_game ic oc game_state ()</code> handles the checkers game and sees
+  if user input for playing is valid or not.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Oscartest.html#VALhandle_message">handle_message</a> [<a href="Oscartest.html">Oscartest</a>]</td>
+<td><div class="info">
+<p><code class="code">handle_message ic oc msg</code> takes in input console, output console of Lwt_IO
+   and message that user typed in and parses it to any commands listed.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Authors.html#VALhours_worked">hours_worked</a> [<a href="Authors.html">Authors</a>]</td>
+<td><div class="info">
+<p><code class="code">hours_worked</code> is a list of the number of hours each team member
+    worked on this assignment.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Widget.html#VALhpair">hpair</a> [<a href="Widget.html">Widget</a>]</td>
+<td><div class="info">
+<p><code class="code">hpair w1 w2</code> is a new widget that places <code class="code">w1</code> and <code class="code">w2</code> next to each other
+   horizontally and at the same y position on screen</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>L</div></td></tr>
+<tr><td><a href="Widget.html#VALlabel">label</a> [<a href="Widget.html">Widget</a>]</td>
+<td><div class="info">
+<p><code class="code">border w</code> is the widget <code class="code">w</code> with a 1 pixel thick border drawn around it</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>M</div></td></tr>
+<tr><td><a href="Minesweeper.html#VALmines">mines</a> [<a href="Minesweeper.html">Minesweeper</a>]</td>
+<td><div class="info">
+<p><code class="code">mines</code> is the number of mines.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Checkers.html#VALmove">move</a> [<a href="Checkers.html">Checkers</a>]</td>
+<td><div class="info">
+<p><code class="code">move t pos1 pos2</code> is the state <code class="code">t</code> after moving the checker piece in <code class="code">pos1</code>
+    to <code class="code">pos2</code>, removing all appropriate checker pieces in the process.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>N</div></td></tr>
+<tr><td><a href="Minesweeper.html#VALnew_game">new_game</a> [<a href="Minesweeper.html">Minesweeper</a>]</td>
+<td><div class="info">
+<p><code class="code">new_game</code> is a randomly initialized state of minesweeper.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Checkers.html#VALnew_game">new_game</a> [<a href="Checkers.html">Checkers</a>]</td>
+<td><div class="info">
+<p><code class="code">new_game</code> is the state that represents a new game of checkers.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>P</div></td></tr>
+<tr><td><a href="Checkers.html#VALprint_game">print_game</a> [<a href="Checkers.html">Checkers</a>]</td>
+<td><div class="info">
+<p><code class="code">print_game t</code> prints a string representation of the state <code class="code">t</code> to 
+    the console.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>R</div></td></tr>
+<tr><td><a href="Testhelper.html#VALreplace_with_underscore_list">replace_with_underscore_list</a> [<a href="Testhelper.html">Testhelper</a>]</td>
+<td><div class="info">
+<p><code class="code">replace_with_underscore_list e</code> is a function that works on 
+  the list for underscores to make print_emojis work</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Testhelper.html#VALreplace_with_underscore_words">replace_with_underscore_words</a> [<a href="Testhelper.html">Testhelper</a>]</td>
+<td><div class="info">
+<p><code class="code">replace_with_underscore_words h</code> is a helper function that takes
+  in a string and replaces spaces with underscores.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>S</div></td></tr>
+<tr><td><a href="Gface.html#VALset_back_col">set_back_col</a> [<a href="Gface.html">Gface</a>]</td>
+<td><div class="info">
+<p><code class="code">set_back_col gc col</code> sets the background color of <code class="code">gc</code> to <code class="code">col</code></p>
+
+</div>
+</td></tr>
+<tr><td><a href="Minesweeper.html#VALset_box">set_box</a> [<a href="Minesweeper.html">Minesweeper</a>]</td>
+<td><div class="info">
+<p><code class="code">set_box t pos b</code> is the state <code class="code">t</code> with the box located at position
+    <code class="code">pos</code> set to <code class="code">b</code>.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Gface.html#VALset_font">set_font</a> [<a href="Gface.html">Gface</a>]</td>
+<td><div class="info">
+<p><code class="code">set_font_size gc size</code> sets the font size of <code class="code">gc</code> to <code class="code">size</code></p>
+
+</div>
+</td></tr>
+<tr><td><a href="Gface.html#VALset_font_size">set_font_size</a> [<a href="Gface.html">Gface</a>]</td>
+<td><div class="info">
+<p><code class="code">set_lw gc lw</code> sets the line width of <code class="code">gc</code> to <code class="code">lw</code></p>
+
+</div>
+</td></tr>
+<tr><td><a href="Gface.html#VALset_fore_col">set_fore_col</a> [<a href="Gface.html">Gface</a>]</td>
+<td><div class="info">
+<p><code class="code">set_font gc font</code> sets the font color of <code class="code">gc</code> to <code class="code">font</code></p>
+
+</div>
+</td></tr>
+<tr><td><a href="Gface.html#VALset_lw">set_lw</a> [<a href="Gface.html">Gface</a>]</td>
+<td><div class="info">
+<p><code class="code">set_back_col gc (a,b)</code> sets the position of <code class="code">gc</code> to <code class="code">(a,b)</code></p>
+
+</div>
+</td></tr>
+<tr><td><a href="Gface.html#VALset_pos">set_pos</a> [<a href="Gface.html">Gface</a>]</td>
+<td></td></tr>
+<tr><td><a href="Checkers.html#VALset_square">set_square</a> [<a href="Checkers.html">Checkers</a>]</td>
+<td><div class="info">
+<p><code class="code">set_square t pos sq</code> is the state <code class="code">t</code> with the square located at position
+    <code class="code">pos</code> set to <code class="code">sq</code>.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Checkers.html#VALsize">size</a> [<a href="Checkers.html">Checkers</a>]</td>
+<td><div class="info">
+<p><code class="code">size</code> is the size of a checkerboard.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Widget.html#VALspace">space</a> [<a href="Widget.html">Widget</a>]</td>
+<td><div class="info">
+<p><code class="code">label str</code> is a widget is a widget containing the string <code class="code">str</code></p>
+
+</div>
+</td></tr>
+<tr><td><a href="Testhelper.html#VALsplit_string">split_string</a> [<a href="Testhelper.html">Testhelper</a>]</td>
+<td><div class="info">
+<p><code class="code">split_string s</code> takes in string s and 
+   splits it into a string list by spaces</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>T</div></td></tr>
+<tr><td><a href="Testhelper.html#VALtext_emoji_handling">text_emoji_handling</a> [<a href="Testhelper.html">Testhelper</a>]</td>
+<td><div class="info">
+<p><code class="code">text_emoji_handling str</code> takes in a user text and changes some 
+  standard symbols into emojis if any.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Gface.html#VALto_local_coords">to_local_coords</a> [<a href="Gface.html">Gface</a>]</td>
+<td><div class="info">
+<p><code class="code">to_loca_coords gc (a,b)</code> is the widget-local coordinates of the global
+   coordinates <code class="code">(a,b)</code> relative to the graphical context <code class="code">gc</code></p>
+
+</div>
+</td></tr>
+<tr><td><a href="Gface.html#VALto_ocaml_coords">to_ocaml_coords</a> [<a href="Gface.html">Gface</a>]</td>
+<td><div class="info">
+<p><code class="code">to_ocaml_coords gc (a,b)</code> is the global coordinates of the local widget
+    coordinates <code class="code">(a,b)</code> relative to the graphical context <code class="code">gc</code></p>
+
+</div>
+</td></tr>
+<tr><td><a href="Checkers.html#VALto_string">to_string</a> [<a href="Checkers.html">Checkers</a>]</td>
+<td><div class="info">
+<p><code class="code">to_string t</code> is a string representation of the state <code class="code">t</code>.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Gface.html#VALtranslate">translate</a> [<a href="Gface.html">Gface</a>]</td>
+<td><div class="info">
+<p><code class="code">translate gc (a,b)</code> is a new graphics context which is <code class="code">gc</code> shifted right
+   by <code class="code">a</code> and up by <code class="code">b</code></p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>U</div></td></tr>
+<tr><td><a href="Minesweeper.html#VALuncover">uncover</a> [<a href="Minesweeper.html">Minesweeper</a>]</td>
+<td><div class="info">
+<p><code class="code">uncover t pos</code> is the state after uncovering the box at position <code class="code">pos</code>.</p>
+
+</div>
+</td></tr>
+<tr><td><a href="Gface.html#VALuse_gc">use_gc</a> [<a href="Gface.html">Gface</a>]</td>
+<td><div class="info">
+<p><code class="code">use_gc gc</code> applies the data within gc to the graphical window</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>V</div></td></tr>
+<tr><td><a href="Checkers.html#VALvalid_move">valid_move</a> [<a href="Checkers.html">Checkers</a>]</td>
+<td><div class="info">
+<p><code class="code">valid_move t pos1 pos2</code> is true iff moving the checker piece
+    located at position <code class="code">pos1</code> to position <code class="code">pos2</code> is a valid move
+    according to the rules of checkers.</p>
+
+</div>
+</td></tr>
+<tr><td align="left"><div>W</div></td></tr>
+<tr><td><a href="Checkers.html#VALwinner">winner</a> [<a href="Checkers.html">Checkers</a>]</td>
+<td><div class="info">
+<p><code class="code">winner t</code> is None if the game is not over.</p>
+
+</div>
+</td></tr>
+</table>
+</body>
+</html>

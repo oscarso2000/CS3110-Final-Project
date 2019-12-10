@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Minesweeper.html">
+<link rel="next" href="Widget.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Encryption" rel="Chapter" href="Encryption.html">
+<link title="Authors" rel="Chapter" href="Authors.html">
+<link title="Checkers" rel="Chapter" href="Checkers.html">
+<link title="Minesweeper" rel="Chapter" href="Minesweeper.html">
+<link title="Gface" rel="Chapter" href="Gface.html">
+<link title="Widget" rel="Chapter" href="Widget.html">
+<link title="Oscartest" rel="Chapter" href="Oscartest.html">
+<link title="Testhelper" rel="Chapter" href="Testhelper.html"><title>Gface</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Minesweeper.html" title="Minesweeper">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Widget.html" title="Widget">Next</a>
+</div>
+<h1>Module <a href="type_Gface.html">Gface</a></h1>
+
+<pre><span id="MODULEGface"><span class="keyword">module</span> Gface</span>: <code class="code">sig</code> <a href="Gface.html">..</a> <code class="code">end</code></pre><div class="info module top">
+<div class="info-desc">
+<p><code class="code">gctx</code> is the abstract type of a graphics context. This may contain 
+   any information about a graphic</p>
+</div>
+</div>
+<hr width="100%">
+
+<pre><span id="TYPEgctx"><span class="keyword">type</span> <code class="type"></code>gctx</span> </pre>
+
+
+<pre><span id="VALget_back_col"><span class="keyword">val</span> get_back_col</span> : <code class="type"><a href="Gface.html#TYPEgctx">gctx</a> -> Graphics.color</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_back_col gc</code> is the background color of the graphics context <code class="code">gc</code></p>
+
+<p><code class="code">get_fore_col gc</code> is the foreground color of the graphics context <code class="code">gc</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_fore_col"><span class="keyword">val</span> get_fore_col</span> : <code class="type"><a href="Gface.html#TYPEgctx">gctx</a> -> Graphics.color</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_font gc</code> is the font of the graphics context <code class="code">gc</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_font"><span class="keyword">val</span> get_font</span> : <code class="type"><a href="Gface.html#TYPEgctx">gctx</a> -> string</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_font_size gc</code> is the font_size of the graphics context <code class="code">gc</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_font_size"><span class="keyword">val</span> get_font_size</span> : <code class="type"><a href="Gface.html#TYPEgctx">gctx</a> -> int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_lw gc</code> is the line width of the graphics context <code class="code">gc</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_lw"><span class="keyword">val</span> get_lw</span> : <code class="type"><a href="Gface.html#TYPEgctx">gctx</a> -> int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_pos gc</code> is the (x,y) coordinate of the top left corner of <code class="code">gc</code></p>
+</div>
+</div>
+
+<pre><span id="VALget_pos"><span class="keyword">val</span> get_pos</span> : <code class="type"><a href="Gface.html#TYPEgctx">gctx</a> -> int * int</code></pre>
+<pre><span id="VALset_back_col"><span class="keyword">val</span> set_back_col</span> : <code class="type"><a href="Gface.html#TYPEgctx">gctx</a> -> Graphics.color -> <a href="Gface.html#TYPEgctx">gctx</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">set_back_col gc col</code> sets the background color of <code class="code">gc</code> to <code class="code">col</code></p>
+
+<p><code class="code">set_fore_col gc col</code> sets the foreground color of <code class="code">gc</code> to <code class="code">col</code></p>
+</div>
+</div>
+
+<pre><span id="VALset_fore_col"><span class="keyword">val</span> set_fore_col</span> : <code class="type"><a href="Gface.html#TYPEgctx">gctx</a> -> Graphics.color -> <a href="Gface.html#TYPEgctx">gctx</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">set_font gc font</code> sets the font color of <code class="code">gc</code> to <code class="code">font</code></p>
+</div>
+</div>
+
+<pre><span id="VALset_font"><span class="keyword">val</span> set_font</span> : <code class="type"><a href="Gface.html#TYPEgctx">gctx</a> -> string -> <a href="Gface.html#TYPEgctx">gctx</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">set_font_size gc size</code> sets the font size of <code class="code">gc</code> to <code class="code">size</code></p>
+</div>
+</div>
+
+<pre><span id="VALset_font_size"><span class="keyword">val</span> set_font_size</span> : <code class="type"><a href="Gface.html#TYPEgctx">gctx</a> -> int -> <a href="Gface.html#TYPEgctx">gctx</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">set_lw gc lw</code> sets the line width of <code class="code">gc</code> to <code class="code">lw</code></p>
+</div>
+</div>
+
+<pre><span id="VALset_lw"><span class="keyword">val</span> set_lw</span> : <code class="type"><a href="Gface.html#TYPEgctx">gctx</a> -> int -> <a href="Gface.html#TYPEgctx">gctx</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">set_back_col gc (a,b)</code> sets the position of <code class="code">gc</code> to <code class="code">(a,b)</code></p>
+</div>
+</div>
+
+<pre><span id="VALset_pos"><span class="keyword">val</span> set_pos</span> : <code class="type"><a href="Gface.html#TYPEgctx">gctx</a> -> int * int -> <a href="Gface.html#TYPEgctx">gctx</a></code></pre>
+<pre><span id="VALuse_gc"><span class="keyword">val</span> use_gc</span> : <code class="type"><a href="Gface.html#TYPEgctx">gctx</a> -> unit</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">use_gc gc</code> applies the data within gc to the graphical window</p>
+</div>
+</div>
+
+<pre><span id="TYPEpos"><span class="keyword">type</span> <code class="type"></code>pos</span> = <code class="type">int * int</code> </pre>
+<div class="info ">
+<div class="info-desc">
+<p><code class="code">pos</code> is the abstract type representing the relative position of a widget</p>
+</div>
+</div>
+
+
+<pre><span id="VALto_ocaml_coords"><span class="keyword">val</span> to_ocaml_coords</span> : <code class="type"><a href="Gface.html#TYPEgctx">gctx</a> -> int * int -> int * int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">to_ocaml_coords gc (a,b)</code> is the global coordinates of the local widget
+    coordinates <code class="code">(a,b)</code> relative to the graphical context <code class="code">gc</code></p>
+</div>
+</div>
+
+<pre><span id="VALto_local_coords"><span class="keyword">val</span> to_local_coords</span> : <code class="type"><a href="Gface.html#TYPEgctx">gctx</a> -> int * int -> int * int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">to_loca_coords gc (a,b)</code> is the widget-local coordinates of the global
+   coordinates <code class="code">(a,b)</code> relative to the graphical context <code class="code">gc</code></p>
+</div>
+</div>
+
+<pre><span id="VALdraw_string"><span class="keyword">val</span> draw_string</span> : <code class="type"><a href="Gface.html#TYPEgctx">gctx</a> -> <a href="Gface.html#TYPEpos">pos</a> -> string -> unit</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">draw_string gc pos str</code> writes the string <code class="code">str</code> in the widget-local
+    coordinates <code class="code">pos</code> relative to the graphical context <code class="code">gc</code></p>
+</div>
+</div>
+
+<pre><span id="VALdraw_line"><span class="keyword">val</span> draw_line</span> : <code class="type"><a href="Gface.html#TYPEgctx">gctx</a> -> <a href="Gface.html#TYPEpos">pos</a> -> <a href="Gface.html#TYPEpos">pos</a> -> unit</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">draw_line gc p1 p2</code> draws a line connecting the widget-local positions
+   <code class="code">p1</code> and <code class="code">p2</code> converted to global coordinates</p>
+</div>
+</div>
+
+<pre><span id="VALtranslate"><span class="keyword">val</span> translate</span> : <code class="type"><a href="Gface.html#TYPEgctx">gctx</a> -> int * int -> <a href="Gface.html#TYPEgctx">gctx</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">translate gc (a,b)</code> is a new graphics context which is <code class="code">gc</code> shifted right
+   by <code class="code">a</code> and up by <code class="code">b</code></p>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Checkers.html">
+<link rel="next" href="Gface.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Encryption" rel="Chapter" href="Encryption.html">
+<link title="Authors" rel="Chapter" href="Authors.html">
+<link title="Checkers" rel="Chapter" href="Checkers.html">
+<link title="Minesweeper" rel="Chapter" href="Minesweeper.html">
+<link title="Gface" rel="Chapter" href="Gface.html">
+<link title="Widget" rel="Chapter" href="Widget.html">
+<link title="Oscartest" rel="Chapter" href="Oscartest.html">
+<link title="Testhelper" rel="Chapter" href="Testhelper.html"><title>Minesweeper</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Checkers.html" title="Checkers">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Gface.html" title="Gface">Next</a>
+</div>
+<h1>Module <a href="type_Minesweeper.html">Minesweeper</a></h1>
+
+<pre><span id="MODULEMinesweeper"><span class="keyword">module</span> Minesweeper</span>: <code class="code">sig</code> <a href="Minesweeper.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
+<pre><code><span id="TYPEresult"><span class="keyword">type</span> <code class="type"></code>result</span> = </code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTresult.Win"><span class="constructor">Win</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTresult.Lose"><span class="constructor">Lose</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTresult.Incomplete"><span class="constructor">Incomplete</span></span></code></td>
+
+</tr></table>
+
+
+
+<pre><code><span id="TYPEappearance"><span class="keyword">type</span> <code class="type"></code>appearance</span> = </code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTappearance.Hidden"><span class="constructor">Hidden</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTappearance.Uncovered"><span class="constructor">Uncovered</span></span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTappearance.Flag"><span class="constructor">Flag</span></span></code></td>
+
+</tr></table>
+
+
+
+<pre><code><span id="TYPEcontents"><span class="keyword">type</span> <code class="type"></code>contents</span> = </code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTcontents.Number"><span class="constructor">Number</span></span> <span class="keyword">of</span> <code class="type">int</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTcontents.Mine"><span class="constructor">Mine</span></span></code></td>
+
+</tr></table>
+
+
+
+<pre><span id="TYPEbox"><span class="keyword">type</span> <code class="type"></code>box</span> = <code class="type"><a href="Minesweeper.html#TYPEappearance">appearance</a> * <a href="Minesweeper.html#TYPEcontents">contents</a></code> </pre>
+
+
+<pre><span id="TYPEposition"><span class="keyword">type</span> <code class="type"></code>position</span> = <code class="type">int * int</code> </pre>
+
+
+<pre><span id="TYPEstate"><span class="keyword">type</span> <code class="type"></code>state</span> </pre>
+
+
+<pre><span id="EXCEPTIONInvalid_pos"><span class="keyword">exception</span> Invalid_pos</span></pre>
+
+<pre><span id="VALdimensions"><span class="keyword">val</span> dimensions</span> : <code class="type">int * int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">dimensions</code> is the dimensions of the grid.</p>
+</div>
+</div>
+
+<pre><span id="VALmines"><span class="keyword">val</span> mines</span> : <code class="type">int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">mines</code> is the number of mines.</p>
+</div>
+</div>
+
+<pre><span id="VALnew_game"><span class="keyword">val</span> new_game</span> : <code class="type"><a href="Minesweeper.html#TYPEstate">state</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">new_game</code> is a randomly initialized state of minesweeper.</p>
+</div>
+</div>
+
+<pre><span id="VALget_box"><span class="keyword">val</span> get_box</span> : <code class="type"><a href="Minesweeper.html#TYPEstate">state</a> -> <a href="Minesweeper.html#TYPEposition">position</a> -> <a href="Minesweeper.html#TYPEbox">box</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">get_box t pos</code> is the box located at position <code class="code">pos</code> in state <code class="code">t</code>.
+    Raises Invalid_Pos if <code class="code">pos</code> is not a valid position.</p>
+</div>
+</div>
+
+<pre><span id="VALset_box"><span class="keyword">val</span> set_box</span> : <code class="type"><a href="Minesweeper.html#TYPEstate">state</a> -><br>       <a href="Minesweeper.html#TYPEposition">position</a> -> <a href="Minesweeper.html#TYPEbox">box</a> -> <a href="Minesweeper.html#TYPEstate">state</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">set_box t pos b</code> is the state <code class="code">t</code> with the box located at position
+    <code class="code">pos</code> set to <code class="code">b</code>.
+    Raises Invalid_Pos if <code class="code">pos</code> is not a valid position.</p>
+</div>
+</div>
+
+<pre><span id="VALgame_result"><span class="keyword">val</span> game_result</span> : <code class="type"><a href="Minesweeper.html#TYPEstate">state</a> -> <a href="Minesweeper.html#TYPEresult">result</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">game_result t</code> is <code class="code">Win</code> if the player has won, <code class="code">Lose</code> if the player has
+    lost, and <code class="code">Incomplete</code> if the game is not finished.</p>
+</div>
+</div>
+
+<pre><span id="VALflag"><span class="keyword">val</span> flag</span> : <code class="type"><a href="Minesweeper.html#TYPEstate">state</a> -> <a href="Minesweeper.html#TYPEposition">position</a> -> <a href="Minesweeper.html#TYPEstate">state</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">flag t pos</code> is the state <code class="code">t</code> with the box at position <code class="code">pos</code> marked as a
+    flag if it has not yet been uncovered.</p>
+</div>
+</div>
+
+<pre><span id="VALuncover"><span class="keyword">val</span> uncover</span> : <code class="type"><a href="Minesweeper.html#TYPEstate">state</a> -> <a href="Minesweeper.html#TYPEposition">position</a> -> <a href="Minesweeper.html#TYPEstate">state</a></code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">uncover t pos</code> is the state after uncovering the box at position <code class="code">pos</code>.</p>
+</div>
+</div>
+</body></html>

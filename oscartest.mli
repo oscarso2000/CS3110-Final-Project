@@ -1,3 +1,5 @@
+(** [explode s] takes in a string s and converts it into a char list. *)
+val explode: string -> char list
 
 (** [decryption_stuff encrypted_message] takes in the character encrypted array
  *   and decrypts it with the RSA key when the user reads messages. *)

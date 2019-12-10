@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Oscartest.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Encryption" rel="Chapter" href="Encryption.html">
+<link title="Authors" rel="Chapter" href="Authors.html">
+<link title="Checkers" rel="Chapter" href="Checkers.html">
+<link title="Minesweeper" rel="Chapter" href="Minesweeper.html">
+<link title="Gface" rel="Chapter" href="Gface.html">
+<link title="Widget" rel="Chapter" href="Widget.html">
+<link title="Oscartest" rel="Chapter" href="Oscartest.html">
+<link title="Testhelper" rel="Chapter" href="Testhelper.html"><title>Testhelper</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Oscartest.html" title="Oscartest">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;</div>
+<h1>Module <a href="type_Testhelper.html">Testhelper</a></h1>
+
+<pre><span id="MODULETesthelper"><span class="keyword">module</span> Testhelper</span>: <code class="code">sig</code> <a href="Testhelper.html">..</a> <code class="code">end</code></pre><div class="info module top">
+<div class="info-desc">
+<p><code class="code">explode s</code> takes in a string s and converts it into a char list.</p>
+</div>
+</div>
+<hr width="100%">
+
+<pre><span id="VALexplode"><span class="keyword">val</span> explode</span> : <code class="type">string -> char list</code></pre>
+<pre><span id="VALsplit_string"><span class="keyword">val</span> split_string</span> : <code class="type">string -> string list</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">split_string s</code> takes in string s and 
+   splits it into a string list by spaces</p>
+</div>
+</div>
+
+<pre><span id="VALreplace_with_underscore_words"><span class="keyword">val</span> replace_with_underscore_words</span> : <code class="type">string -> string</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">replace_with_underscore_words h</code> is a helper function that takes
+  in a string and replaces spaces with underscores.</p>
+</div>
+</div>
+
+<pre><span id="VALreplace_with_underscore_list"><span class="keyword">val</span> replace_with_underscore_list</span> : <code class="type">string list -> string list</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">replace_with_underscore_list e</code> is a function that works on 
+  the list for underscores to make print_emojis work</p>
+</div>
+</div>
+
+<pre><span id="VALtext_emoji_handling"><span class="keyword">val</span> text_emoji_handling</span> : <code class="type">string -> string</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">text_emoji_handling str</code> takes in a user text and changes some 
+  standard symbols into emojis if any.</p>
+</div>
+</div>
+
+<pre><span id="VALcounting"><span class="keyword">val</span> counting</span> : <code class="type">'a -> 'a list -> int -> int</code></pre><div class="info ">
+<div class="info-desc">
+<p><code class="code">counting x lst c</code> is a tail-recursive function that 
+ returns the index of the first element in list lst
+   that is equal to x where c is the accumulator.</p>
+</div>
+</div>
+</body></html>

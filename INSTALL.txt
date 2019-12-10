@@ -6,11 +6,14 @@ Installation Instructions:
 
 Build Instructions:
 
-  - To build the system, run `make oscar`
+  - To build the system, run `make build`
   - To run the system, run `make run`
   - On a new tab on terminal, under the same folder, run `make connect`
 	Do make sure you give the server at least 5-10 seconds to start up before connecting. If not, it will possibly reject the client connection. But nothing will happen, just try connecting again if that occurs.
   - You can have as many client tabs opened interacting with each other as you want.
+  - For testing, run `make test`
+  - There also exists a `make docs` to extract HTML.
+  - If folder is very messy, run `make clean`.
 
 Connecting from other computers:
     - Although we do not have an internet connection setup, we would like to suggest you still trying to communicate between different computers using SSH. 
