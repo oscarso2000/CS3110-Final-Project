@@ -143,11 +143,48 @@ let app_tests =
     handle_single_test "Single 6" "Darn Right, I'm" "Not single" ;
   ]
 
+(** [reproduce_emoji s] takes in the user input of what emoji they want to 
+ *  send and maps it to the actual string Emoji. *)
+let reproduce_emoji_test
+    (name : string)
+    (emoji : string)
+    (expected_output : string) = 
+  name >:: (fun _ -> 
+      assert_equal expected_output (Reproduce.reproduce_emoji emoji))
+
+let reproduce_tests = 
+  [
+    reproduce_emoji_test "Emo 1" "nerd_face" Emoji.nerd_face;
+    reproduce_emoji_test "Emo 2" "confused_face" Emoji.confused_face;
+    reproduce_emoji_test "Emo 3" "worried_face" Emoji.worried_face;
+    reproduce_emoji_test "Emo 4" "slightly_frowning_face" 
+      Emoji.slightly_frowning_face;
+    reproduce_emoji_test "Emo 5" "frowning_face" Emoji.frowning_face;
+    reproduce_emoji_test "Emo 6" "face_with_open_mouth" 
+      Emoji.face_with_open_mouth;
+    reproduce_emoji_test "Emo 7" "hushed_face" Emoji.hushed_face;
+    reproduce_emoji_test "Emo 8" "astonished_face" Emoji.astonished_face;
+    reproduce_emoji_test "Emo 9" "flushed_face" Emoji.flushed_face;
+    reproduce_emoji_test "Emo 10" "frowning_face_with_open_mouth" 
+      Emoji.frowning_face_with_open_mouth;
+    reproduce_emoji_test "Emo 11" "anguished_face" Emoji.anguished_face;
+    reproduce_emoji_test "Emo 12" "fearful_face" Emoji.fearful_face;
+    reproduce_emoji_test "Emo 13" "crying_face" Emoji.crying_face;
+    reproduce_emoji_test "Emo 14" "loudly_crying_face" Emoji.loudly_crying_face;
+    reproduce_emoji_test "Emo 15" "face_screaming_in_fear" Emoji.face_screaming_in_fear;
+    reproduce_emoji_test "Emo 16" "confounded_face" Emoji.confounded_face;
+    reproduce_emoji_test "Emo 17" "persevering_face" Emoji.persevering_face;
+    reproduce_emoji_test "Emo 18" "disappointed_face" Emoji.disappointed_face;
+    reproduce_emoji_test "Emo 19" "flag:_hong_kong_sar_china" Emoji.hong_kong_sar_china;
+    reproduce_emoji_test "Emo 20" "flag:_united_states" Emoji.united_states;
+  ]
+
 
 let suite =
   "final project test suite"  >::: List.flatten [
     checker_tests;
     app_tests;
+    reproduce_tests;
   ]
 
 
