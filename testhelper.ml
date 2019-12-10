@@ -2,6 +2,7 @@
  *to take in input instead of the mutable list variables, so that testing 
  *will work on these helper functions *)
 open Emoji
+open Str
 
 (** [explode s] takes in a string s and converts it into a char list. *)
 let explode s =
@@ -16,7 +17,7 @@ let split_string s =
 
 (** [replace_with_underscore_words h] is a helper function that takes
  *  in a string and replaces spaces with underscores. *)
-let rec replace_with_underscore_words h = 
+let replace_with_underscore_words h = 
   let exploded = explode h in 
   let rec helper lst acc = 
     match exploded with 
