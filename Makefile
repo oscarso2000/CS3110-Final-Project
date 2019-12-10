@@ -1,4 +1,4 @@
-MODULES=encryption authors checkers minesweeper gface widget oscartest testhelper
+MODULES=encryption authors checkers minesweeper oscartest testhelper
 OBJECTS=$(MODULES:=.cmo)
 TEST=test.byte
 MLIS=$(MODULES:=.mli)
