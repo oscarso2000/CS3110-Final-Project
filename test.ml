@@ -1,5 +1,8 @@
 open OUnit2
 open Checkers
+open Oscartest
+open Encryption
+open Reproduce
 
 let checker_tests = 
   [
