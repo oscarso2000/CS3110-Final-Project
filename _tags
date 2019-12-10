@@ -1,1 +1,1 @@
-true: package(emoji), package(lambdasoup), package(uutf), package(lwt.unix), package(logs.lwt), package(str), package(unix), package(oUnit2), package(lwt), package(extlib), package(ANSITerminal), package(graphics)
+true: package(emoji), package(lambdasoup), package(uutf), package(lwt.unix), package(logs.lwt), package(str), package(unix), package(ounit2), package(lwt), package(extlib), package(ANSITerminal), package(graphics)
