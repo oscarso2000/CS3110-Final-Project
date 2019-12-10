@@ -65,3 +65,14 @@ let rec counting x lst c =
   | [] -> raise(Failure "Not Found")
   | h::t -> if (h=x) then c else counting x t (c+1)
 
+let handle_message_single msg =
+  let arrays = Str.split_delim (Str.regexp " ") msg in
+  if List.length arrays = 1 then
+    match String.lowercase_ascii(List.hd arrays) with
+    | "emojis" -> "Emojis"
+    | "checkers" -> "Checkers"
+    | "read" -> "Read"
+    | "recent" -> "Recent"
+    | _ -> "Unknown command"
+  else
+    "Not single"

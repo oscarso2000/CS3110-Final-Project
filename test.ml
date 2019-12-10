@@ -69,6 +69,15 @@ let counting_index_test
   name >:: (fun _ -> 
       assert_equal expected_output (Testhelper.counting x list 0))
 
+(** [handle_message_single msg] takes in a message that the user typed in
+ *   and parses it to any commands listed. *)
+let handle_single_test
+    (name : string)
+    (msg : string)
+    (expected_output : string) = 
+  name >:: (fun _ -> 
+      assert_equal expected_output (Testhelper.handle_message_single msg))
+
 
 let app_tests = 
   [
@@ -126,6 +135,12 @@ let app_tests =
     counting_index_test "Index 4" "hi" ["a";"dang";"bye";"hi"] 3;
     counting_index_test "Index 5" 'a' ['b';'c';'a';'f'] 2;
     counting_index_test "Index 6" false [true;true;false;false] 2;
+    handle_single_test "Single 1" "emojis" "Emojis";
+    handle_single_test "Single 2" "checkers" "Checkers";
+    handle_single_test "Single 3" "read" "Read";
+    handle_single_test "Single 4" "recent" "Recent";
+    handle_single_test "Single 5" "idkwtf" "Unknown command";
+    handle_single_test "Single 6" "Darn Right, I'm" "Not single" ;
   ]
 
 
