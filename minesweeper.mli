@@ -20,14 +20,14 @@ type state = box list
 
 exception Invalid_pos
 
-(** [dimensions] is the dimensions of the grid. *)
-val dimensions : int * int
+(** [size] is the size of the grid. *)
+val size : int
 
 (** [mines] is the number of mines. *)
 val mines : int
 
 (** [new_game] is a randomly initialized state of minesweeper. *)
-val new_game : state
+val new_game : unit -> state
 
 (** [get_box t pos] is the box located at position [pos] in state [t].
     Raises Invalid_Pos if [pos] is not a valid position. *)
@@ -51,3 +51,7 @@ val uncover : state -> position -> state
 
 (** [to_string t] converts the state to string for printing in console*)
 val to_string: (appearance * contents) list -> string
+
+(** [print_game t] prints a string representation of the state [t] to 
+    the console. *)
+val print_game : state -> unit
