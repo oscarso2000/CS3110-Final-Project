@@ -27,6 +27,11 @@ let checker_tests =
         assert_equal 10 (10));
   ]
 
+let minesweeper_tests = 
+  [
+    "new game" >:: (fun _ ->
+        assert_equal 10 (10));
+  ]
 
 (** [explode s] takes in a string s and converts it into a char list. *)
 let explode_test
