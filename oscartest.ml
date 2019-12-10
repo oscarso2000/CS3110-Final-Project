@@ -2,8 +2,6 @@ open Lwt
 open Str
 open Encryption
 open Emoji
-open Cohttp_lwt_unix
-open Cohttp_lwt__Body
 open Soup
 open Lwt.Infix
 open Reproduce
@@ -180,6 +178,14 @@ let encrypt_text index msg =
   messages := !messages @ [helper_message];
   List.map (fun x -> Encryption.encrypt (fst key) (snd key) x) exploded_ascii
 
+(** [counting x lst c] is a tail-recursive function that 
+ * returns the index of the first element in list lst
+ *   that is equal to x where c is the accumulator.  *)
+let rec counting x lst c = 
+  match lst with
+  | [] -> raise(Failure "Not Found")
+  | h::t -> if (h=x) then c else counting x t (c+1)
+
 
 let rec handle_message input_console output_console msg =
   let arrays = Str.split_delim (Str.regexp " ") msg in
@@ -286,10 +292,32 @@ and handle_game input_console output_console game_state () =
 
 and handle_connection input_console output_console num () =
   let handle_name name = 
-    names := !names@ [name];
-    Lwt_io.write_line output_console 
-      ("Your ID is: " ^ string_of_int (List.length !names));
-    handle_connection input_console output_console 1 ();
+    if List.mem name !names then 
+      (Lwt_io.write_line output_console 
+         ("This name exists already, do you want to log back in?");
+       Lwt_io.read_line_opt input_console >>= 
+       (fun response -> 
+          match response with 
+          | None -> handle_connection input_console output_console 0 ()
+          | Some x when x = "yes" -> 
+            (Lwt_io.write_line output_console ("Please Enter Password");
+             Lwt_io.read_line_opt input_console >>= 
+             (fun response ->
+                match response with 
+                | Some p -> let index = counting name !names 0 in 
+                  if p = List.nth !passwords index then 
+                    (Lwt_io.write_line output_console ("Welcome Back " ^ name ^ "!");
+                    handle_connection input_console output_console 2 ())
+                  else
+                    (Lwt_io.write_line output_console ("Wrong Password");
+                     handle_connection input_console output_console 0 ())
+                | None -> handle_connection input_console output_console 0 ()))
+          | Some x -> handle_connection input_console output_console 0 ()))
+    else
+      (names := !names @ [name];
+       Lwt_io.write_line output_console 
+         ("Your ID is: " ^ string_of_int (List.length !names));
+       handle_connection input_console output_console 1 ();)
   in
   let handle_password password = 
     passwords := !passwords @ [password];
@@ -359,6 +387,7 @@ and handle_connection input_console output_console num () =
             end
         | None -> handle_connection input_console output_console 3 ()
      ))
+
 
 (* Setting up sockets and connections *)
 let accept_connection conn =

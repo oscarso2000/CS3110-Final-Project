@@ -6,8 +6,8 @@ type result =
   | Incomplete
 
 type appearance =
-  | Uncovered
   | Hidden
+  | Uncovered
   | Flag
 
 type contents = 

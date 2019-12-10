@@ -29,6 +29,7 @@ Process:
   - For the client: (This is currently a group chat)
     - Input name, you will get ID
     - Input password, make it short and simple, it will be for sending messages and verifying you are the user sending the message.
+    - If you are a previous user, it will prompt you if you want to sign in as the same person. If you type `yes`, then type your previous password, you will be logged back in as the same old user. 
     - Input `read`, you will get a history of messages displayed, empty if none. 
     - If your ID is 1, type "1: send my message here", if you want to send a message 
     - If your ID is 1, type "1: emoji ____" where ___ represents the emoji you want to send. It is in text. Eg. "1: emoji grinning_face".
@@ -36,6 +37,8 @@ Process:
     - Input `emojis` to see a list of emojis that you can send.
     - Input `recent`, you will get the most recent line of message.
     - If you want to send simple emojis, you can use "1: send ____" like a normal messenger. Eg. "1: send hi :)" and the emoji will appear in dialogue when read.
+    - To quit the client, just cmd+w (mac) or ctrl+w (windows) and terminate the client. 
+    - To quit server if needed, just ctrl+c on the terminal itself. 
 
 Note: Some emojis are really new and the OCaml emoji files and my matching code don't include them. They will be replaced with a red question mark. 
 
