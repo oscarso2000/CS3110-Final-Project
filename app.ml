@@ -298,6 +298,7 @@ and handle_checkers input_console output_console game_state () =
 
 and handle_minesweeper input_console output_console game_state () = 
   (Lwt_io.write_line output_console ("\nExample Input: `uncover 5 2`");
+   Lwt_io.write_line output_console ("Toggle Flag: `flag 5 2`");
    Lwt_io.write_line output_console ("Type `close` to close game");
    let t = game_state in 
    Lwt_io.write_line output_console (t |> Minesweeper.to_string);
@@ -316,6 +317,15 @@ and handle_minesweeper input_console output_console game_state () =
                 let a1 = int_of_string (List.nth arrays 1) in 
                 let a2 = int_of_string (List.nth arrays 2) in 
                 let new_t = Minesweeper.uncover t (a1,a2) in 
+                handle_minesweeper input_console output_console new_t ()
+              with _ -> 
+                (Lwt_io.write_line output_console ("Invalid Input");
+                 handle_minesweeper input_console output_console t ())
+            else if List.nth arrays 0 = "flag" then 
+              try 
+                let a1 = int_of_string (List.nth arrays 1) in 
+                let a2 = int_of_string (List.nth arrays 2) in 
+                let new_t = Minesweeper.flag t (a1,a2) in 
                 handle_minesweeper input_console output_console new_t ()
               with _ -> 
                 (Lwt_io.write_line output_console ("Invalid Input");
