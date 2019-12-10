@@ -47,27 +47,6 @@ let get_box t (x,y) : box =
 let rec set_box t (x,y) b : state =
   if x >= size || y >= size then t else
 
-    let number_neighbors t' (x,y) =
-      [(x+1,y);(x-1,y);(x,y+1);(x,y-1);(x+1,y+1);(x+1,y-1);(x-1,y+1);(x-1,y-1);]
-      (* remove invalid coordinates *)
-      |> List.filter (fun (x,y) -> x >= 0 && x < size &&
-                                   y >= 0 && y < size)
-      (* remove boxes that have mines *)
-      |> List.filter (fun (x,y) -> get_box t' (x,y) |> snd <> Mine)
-    in
-
-    let rec update_numbers t' = function
-      | [] -> t'
-      | (x,y)::rem -> 
-        begin
-          let b' = match get_box t' (x,y) with
-            | a, Number n -> a, Number (n+1)
-            | box -> box (* unreachable case *)
-          in 
-          update_numbers (set_box t' (x,y) b') rem
-        end
-    in
-
     let index = size * x + y in
     let rec update_boxes acc counter = function
       | [] -> acc
@@ -75,14 +54,7 @@ let rec set_box t (x,y) b : state =
                   (counter + 1) y
     in
 
-    match b |> snd with
-    | Mine -> print_endline "mine";
-      begin
-        let t' = update_boxes [] 0 t in
-        let neighbors = number_neighbors t' (x,y) in
-        update_numbers t' neighbors
-      end
-    | _ -> update_boxes [] 0 t
+    update_boxes [] 0 t
 
 let new_game () : state =
   Random.self_init ();
@@ -98,6 +70,27 @@ let new_game () : state =
       (Hidden,(Number 0))::acc |> generate_empty_boxes
   in
 
+  let number_neighbors t' (x,y) =
+    [(x+1,y);(x-1,y);(x,y+1);(x,y-1);(x+1,y+1);(x+1,y-1);(x-1,y+1);(x-1,y-1);]
+    (* remove invalid coordinates *)
+    |> List.filter (fun (x,y) -> x >= 0 && x < size &&
+                                 y >= 0 && y < size)
+    (* remove boxes that have mines *)
+    |> List.filter (fun (x,y) -> get_box t' (x,y) |> snd <> Mine)
+  in
+
+  let rec update_numbers t' = function
+    | [] -> t'
+    | (x,y)::rem -> 
+      begin
+        let b' = match get_box t' (x,y) with
+          | a, Number n -> a, Number (n+1)
+          | box -> box (* unreachable case *)
+        in 
+        update_numbers (set_box t' (x,y) b') rem
+      end
+  in
+
   let rec add_mines t = function
     | [] -> t
     | i::rem -> begin
@@ -105,7 +98,8 @@ let new_game () : state =
         let y = i mod size in
         (string_of_int i) ^ "/" ^ (string_of_int boxes) ^ " = " ^
         (string_of_int x) ^ "," ^ (string_of_int y) |> print_endline;
-        add_mines (set_box t (x,y) (Hidden,Mine)) rem
+        let t_mine = add_mines (set_box t (x,y) (Hidden,Mine)) rem in
+        update_numbers t_mine (number_neighbors t_mine (x,y))
       end
   in
 
@@ -115,8 +109,10 @@ let new_game () : state =
 
 let flag t (x,y) : state =
   if game_result t <> Incomplete then t else
-    let _, contents = get_box t (x,y) in
-    let box = Flag, contents in
+    let app, contents = get_box t (x,y) in
+    let box = 
+      (if app = Flag then Hidden else if app <> Uncovered then Flag else app), 
+      contents in
     set_box t (x,y) box
 
 let uncover t (x,y) : state =
