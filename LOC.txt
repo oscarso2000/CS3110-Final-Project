@@ -1,1 +1,3 @@
-reproduce.ml is used to convert strings into emojis. As it matches well over 1000 (~1400) emojis, each on their own line, we did not count that towards our LOC in make loc although it could probably be considered for 100-200 equivalent of code given that we had to check individual emojis to see if the package was updated or not, which took about 8 hours. We included everything else in .ml and .mli files since nothing else was dead code or trivial or brute force. 
+We did not include all files into our final LOC because of dead/repetetive code.
+
+The LOC we measured can be found by running `make loc`. You can take a look at the Makefile to see what we included, or you can navigate to LOC-files.txt which includes a list of files that we count towards our LOC.
