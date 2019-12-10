@@ -85,8 +85,7 @@ let new_game : state =
   let rec generate_boxes acc =
     if acc |> List.length = size then acc else
       (Number 0)::acc |> generate_boxes
-  in
-
+  in 
   failwith "Unimplemented"
 
 let game_result t : result =

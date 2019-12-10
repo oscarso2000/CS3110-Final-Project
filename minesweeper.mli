@@ -48,3 +48,6 @@ val flag : state -> position -> state
 
 (** [uncover t pos] is the state after uncovering the box at position [pos]. *)
 val uncover : state -> position -> state
+
+(** [to_string t] converts the state to string for printing in console*)
+val to_string: (appearance * contents) list -> string
