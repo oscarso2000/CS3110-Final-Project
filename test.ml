@@ -99,6 +99,7 @@ let app_tests =
     split_string_test "SS 6" "Hi**:D" ["Hi**:D"];
     split_string_test "SS 7" "!@#$%^&*() <>" ["!@#$%^&*()";"<>"];
     split_string_test "SS 8" "This is tiresome." ["This";"is";"tiresome."];
+    split_string_test "SS 8" ". ." [".";"."];
     (* underscore_words_test "UWT 1" "Hi" "Hi";
        underscore_words_test "UWT 2" "Hi " "Hi_";
        underscore_words_test "UWT 3" "_omg Face" "_omg_Face";
