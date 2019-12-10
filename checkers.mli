@@ -14,6 +14,8 @@ val size : int
 (** [new_game] is the state that represents a new game of checkers. *)
 val new_game : state
 
+val get_player : state -> player
+
 (** [get_square t pos] is the square located at position [pos] in state [t].
     Raises Invalid_Pos if [pos] is not a valid position. *)
 val get_square : state -> position -> square
