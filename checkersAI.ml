@@ -69,7 +69,7 @@ let evaluate_state t =
 
   let opposing_pieces = 
     t |> Checkers.get_board 
-    |> List.filter (fun sq -> sq = active_color)
+    |> List.filter (fun sq -> sq <> active_color && sq <> None)
     |> List.length
   in
 
