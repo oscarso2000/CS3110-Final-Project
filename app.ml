@@ -269,7 +269,7 @@ and handle_checkers input_console output_console game_state () =
         (Lwt_io.write_line output_console ("Closing Checkers..."); 
          handle_connection input_console output_console 2 ())
       | Some i when i <> "" -> 
-        let arrays = Str.split_delim (Str.regexp " ") i in
+        let arrays = Str.split_delim (Str.regexp " ") (String.trim i) in
         if List.length arrays = 6 then 
           begin
             if List.nth arrays 0 = "move" && List.nth arrays 3 = "to" then 
@@ -310,7 +310,7 @@ and handle_minesweeper input_console output_console game_state () =
         (Lwt_io.write_line output_console ("Closing Minesweeper..."); 
          handle_connection input_console output_console 2 ())
       | Some i when i <> "" -> 
-        let arrays = Str.split_delim (Str.regexp " ") i in
+        let arrays = Str.split_delim (Str.regexp " ") (String.trim i) in
         if List.length arrays = 3 then 
           begin
             if List.nth arrays 0 = "uncover" then 
@@ -366,7 +366,7 @@ and handle_multiplayer input_console output_console game_state num player () =
         (Lwt_io.write_line output_console ("Closing Checkers..."); 
          handle_connection input_console output_console 2 ())
       | Some i when i <> "" -> 
-        let arrays = Str.split_delim (Str.regexp " ") i in
+        let arrays = Str.split_delim (Str.regexp " ") (String.trim i) in
         if List.length arrays = 6 then 
           begin
             if List.nth arrays 0 = "move" && List.nth arrays 3 = "to" then 
@@ -432,7 +432,7 @@ and handle_connection input_console output_console num () =
     handle_connection input_console output_console 2 ();
   in
   if num = 0 then 
-    (Lwt_io.write_line output_console "What is your name: "; 
+    (Lwt_io.write_line output_console "What is your name: ";
      Lwt_io.read_line_opt input_console >>= 
      (fun name ->
         match name with
