@@ -7,6 +7,7 @@ open Lwt.Infix
 open Reproduce
 open Checkers
 open Minesweeper
+open CheckersAI
 
 (*Mutable variables that update as user's join and sends messages*)
 let messages = ref []
@@ -201,6 +202,7 @@ let rec handle_message input_console output_console msg =
     | "emojis" -> print_emojis
     | "checkers" -> "Starting Checkers..."
     | "minesweeper" -> "Starting Minesweeper..."
+    | "ai" -> "Starting AI Checkers..."
     | "read" -> 
       if List.length !enc = 0 then
         "No Messages Yet"
@@ -396,6 +398,52 @@ and handle_multiplayer input_console output_console game_state num player () =
       | None -> (Logs_lwt.info (fun m -> m "Connection closed") 
                  >>= return)))
 
+
+and handle_checkersAI input_console output_console game_state () = 
+  (Lwt_io.write_line output_console ("\nExample Input: `move 5 2 to 3 1`");
+   Lwt_io.write_line output_console ("Type `close` to close game");
+   let t = game_state in 
+   Lwt_io.write_line output_console ("Your turn...");
+   Lwt_io.write_line output_console (t |> Checkers.to_string);
+   Lwt_io.read_line_opt input_console >>= 
+   (fun input -> 
+      match input with
+      | Some i when i = "close" ->
+        (Lwt_io.write_line output_console ("Closing Checkers..."); 
+         handle_connection input_console output_console 2 ())
+      | Some i when i <> "" -> 
+        let arrays = Str.split_delim (Str.regexp " ") (String.trim i) in
+        if List.length arrays = 6 then 
+          begin
+            if List.nth arrays 0 = "move" && List.nth arrays 3 = "to" then 
+              try 
+                let a1 = int_of_string (List.nth arrays 1) in 
+                let a2 = int_of_string (List.nth arrays 2) in 
+                let b1 = int_of_string (List.nth arrays 4) in 
+                let b2 = int_of_string (List.nth arrays 5) in 
+                let new_t = Checkers.move t (a1,a2) (b1,b2) in 
+                Lwt_io.write_line output_console ("AI's turn...");
+                Lwt_io.write_line output_console ("\n" ^ (new_t |> Checkers.to_string));
+                let ((x1,x2),(y1,y2)) = CheckersAI.next_move new_t in 
+                let computer_t = Checkers.move new_t (x1,x2) (y1,y2) in
+                handle_checkersAI input_console output_console computer_t ()
+              with _ -> 
+                (Lwt_io.write_line output_console ("Invalid Input");
+                 handle_checkersAI input_console output_console t ())
+            else
+              ( Lwt_io.write_line output_console ("Invalid Input");
+                handle_checkersAI input_console output_console t ())
+          end
+        else
+          (Lwt_io.write_line output_console ("Invalid Input"); 
+           handle_checkersAI input_console output_console t ())
+      | Some _ -> (Lwt_io.write_line output_console ("Invalid Input");
+                   Logs_lwt.info (fun m -> m "Nothing happened") 
+                   >>= handle_checkers input_console output_console t)
+      | None -> (Logs_lwt.info (fun m -> m "Connection closed") 
+                 >>= return)))
+
+
 and handle_connection input_console output_console num () =
   let handle_name name = 
     if List.mem name !names then 
@@ -478,6 +526,9 @@ and handle_connection input_console output_console num () =
                Lwt_io.write_line output_console ("You are Black"); 
                Lwt_io.write_line output_console ("Please Wait...") >>=
                handle_multiplayer input_console output_console (t) num !mult_count)
+          else if reply = "Starting AI Checkers..." then 
+            Lwt_io.write_line output_console reply >>= 
+            handle_checkersAI input_console output_console (Checkers.new_game)
           else
             Lwt_io.write_line output_console reply >>= 
             handle_connection input_console output_console 2
