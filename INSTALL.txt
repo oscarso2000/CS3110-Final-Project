@@ -50,5 +50,12 @@ Note: Some emojis are really new and the OCaml emoji files and my matching code 
 This file now includes backend encryption. It won't be noticeable in the UI, but the code generates a key from encryption.ml and utilizes it to encrypt the message which is saved in a mutable variable for list of lists so that the middle man will not understand anything even if they access the variable. Then, when read/recent is called, it decrypts the message again. 
 
 To view how encryption works:
-    - Open uTop
-    - Tushar will continue this...
+    - Run `make`, this will open uTop for you. 
+    Code along: 
+    #use "encryption.ml";;
+    let m,k,ki = generate_keys();;
+    let message = 69;;
+    let encrypted = m k message;;
+    let decrypted = decrypt m ki encrypted;;
+    This will show decrypted message from the encryption which should be the same as the initial number.
+    - Since we used ASCII for each char, this encryption method will work for us. 
