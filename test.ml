@@ -121,10 +121,6 @@ let checker_tests =
         assert_equal (winner bm53) (None));
     "there is a winner" >:: (fun _ ->
         assert_equal (winner bm55) (Some Red));
-
-
-
-
   ]
 
 let minesweeper_tests = 
