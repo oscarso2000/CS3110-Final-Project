@@ -794,7 +794,8 @@ let reproduce_emoji s =
   | "inbox_tray" -> Emoji.inbox_tray
   | "package" -> Emoji.package
   | "closed_mailbox_with_raised_flag" -> Emoji.closed_mailbox_with_raised_flag
-  | "closed_mailbox_with_lowered_flag" -> Emoji.closed_mailbox_with_lowered_flag
+  | "closed_mailbox_with_lowered_flag" -> 
+    Emoji.closed_mailbox_with_lowered_flag
   | "open_mailbox_with_raised_flag" -> Emoji.open_mailbox_with_raised_flag
   | "open_mailbox_with_lowered_flag" -> Emoji.open_mailbox_with_lowered_flag
   | "postbox" -> Emoji.postbox
@@ -973,7 +974,8 @@ let reproduce_emoji s =
   | "japanese_“here”_button" -> Emoji.japanese_here_button
   | "japanese_“service_charge”_button" -> Emoji.japanese_service_charge_button
   | "japanese_“monthly_amount”_button" -> Emoji.japanese_monthly_amount_button
-  | "japanese_“not_free_of_charge”_button" -> Emoji.japanese_not_free_of_charge_button
+  | "japanese_“not_free_of_charge”_button" -> 
+    Emoji.japanese_not_free_of_charge_button
   | "japanese_“reserved”_button" -> Emoji.japanese_reserved_button
   | "japanese_“bargain”_button" -> Emoji.japanese_bargain_button
   | "japanese_“discount”_button" -> Emoji.japanese_discount_button
@@ -983,9 +985,11 @@ let reproduce_emoji s =
   | "japanese_“application”_button" -> Emoji.japanese_application_button
   | "japanese_“passing_grade”_button" -> Emoji.japanese_passing_grade_button
   | "japanese_“vacancy”_button" -> Emoji.japanese_vacancy_button
-  | "japanese_“congratulations”_button" -> Emoji.japanese_congratulations_button
+  | "japanese_“congratulations”_button" -> 
+    Emoji.japanese_congratulations_button
   | "japanese_“secret”_button" -> Emoji.japanese_secret_button
-  | "japanese_“open_for_business”_button" -> Emoji.japanese_open_for_business_button
+  | "japanese_“open_for_business”_button" ->
+    Emoji.japanese_open_for_business_button
   | "japanese_“no_vacancy”_button" -> Emoji.japanese_no_vacancy_button
   | "red_circle" -> Emoji.red_circle
   | "white_circle" -> Emoji.white_circle
@@ -1099,7 +1103,8 @@ let reproduce_emoji s =
   | "flag:_guadeloupe" -> Emoji.guadeloupe
   | "flag:_equatorial_guinea" -> Emoji.equatorial_guinea
   | "flag:_greece" -> Emoji.greece
-  | "flag:_south_georgia_&_south_sandwich_islands" -> Emoji.south_georgia_and_south_sandwich_islands
+  | "flag:_south_georgia_&_south_sandwich_islands" ->
+    Emoji.south_georgia_and_south_sandwich_islands
   | "flag:_guatemala" -> Emoji.guatemala
   | "flag:_guam" -> Emoji.guam
   | "flag:_guinea-bissau" -> Emoji.guinea_bissau
@@ -1116,7 +1121,8 @@ let reproduce_emoji s =
   | "flag:_israel" -> Emoji.israel
   | "flag:_isle_of_man" -> Emoji.isle_of_man
   | "flag:_india" -> Emoji.india
-  | "flag:_british_indian_ocean_territory" -> Emoji.british_indian_ocean_territory
+  | "flag:_british_indian_ocean_territory" -> 
+    Emoji.british_indian_ocean_territory
   | "flag:_iraq" -> Emoji.iraq
   | "flag:_iran" -> Emoji.iran
   | "flag:_iceland" -> Emoji.iceland
@@ -1215,7 +1221,8 @@ let reproduce_emoji s =
   | "flag:_syria" -> Emoji.syria
   | "flag:_tristan_da_cunha" -> Emoji.tristan_da_cunha
   | "flag:_chad" -> Emoji.chad
-  | "flag:_french_southern_territories" -> Emoji.french_southern_territories
+  | "flag:_french_southern_territories" -> 
+    Emoji.french_southern_territories
   | "flag:_togo" -> Emoji.togo
   | "flag:_thailand" -> Emoji.thailand
   | "flag:_tajikistan" -> Emoji.tajikistan

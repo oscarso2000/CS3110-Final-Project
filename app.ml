@@ -381,13 +381,16 @@ and handle_multiplayer input_console output_console game_state num player () =
                 multiplayer.(num - 1) <- new_t;
                 Lwt_io.write_line output_console (t |> Checkers.to_string);
                 Lwt_io.write_line output_console ("Please Wait...") >>= 
-                handle_multiplayer input_console output_console multiplayer.(num-1) num player
+                handle_multiplayer input_console output_console 
+                  multiplayer.(num-1) num player
               with _ -> 
                 (Lwt_io.write_line output_console ("Invalid Input");
-                 handle_multiplayer input_console output_console t num player ())
+                 handle_multiplayer input_console 
+                   output_console t num player ())
             else
               ( Lwt_io.write_line output_console ("Invalid Input");
-                handle_multiplayer input_console output_console t num player ())
+                handle_multiplayer input_console 
+                  output_console t num player ())
           end
         else
           (Lwt_io.write_line output_console ("Invalid Input"); 
@@ -423,7 +426,8 @@ and handle_checkersAI input_console output_console game_state () =
                 let b2 = int_of_string (List.nth arrays 5) in 
                 let new_t = Checkers.move t (a1,a2) (b1,b2) in 
                 Lwt_io.write_line output_console ("AI's turn...");
-                Lwt_io.write_line output_console ("\n" ^ (new_t |> Checkers.to_string));
+                Lwt_io.write_line output_console
+                  ("\n" ^ (new_t |> Checkers.to_string));
                 let ((x1,x2),(y1,y2)) = CheckersAI.next_move new_t in 
                 let computer_t = Checkers.move new_t (x1,x2) (y1,y2) in
                 handle_checkersAI input_console output_console computer_t ()
@@ -509,7 +513,8 @@ and handle_connection input_console output_console num () =
             handle_checkers input_console output_console (Checkers.new_game)
           else if reply = "Starting Minesweeper..." then 
             Lwt_io.write_line output_console reply >>=
-            handle_minesweeper input_console output_console (Minesweeper.new_game ())
+            handle_minesweeper input_console 
+              output_console (Minesweeper.new_game ())
           else if reply = "Starting Multiplayer Checkers..." then 
             (mult_count := !mult_count + 1;
              let num = (!mult_count + 1) / 2 in
@@ -519,13 +524,15 @@ and handle_connection input_console output_console num () =
                 Lwt_io.write_line output_console reply;
                 Lwt_io.write_line output_console ("You are Red");
                 Lwt_io.write_line output_console ("Please Wait...") >>=
-                handle_multiplayer input_console output_console (t) num !mult_count)
+                handle_multiplayer input_console output_console 
+                  (t) num !mult_count)
              else 
                let t = multiplayer.(num - 1) in 
                Lwt_io.write_line output_console reply;
                Lwt_io.write_line output_console ("You are Black"); 
                Lwt_io.write_line output_console ("Please Wait...") >>=
-               handle_multiplayer input_console output_console (t) num !mult_count)
+               handle_multiplayer input_console output_console 
+                 (t) num !mult_count)
           else if reply = "Starting AI Checkers..." then 
             Lwt_io.write_line output_console reply >>= 
             handle_checkersAI input_console output_console (Checkers.new_game)

@@ -118,7 +118,7 @@ let flag t (x,y) : state =
   if game_result t <> Incomplete then t else
     let app, contents = get_box t (x,y) in
     let box = 
-      (if app = Flag then Hidden else if app <> Uncovered then Flag else app), 
+      (if app = Flag then Hidden else if app <> Uncovered then Flag else app),
       contents in
     set_box t (x,y) box
 
