@@ -20,107 +20,108 @@ open Reproduce
 open Emoji
 open Str
 
-let init_checkers = new_game
-let blues_move_1 = move init_checkers (2,1) (3,2)
-let reds_move_2 = move blues_move_1 (5,2) (4,3)
-let blues_move_3 = move reds_move_2 (2,3) (3,4)
-let reds_move_4 = move blues_move_3 (4,3) (2,1)
-let blues_move_5 = move reds_move_4 (3,4) (4,3)
-let reds_move_6 = move blues_move_5 (5,4) (3,2)
-let bm7 = move reds_move_6 (1,2) (3,0)
-let rm8 = move bm7 (5,0) (4,1)
-let bm9 = move rm8 (3,0) (5,2)
-let rm10 = move bm9 (6,1) (4,3)
-let bm11 = move rm10 (2,5) (3,4)
-let rm12 = move bm11 (3,2) (2,3)
-let bm13 = move rm12 (3,4) (5,2)
-let rm14 = move bm13 (6,3) (4,1)
-let bm15 = move rm14 (1,4) (3,2)
-let rm16 = move bm15 (4,1) (2,3)
-let bm17 = move rm16 (2,7) (3,6)
-let rm18 = move bm17 (2,3) (1,4)
-let bm19 = move rm18 (0,5) (2,3)
-let rm20 = move bm19 (5,6) (4,7)
-let bm21 = move rm20 (1,0) (2,1)
-let rm22 = move bm21 (4,7) (2,5)
-let bm23 = move rm22 (1,6) (3,4)
-let rm24 = move bm23 (6,7) (5,6)
-let bm25 = move rm24 (3,4) (4,5)
-let rm26 = move bm25 (5,6) (3,4)
-let bm27 = move rm26 (2,3) (4,5)
-let rm28 = move bm27 (6,5) (5,4)
-let bm29 = move rm28 (4,5) (6,3)
-let rm30 = move bm29 (7,2) (5,4)
-let bm31 = move rm30 (2,1) (3,2)
-let rm32 = move bm31 (7,0) (6,1)
-let bm33 = move rm32 (0,1) (1,0)
-let rm34 = move bm33 (7,4) (6,5)
-let bm35 = move rm34 (0,3) (1,2)
-let rm36 = move bm35 (5,4) (4,3)
-let bm37 = move rm36 (3,2) (5,4)
-let rm38 = move bm37 (6,5) (4,3)
-let bm39 = move rm38 (0,7) (1,6)
-let rm40 = move bm39 (7,6) (6,5)
-let bm41 = move rm40 (1,6) (2,5)
-let rm42 = move bm41 (4,3) (3,4)
-let bm43 = move rm42 (2,5) (4,3)
-let rm44 = move bm43 (6,5) (5,4)
-let bm45 = move rm44 (4,3) (6,5)
-let rm46 = move bm45 (6,1) (5,2)
-let bm47 = move rm46 (6,5) (5,4)
-let rm48 = move bm47 (5,2) (4,3)
-let bm49 = move rm48 (5,4) (4,5)
-let rm50 = move bm49 (4,3) (5,2)
-let bm51 = move rm50 (1,2) (2,1)
-let rm52 = move bm51 (5,2) (4,3)
-let bm53 = move rm52 (2,1) (3,2)
-let rm54 = move bm53 (4,3) (2,1)
-let bm55 = move rm54 (1,0) (3,2)
+let init_checkers = Checkers.new_game
+let blues_move_1 = Checkers.move init_checkers (2,1) (3,2)
+let reds_move_2 = Checkers.move blues_move_1 (5,2) (4,3)
+let blues_move_3 = Checkers.move reds_move_2 (2,3) (3,4)
+let reds_move_4 = Checkers.move blues_move_3 (4,3) (2,1)
+let blues_move_5 = Checkers.move reds_move_4 (3,4) (4,3)
+let reds_move_6 = Checkers.move blues_move_5 (5,4) (3,2)
+let bm7 = Checkers.move reds_move_6 (1,2) (3,0)
+let rm8 = Checkers.move bm7 (5,0) (4,1)
+let bm9 = Checkers.move rm8 (3,0) (5,2)
+let rm10 = Checkers.move bm9 (6,1) (4,3)
+let bm11 = Checkers.move rm10 (2,5) (3,4)
+let rm12 = Checkers.move bm11 (3,2) (2,3)
+let bm13 = Checkers.move rm12 (3,4) (5,2)
+let rm14 = Checkers.move bm13 (6,3) (4,1)
+let bm15 = Checkers.move rm14 (1,4) (3,2)
+let rm16 = Checkers.move bm15 (4,1) (2,3)
+let bm17 = Checkers.move rm16 (2,7) (3,6)
+let rm18 = Checkers.move bm17 (2,3) (1,4)
+let bm19 = Checkers.move rm18 (0,5) (2,3)
+let rm20 = Checkers.move bm19 (5,6) (4,7)
+let bm21 = Checkers.move rm20 (1,0) (2,1)
+let rm22 = Checkers.move bm21 (4,7) (2,5)
+let bm23 = Checkers.move rm22 (1,6) (3,4)
+let rm24 = Checkers.move bm23 (6,7) (5,6)
+let bm25 = Checkers.move rm24 (3,4) (4,5)
+let rm26 = Checkers.move bm25 (5,6) (3,4)
+let bm27 = Checkers.move rm26 (2,3) (4,5)
+let rm28 = Checkers.move bm27 (6,5) (5,4)
+let bm29 = Checkers.move rm28 (4,5) (6,3)
+let rm30 = Checkers.move bm29 (7,2) (5,4)
+let bm31 = Checkers.move rm30 (2,1) (3,2)
+let rm32 = Checkers.move bm31 (7,0) (6,1)
+let bm33 = Checkers.move rm32 (0,1) (1,0)
+let rm34 = Checkers.move bm33 (7,4) (6,5)
+let bm35 = Checkers.move rm34 (0,3) (1,2)
+let rm36 = Checkers.move bm35 (5,4) (4,3)
+let bm37 = Checkers.move rm36 (3,2) (5,4)
+let rm38 = Checkers.move bm37 (6,5) (4,3)
+let bm39 = Checkers.move rm38 (0,7) (1,6)
+let rm40 = Checkers.move bm39 (7,6) (6,5)
+let bm41 = Checkers.move rm40 (1,6) (2,5)
+let rm42 = Checkers.move bm41 (4,3) (3,4)
+let bm43 = Checkers.move rm42 (2,5) (4,3)
+let rm44 = Checkers.move bm43 (6,5) (5,4)
+let bm45 = Checkers.move rm44 (4,3) (6,5)
+let rm46 = Checkers.move bm45 (6,1) (5,2)
+let bm47 = Checkers.move rm46 (6,5) (5,4)
+let rm48 = Checkers.move bm47 (5,2) (4,3)
+let bm49 = Checkers.move rm48 (5,4) (4,5)
+let rm50 = Checkers.move bm49 (4,3) (5,2)
+let bm51 = Checkers.move rm50 (1,2) (2,1)
+let rm52 = Checkers.move bm51 (5,2) (4,3)
+let bm53 = Checkers.move rm52 (2,1) (3,2)
+let rm54 = Checkers.move bm53 (4,3) (2,1)
+let bm55 = Checkers.move rm54 (1,0) (3,2)
 
 let checker_tests = 
   [
     "red turn blue moves validly" >:: (fun _ ->
-        assert_equal (valid_move init_checkers (5,0) (4,1)) false);
+        assert_equal (Checkers.valid_move init_checkers (5,0) (4,1)) false);
     "red turn blue moves invalidly1" >:: (fun _ -> 
-        assert_equal (valid_move init_checkers (5,0) (4,0)) false);
+        assert_equal (Checkers.valid_move init_checkers (5,0) (4,0)) false);
     "red turn blue moves invalidly2" >:: (fun _ -> 
-        assert_equal (valid_move init_checkers (5,0) (4,-1)) false);
+        assert_equal (Checkers.valid_move init_checkers (5,0) (4,-1)) false);
     "red turn blue moves invalidly3" >:: (fun _ -> 
-        assert_equal (valid_move init_checkers (5,0) (5,1)) false);  
+        assert_equal (Checkers.valid_move init_checkers (5,0) (5,1)) false);  
     "red turn blue moves invalidly4" >:: (fun _ -> 
-        assert_equal (valid_move init_checkers (5,0) (6,1)) false);
+        assert_equal (Checkers.valid_move init_checkers (5,0) (6,1)) false);
     "red turn blue moves invalidly5" >:: (fun _ -> 
-        assert_equal (valid_move init_checkers (5,0) (6,0)) false);
+        assert_equal (Checkers.valid_move init_checkers (5,0) (6,0)) false);
     "red turn blue moves invalidly6" >:: (fun _ -> 
-        assert_equal (valid_move init_checkers (5,0) (6,1)) false); 
+        assert_equal (Checkers.valid_move init_checkers (5,0) (6,1)) false); 
     "red turn blue moves invalidly7" >:: (fun _ -> 
-        assert_equal (valid_move init_checkers (5,0) (2000,20000)) false); 
+        assert_equal (Checkers.valid_move init_checkers (5,0) (2000,20000)) false); 
     "red turn blue moves on top of blue" >:: (fun _ -> 
-        assert_equal (valid_move init_checkers (6,1) (5,0)) false);
-    "blank space cant move" >:: (fun _ ->
-        assert_equal (valid_move init_checkers (3,3) (4,4)) false);
+        assert_equal (Checkers.valid_move init_checkers (6,1) (5,0)) false);
+    "blank space cant Checkers.move" >:: (fun _ ->
+        assert_equal (Checkers.valid_move init_checkers (3,3) (4,4)) false);
     "red moves validly on reds turn" >:: (fun _ ->
-        assert_equal (valid_move init_checkers (2,1) (3,2)) true);
-    "red cant move on blue turn" >:: (fun _ ->
-        assert_equal (valid_move blues_move_1 (3,2) (4,3)) false); 
+        assert_equal (Checkers.valid_move init_checkers (2,1) (3,2)) true);
+    "red cant Checkers.move on blue turn" >:: (fun _ ->
+        assert_equal (Checkers.valid_move blues_move_1 (3,2) (4,3)) false); 
     "blue hops red" >:: (fun _ ->
-        assert_equal (valid_move blues_move_3 (4,3) (2,1)) true);
+        assert_equal (Checkers.valid_move blues_move_3 (4,3) (2,1)) true);
     "cant double hop when not allowed" >:: (fun _ ->
-        assert_equal (valid_move reds_move_4 (3,4) (5,2)) false);
+        assert_equal (Checkers.valid_move reds_move_4 (3,4) (5,2)) false);
     "get player works" >:: (fun _ ->
-        assert_equal (get_player init_checkers) Red);
+        assert_equal (Checkers.get_player init_checkers) Red);
     "squares where they belong" >:: (fun _ ->
-        assert_equal (get_square init_checkers (2,1)) (Some Red));
+        assert_equal (Checkers.get_square init_checkers (2,1)) (Some Red));
     "squares where they belong2" >:: (fun _ ->
-        assert_equal (get_square init_checkers (2,0)) (None));
+        assert_equal (Checkers.get_square init_checkers (2,0)) (None));
     "squares where they belong3" >:: (fun _ ->
-        assert_equal (get_square init_checkers (5,0)) (Some Black));
+        assert_equal (Checkers.get_square init_checkers (5,0)) (Some Black));
     "no squares outside the grid" >:: (fun _ ->
-        assert_raises  Checkers.Invalid_pos (fun () -> (get_square init_checkers (20,20))));
+        assert_raises  Checkers.Invalid_pos (fun () -> (Checkers.get_square init_checkers (20,20))));
     "no winner yet" >:: (fun _ ->
-        assert_equal (winner bm53) (None));
+        assert_equal (Checkers.winner bm53) (None));
     "there is a winner" >:: (fun _ ->
-        assert_equal (winner bm55) (Some Red));
+        assert_equal (Checkers.winner bm55) (Some Red));
+
   ]
 
 let minesweeper_tests = 
