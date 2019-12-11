@@ -9,10 +9,9 @@ Build Instructions:
 
   - To build the system, run `make build`. After, run `make oscar`.
   - To run the system, run `make run`
-  - On a new tab on terminal, under the same folder, run `make connect`
-	Do make sure you give the server at least 5-10 seconds to start up before connecting. If not, it will possibly reject the client connection. But nothing will happen, just try connecting again if that occurs.
+  - On a new tab on terminal, under the same folder, run `make connect`. Make sure you give the server at least 5-10 seconds to start up before connecting. If not, it will possibly reject the client connection. If that occurs, just try connecting again.
   - You can have as many client tabs opened interacting with each other as you want. If not, follow "Connecting from other computers" below to communicate between different computers. 
-  - For testing, run `make test`
+  - For testing, run `make test`. If it doesn't work, run `make clean` first.
   - There also exists a `make docs` to extract HTML.
   - If folder is very messy, run `make clean`.
 
@@ -31,13 +30,14 @@ Connecting from other computers:
 
 
 Process:
-  - For the client: (This is currently a group chat)
+  - For the client:
     - Input name, you will get ID
     - Input password, make it short and simple, it will be for sending messages and verifying you are the user sending the message.
     - If you are a previous user, it will prompt you if you want to sign in as the same person. If you type `yes`, then type your previous password, you will be logged back in as the same old user. 
-    - Input `read`, you will get a history of messages displayed, empty if none. 
-    - If your ID is 1, type "1: send my message here", if you want to send a message 
-    - If your ID is 1, type "1: emoji ____" where ___ represents the emoji you want to send. It is in text. Eg. "1: emoji grinning_face".
+    - To get all the messages from the buffer, type `read`. 
+    - To send messages to the buffer, type `[id]: send [msg]`, where [id] is your ID number and [msg] is the message you want to send. Some examples are below.
+      - If your ID is 1, type "1: send my message here", if you want to send a message 
+      - If your ID is 1, type "1: emoji ____" where ___ represents the emoji you want to send. It is in text. Eg. "1: emoji grinning_face".
     - The interface will then prompt user no.1, for example, for his/her password, enter the password that you have created when you created your user. 
     - Input `emojis` to see a list of emojis that you can send.
     - Input `recent`, you will get the most recent line of message.
