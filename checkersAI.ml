@@ -96,11 +96,15 @@ let minimize states : Checkers.state =
     (List.nth states 1, max_int)
   |> fst
 
-let rec minimax acc t depth =
+let rec minimax t depth =
+(*
   (* get all next possible states *)
   t |> next_states 
   (* map next states to resulting minimized state after opposing player plays *)
   |> List.map (fun t -> minimize (next_states t))
+  *)
+
+  List.nth (valid_moves t) 1
 
 let next_move t =
   let best_state = t |> next_states |> maximize in
