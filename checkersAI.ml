@@ -30,8 +30,30 @@ let piece_moves t (x,y) =
 
     one_step @ two_step
 
-let valid_moves t = 
-  failwith "Uni"
+let valid_moves t : move list = 
+  let active_player = Checkers.get_player t in
+  let active_color = Some active_player in
+
+  let rec pos_map acc counter = 
+    if counter = Checkers.size * Checkers.size then acc else
+      let x = counter / Checkers.size in
+      let y = counter mod Checkers.size in
+      pos_map ((x,y)::acc) (counter + 1)
+  in
+
+  let pieces = 
+    pos_map [] 0 
+    |> List.filter (fun pos -> Checkers.get_square t pos = active_color)
+  in
+
+  let rec get_moves acc = function
+    | [] -> acc
+    | pos::y -> 
+      begin
+        let moves = piece_moves t pos |> List.map(fun pos' -> pos, pos') in
+        get_moves (moves @ acc) y
+      end
+  in get_moves [] pieces
 
 let evaluate t =
   failwith "Unimplemented"
