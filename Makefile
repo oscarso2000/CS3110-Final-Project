@@ -3,7 +3,6 @@ OBJECTS=$(MODULES:=.cmo)
 TEST=test.byte
 MLIS=$(MODULES:=.mli)
 OCAMLBUILD=ocamlbuild -use-ocamlfind
-PKGS = uutf,cohttp-lwt-unix,lambdasoup,lwt.unix,logs,str,logs.lwt
 
 default: build
 	utop

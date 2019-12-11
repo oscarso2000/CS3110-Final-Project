@@ -3,3 +3,9 @@ PKG oUnit
 PKG lwt
 PKG lwt_io
 PKG emoji
+PKG uutf
+PKG lambdasoup
+PKG lwt.unix
+PKG logs
+PKG str
+PKG logs.lwt
