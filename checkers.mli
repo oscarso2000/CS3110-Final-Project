@@ -14,6 +14,7 @@ val size : int
 (** [new_game] is the state that represents a new game of checkers. *)
 val new_game : state
 
+(** [get_player t] is the player who's turn it is in state [t]. *)
 val get_player : state -> player
 
 (** [get_square t pos] is the square located at position [pos] in state [t].
