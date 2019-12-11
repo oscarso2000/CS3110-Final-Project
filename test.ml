@@ -181,6 +181,12 @@ let checkers_ai_tests =
           (List.sort compare [((5,0),(4,1));((6,1),(5,2));((6,3),(5,2));
                               ((4,3),(2,1));((4,3),(5,2));((5,4),(4,5));
                               ((5,6),(4,5));((5,6),(4,7))]));
+    "evaluate state" >:: (fun _ ->
+        assert_equal (CheckersAI.evaluate_state init_checkers) 0);
+    "evaluate state uneven" >:: (fun _ ->
+        assert_equal (CheckersAI.evaluate_state reds_move_4) ~-1);
+    "eval move" >:: (fun _ ->
+        assert_equal (CheckersAI.evaluate_move init_checkers ((2,1),(3,2))) 0);
 
   ]
 
