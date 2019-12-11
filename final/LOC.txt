@@ -1,0 +1,3 @@
+We did not include all files into our final LOC because of dead/repetetive code.
+
+The LOC we measured can be found by running `make loc`. You can take a look at the Makefile to see what we included, or you can navigate to LOC-files.txt which includes a list of files that we count towards our LOC.

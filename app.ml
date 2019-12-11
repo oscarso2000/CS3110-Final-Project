@@ -452,7 +452,7 @@ and handle_connection input_console output_console num () =
   let handle_name name = 
     if List.mem name !names then 
       (Lwt_io.write_line output_console 
-         ("This name exists already, do you want to log back in?");
+         ("This name exists already, do you want to log back in? Yes or No?");
        Lwt_io.read_line_opt input_console >>= 
        (fun response -> 
           match response with 

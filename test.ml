@@ -98,7 +98,8 @@ let checker_tests =
     "red turn blue moves invalidly6" >:: (fun _ -> 
         assert_equal (Checkers.valid_move init_checkers (5,0) (6,1)) false); 
     "red turn blue moves invalidly7" >:: (fun _ -> 
-        assert_equal (Checkers.valid_move init_checkers (5,0) (2000,20000)) false); 
+        assert_equal 
+          (Checkers.valid_move init_checkers (5,0) (2000,20000)) false); 
     "red turn blue moves on top of blue" >:: (fun _ -> 
         assert_equal (Checkers.valid_move init_checkers (6,1) (5,0)) false);
     "blank space cant Checkers.move" >:: (fun _ ->
@@ -120,7 +121,8 @@ let checker_tests =
     "squares where they belong3" >:: (fun _ ->
         assert_equal (Checkers.get_square init_checkers (5,0)) (Some Black));
     "no squares outside the grid" >:: (fun _ ->
-        assert_raises  Checkers.Invalid_pos (fun () -> (Checkers.get_square init_checkers (20,20))));
+        assert_raises  Checkers.Invalid_pos (fun () -> 
+            (Checkers.get_square init_checkers (20,20))));
     "no winner yet" >:: (fun _ ->
         assert_equal (Checkers.winner bm53) (None));
     "there is a winner" >:: (fun _ ->
@@ -143,7 +145,8 @@ let minesweeper_tests =
     "box is uncovered" >:: (fun _ ->
         assert_equal (Minesweeper.get_box g2 (4,4)) (Uncovered, Number 0));
     "box is invalid" >:: (fun _ ->
-        assert_raises Minesweeper.Invalid_pos (fun () -> Minesweeper.get_box g1 (50,50)));
+        assert_raises Minesweeper.Invalid_pos 
+          (fun () -> Minesweeper.get_box g1 (50,50)));
     "unfinished game" >:: (fun _ ->
         assert_equal (Minesweeper.game_result g1) Incomplete);
     "1 mine around" >:: (fun _ ->
@@ -159,13 +162,15 @@ let minesweeper_tests =
     "nah it wasnt a mine" >:: (fun _ ->
         assert_equal (Minesweeper.get_box g7 (0,1)) (Uncovered, Number 1));
     "cant flag out of bounds" >:: (fun _ ->
-        assert_raises Minesweeper.Invalid_pos (fun () -> Minesweeper.flag g7 (50,50)));
+        assert_raises Minesweeper.Invalid_pos (fun () -> 
+            Minesweeper.flag g7 (50,50)));
   ]
 
 let checkers_ai_tests =
   [
     "piece moves on red start" >:: (fun _ ->
-        assert_equal (CheckersAI.piece_moves init_checkers (2,1)) [(3,2);(3,0)]);
+        assert_equal (CheckersAI.piece_moves init_checkers (2,1)) 
+          [(3,2);(3,0)]);
     "edge piece valid moves" >:: (fun _ ->
         assert_equal (CheckersAI.piece_moves init_checkers (5,0)) [(4,1)]);
     "blank space piece moves" >:: (fun _ ->
@@ -175,7 +180,8 @@ let checkers_ai_tests =
     "all black valid moves" >:: (fun _ -> 
         assert_equal (List.sort compare (CheckersAI.valid_moves blues_move_1))
           (List.sort compare [((5,0),(4,1));((5,2),(4,1));((5,2),(4,3));
-                              ((5,4),(4,3));((5,4),(4,5));((5,6),(4,5));((5,6),(4,7))]));
+                              ((5,4),(4,3));((5,4),(4,5));
+                              ((5,6),(4,5));((5,6),(4,7))]));
     "a piece can double jump" >:: (fun _ ->
         assert_equal (List.sort compare (CheckersAI.valid_moves blues_move_3))
           (List.sort compare [((5,0),(4,1));((6,1),(5,2));((6,3),(5,2));
