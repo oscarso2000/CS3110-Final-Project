@@ -14,7 +14,7 @@ let names = ref []
 let enc = ref []
 let passwords = ref []
 let emojis = ref []
-let multiplayer = Array.make 100 Checkers.new_game
+let multiplayer = Array.make 10 Checkers.new_game
 let mult_count = ref 0
 
 let listen_address = Unix.inet_addr_loopback
@@ -200,8 +200,6 @@ let rec handle_message input_console output_console msg =
     match String.lowercase_ascii(List.hd arrays) with
     | "emojis" -> print_emojis
     | "checkers" -> "Starting Checkers..."
-    | "multiplayer" -> "Starting Multiplayer Checkers..."
-    (* | "quit" -> (string_of_int (Sys.command "^C") ^ " Quitting Now") (*fix*) *)
     | "minesweeper" -> "Starting Minesweeper..."
     | "read" -> 
       if List.length !enc = 0 then
@@ -468,11 +466,12 @@ and handle_connection input_console output_console num () =
             (mult_count := !mult_count + 1;
              let num = (!mult_count + 1) / 2 in
              if !mult_count mod 2 = 1 then
-               let t = multiplayer.(num - 1) in
-               Lwt_io.write_line output_console reply;
-               Lwt_io.write_line output_console ("You are Red");
-               Lwt_io.write_line output_console ("Please Wait...") >>=
-               handle_multiplayer input_console output_console (t) num !mult_count
+               (multiplayer.(num - 1) <- Checkers.new_game;
+                let t = multiplayer.(num - 1) in
+                Lwt_io.write_line output_console reply;
+                Lwt_io.write_line output_console ("You are Red");
+                Lwt_io.write_line output_console ("Please Wait...") >>=
+                handle_multiplayer input_console output_console (t) num !mult_count)
              else 
                let t = multiplayer.(num - 1) in 
                Lwt_io.write_line output_console reply;
