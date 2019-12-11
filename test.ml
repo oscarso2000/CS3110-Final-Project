@@ -14,6 +14,7 @@
 
 open OUnit2
 open Checkers
+open Minesweeper
 open Testhelper
 open Encryption
 open Reproduce
@@ -124,10 +125,30 @@ let checker_tests =
 
   ]
 
+let g1 = Minesweeper.seed_new_game 1
+let g2 = Minesweeper.uncover g1 (4,4)
+let g3 = Minesweeper.uncover g2 (6,1)
+let g4 = Minesweeper.flag g3 (0,2)
+let g5 = Minesweeper.uncover g4 (0,2)
+
 let minesweeper_tests = 
   [
-    "new game" >:: (fun _ ->
-        assert_equal 10 (10));
+    "box is correct" >:: (fun _ ->
+        assert_equal (Minesweeper.get_box g1 (4,4)) (Hidden, Number 0));
+    "box is uncovered" >:: (fun _ ->
+        assert_equal (Minesweeper.get_box g2 (4,4)) (Uncovered, Number 0));
+    "box is invalid" >:: (fun _ ->
+        assert_raises Minesweeper.Invalid_pos (fun () -> Minesweeper.get_box g1 (50,50)));
+    "unfinished game" >:: (fun _ ->
+        assert_equal (Minesweeper.game_result g1) Incomplete);
+    "1 mine around" >:: (fun _ ->
+        assert_equal (Minesweeper.get_box g3 (6,1)) (Uncovered, Number 1));
+    "correct mine location" >:: (fun _ ->
+        assert_equal (Minesweeper.get_box g3 (0,2)) (Hidden, Mine));
+    "flagged correctly" >:: (fun _ ->
+        assert_equal (Minesweeper.get_box g4 (0,2)) (Flag, Mine));
+    "we lost?" >:: (fun _ ->
+        assert_equal (Minesweeper.game_result g5) Lose);
   ]
 
 (** [explode s] takes in a string s and converts it into a char list. *)
@@ -300,6 +321,7 @@ let reproduce_tests =
 let suite =
   "final project test suite"  >::: List.flatten [
     checker_tests;
+    minesweeper_tests;
     app_tests;
     reproduce_tests;
   ]

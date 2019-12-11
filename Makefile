@@ -22,10 +22,10 @@ connect :
 oscar :
 	ocamlopt -c encryption.mli encryption.ml
 	ocamlfind ocamlopt -package emoji -c reproduce.mli reproduce.ml
-	ocamlfind ocamlopt -c checkers.mli checkers.ml
+	ocamlfind ocamlopt -c checkers.mli checkersAI.mli checkers.ml checkersAI.ml
 	ocamlfind ocamlopt -c minesweeper.mli minesweeper.ml
 	ocamlfind ocamlopt -package emoji,uutf,cohttp-lwt-unix,lambdasoup,lwt,lwt.unix,logs,str,logs.lwt -c app.mli app.ml
-	ocamlfind ocamlopt -package emoji,uutf,cohttp-lwt-unix,lambdasoup,lwt,lwt.unix,logs,str,logs.lwt -linkpkg -o messenger ./minesweeper.ml ./checkers.ml ./reproduce.ml ./encryption.ml ./app.ml
+	ocamlfind ocamlopt -package emoji,uutf,cohttp-lwt-unix,lambdasoup,lwt,lwt.unix,logs,str,logs.lwt -linkpkg -o messenger ./minesweeper.ml ./checkers.ml ./checkersAI.ml ./reproduce.ml ./encryption.ml ./app.ml
 
 install : 
 	opam update
