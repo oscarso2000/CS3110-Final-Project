@@ -2,8 +2,6 @@ open Checkers
 
 type move = Checkers.position * Checkers.position
 
-(** [piece_moves t pos] is a list of positions that a checker piece located at
-    position [pos] can move to, regardless of who the active player is. *)
 let piece_moves t (x,y) =
   let active_piece = Checkers.get_square t (x,y) in
   if active_piece = None then [] else

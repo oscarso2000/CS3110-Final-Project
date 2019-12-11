@@ -1,3 +1,5 @@
+./ai-checkers.ml
+./ai-checkers.mli
 ./app.ml
 ./app.mli
 ./authors.ml

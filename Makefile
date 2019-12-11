@@ -1,4 +1,4 @@
-MODULES=encryption authors checkers minesweeper app testhelper
+MODULES=encryption authors checkers checkersAI minesweeper app testhelper
 OBJECTS=$(MODULES:=.cmo)
 TEST=test.byte
 MLIS=$(MODULES:=.mli)
@@ -50,9 +50,8 @@ docs-private: build
 		-html -stars -d doc.private \
 		-inv-merge-ml-mli -m A -hide-warnings $(MLIS) $(MLS)
 
-
 zip :
-	zip final.zip *.ml* *.mli*  _tags Makefile *.txt
+	zip final.zip *.ml *.mli *.txt _tags Makefile emo*
 
 clean:
 	ocamlbuild -clean
