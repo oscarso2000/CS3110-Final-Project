@@ -21,6 +21,9 @@ let size = 8
 let get_player t =
   fst t
 
+let get_board t =
+  snd t
+
 let new_game =
   let rec construct_board acc row = 
     let rec construct_row acc col =

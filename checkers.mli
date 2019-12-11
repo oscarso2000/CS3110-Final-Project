@@ -17,6 +17,10 @@ val new_game : state
 (** [get_player t] is the player who's turn it is in state [t]. *)
 val get_player : state -> player
 
+(** [get_board t] is the list of squares in state [t] where a square in
+    position [x,y] is found at index [size * x + y] in the list. *)
+val get_board : state -> square list
+
 (** [get_square t pos] is the square located at position [pos] in state [t].
     Raises Invalid_Pos if [pos] is not a valid position. *)
 val get_square : state -> position -> square
