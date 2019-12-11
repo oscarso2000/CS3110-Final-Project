@@ -35,16 +35,14 @@ Process:
     - Input password, make it short and simple, it will be for sending messages and verifying you are the user sending the message.
     - If you are a previous user, it will prompt you if you want to sign in as the same person. If you type `yes`, then type your previous password, you will be logged back in as the same old user. 
     - To get all the messages from the buffer, type `read`. 
+    - To get the most recent message in the buffer, type `recent`.
     - To send messages to the buffer, type `[id]: send [msg]`, where [id] is your ID number and [msg] is the message you want to send. Some examples are below.
-      - If your ID is 1, type "1: send my message here", if you want to send a message 
-      - If your ID is 1, type "1: emoji ____" where ___ represents the emoji you want to send. It is in text. Eg. "1: emoji grinning_face".
-    - The interface will then prompt user no.1, for example, for his/her password, enter the password that you have created when you created your user. 
-    - Input `emojis` to see a list of emojis that you can send.
-    - Input `recent`, you will get the most recent line of message.
-    - If you want to send simple emojis, you can use "1: send ____" like a normal messenger. Eg. "1: send hi :)" and the emoji will appear in dialogue when read.
-    - To play local multiplayer checkers, type `checkers` and follow the instructions given.
-    - If you're a loner, play with the AI by typing `ai` instead. 
-    - To play minesweeper, type `minesweeper`. 
+      - For example, if your ID is 1, you can send a message like so: `1: hello!` 
+    - To send an emoji to the buffer, type `[id]: emoji [emoji_name]`, where [id] is your ID number and [emoji_name] is the name of the emoji.
+      - For example, if your ID is 1, you can send a grinning face emoji as `1: emoji grinning_face`.
+    - To see a list of emojis that you can use type `emojis`.
+    - When you send an ascii emoji, it will be converted to a real emoji.
+      - For example, `1: send :)` has the same result as typing `1: emoji smiling_face`
     - To quit the client, just cmd+w (mac) or ctrl+w (windows) and terminate the client. 
     - To quit server if needed, just ctrl+c on the terminal itself. 
 
