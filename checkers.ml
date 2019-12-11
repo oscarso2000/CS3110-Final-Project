@@ -39,14 +39,16 @@ let new_game =
 
 let get_square t (x, y) : square =
   if x >= size || y >= size then raise Invalid_pos else
-    let size = t |> snd |> List.length |> float_of_int |> sqrt |> int_of_float in
+    let size = t |> snd |> List.length |> float_of_int 
+               |> sqrt |> int_of_float in
     let index = size * x + y in 
     try List.nth (snd t) index with
     | _ -> raise Invalid_pos
 
 let set_square t (x, y) sq : state =
   if x >= size || y >= size then raise Invalid_pos else
-    let size = t |> snd |> List.length |> float_of_int |> sqrt |> int_of_float in
+    let size = t |> snd |> List.length |> float_of_int 
+               |> sqrt |> int_of_float in
     let index = size * x + y in 
     if index >= List.length (snd t) then raise Invalid_pos else
       let rec update_squares acc counter = function
@@ -56,8 +58,10 @@ let set_square t (x, y) sq : state =
       in (fst t), update_squares [] 0 (snd t)
 
 let winner t =
-  let r_count = (snd t) |> List.filter (fun s -> s = Some Red) |> List.length in
-  let b_count = (snd t) |> List.filter (fun s -> s = Some Black) |> List.length in
+  let r_count = (snd t) |> List.filter (fun s -> s = Some Red) 
+                |> List.length in
+  let b_count = (snd t) |> List.filter (fun s -> s = Some Black) 
+                |> List.length in
   if r_count = 0 && b_count > 0 then Some Black else
   if b_count = 0 && r_count > 0 then Some Red else None
 
@@ -69,7 +73,8 @@ let valid_move t (x1, y1) (x2, y2) : bool =
 
     ((abs (x1 - x2) = 1 && abs (y1 - y2) = 1) || (* valid one-step move *)
      (abs (x1 - x2) = 2 && abs (y1 - y2) = 2 && (* valid two-step move *)
-      get_square t ((x1 + x2)/2, (y1 + y2)/2) = Some (t |> fst |> switch_player)))
+      get_square t ((x1 + x2)/2, (y1 + y2)/2) = 
+      Some (t |> fst |> switch_player)))
   with
   | Invalid_pos -> false
 

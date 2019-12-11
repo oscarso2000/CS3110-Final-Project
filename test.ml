@@ -21,6 +21,9 @@ open Reproduce
 open Emoji
 open Str
 
+(*the following code plays an entire game of checkers until a winner is determined
+  the various states are used for testing, particularly the first few as well as the last
+  one to determine a winner *)
 let init_checkers = Checkers.new_game
 let blues_move_1 = Checkers.move init_checkers (2,1) (3,2)
 let reds_move_2 = Checkers.move blues_move_1 (5,2) (4,3)
@@ -130,6 +133,8 @@ let g2 = Minesweeper.uncover g1 (4,4)
 let g3 = Minesweeper.uncover g2 (6,1)
 let g4 = Minesweeper.flag g3 (0,2)
 let g5 = Minesweeper.uncover g4 (0,2)
+let g6 = Minesweeper.flag g4 (0,1)
+let g7 = Minesweeper.uncover g6 (0,1)
 
 let minesweeper_tests = 
   [
@@ -149,6 +154,34 @@ let minesweeper_tests =
         assert_equal (Minesweeper.get_box g4 (0,2)) (Flag, Mine));
     "we lost?" >:: (fun _ ->
         assert_equal (Minesweeper.game_result g5) Lose);
+    "is this a mine?" >:: (fun _ ->
+        assert_equal (Minesweeper.get_box g6 (0,1)) (Flag, Number 1));
+    "nah it wasnt a mine" >:: (fun _ ->
+        assert_equal (Minesweeper.get_box g7 (0,1)) (Uncovered, Number 1));
+    "cant flag out of bounds" >:: (fun _ ->
+        assert_raises Minesweeper.Invalid_pos (fun () -> Minesweeper.flag g7 (50,50)));
+  ]
+
+let checkers_ai_tests =
+  [
+    "piece moves on red start" >:: (fun _ ->
+        assert_equal (CheckersAI.piece_moves init_checkers (2,1)) [(3,2);(3,0)]);
+    "edge piece valid moves" >:: (fun _ ->
+        assert_equal (CheckersAI.piece_moves init_checkers (5,0)) [(4,1)]);
+    "blank space piece moves" >:: (fun _ ->
+        assert_equal (CheckersAI.piece_moves init_checkers (2,0)) []);
+    "piece with no moves" >:: (fun _ ->
+        assert_equal (CheckersAI.piece_moves init_checkers (0,1)) []);
+    "all black valid moves" >:: (fun _ -> 
+        assert_equal (List.sort compare (CheckersAI.valid_moves blues_move_1))
+          (List.sort compare [((5,0),(4,1));((5,2),(4,1));((5,2),(4,3));
+                              ((5,4),(4,3));((5,4),(4,5));((5,6),(4,5));((5,6),(4,7))]));
+    "a piece can double jump" >:: (fun _ ->
+        assert_equal (List.sort compare (CheckersAI.valid_moves blues_move_3))
+          (List.sort compare [((5,0),(4,1));((6,1),(5,2));((6,3),(5,2));
+                              ((4,3),(2,1));((4,3),(5,2));((5,4),(4,5));
+                              ((5,6),(4,5));((5,6),(4,7))]));
+
   ]
 
 (** [explode s] takes in a string s and converts it into a char list. *)
@@ -322,6 +355,7 @@ let suite =
   "final project test suite"  >::: List.flatten [
     checker_tests;
     minesweeper_tests;
+    checkers_ai_tests;
     app_tests;
     reproduce_tests;
   ]
