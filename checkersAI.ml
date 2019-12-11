@@ -31,13 +31,7 @@ let piece_moves t (x,y) =
     one_step @ two_step
 
 let valid_moves t = 
-  let active_player = Checkers.get_player t in
-
-  let rec pos_map acc counter = 
-    if counter = Checkers.size * Checkers.size then acc else
-
-  in
-  t |> Checkers.get_board |> List
+  failwith "Uni"
 
 let evaluate t =
   failwith "Unimplemented"

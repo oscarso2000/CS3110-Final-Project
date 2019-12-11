@@ -29,6 +29,10 @@ val mines : int
 (** [new_game] is a randomly initialized state of minesweeper. *)
 val new_game : unit -> state
 
+(** [seed_new_game seed] is a randomly initialized state of minesweeper
+    where the RNG is initialized by [seed]. *)
+val seed_new_game : int -> state
+
 (** [get_box t pos] is the box located at position [pos] in state [t].
     Raises Invalid_Pos if [pos] is not a valid position. *)
 val get_box : state -> position -> box

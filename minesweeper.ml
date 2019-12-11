@@ -56,8 +56,9 @@ let rec set_box t (x,y) b : state =
 
     update_boxes [] 0 t
 
-let new_game () : state =
-  Random.self_init ();
+(** [initialize_game ()] is a deterministically initialized state of 
+    minesweeper. *)
+let initialize_game () : state =
   let boxes = size * size in
 
   let rec generate_mines acc = 
@@ -96,8 +97,6 @@ let new_game () : state =
     | i::rem -> begin
         let x = i / size in
         let y = i mod size in
-        (string_of_int i) ^ "/" ^ (string_of_int boxes) ^ " = " ^
-        (string_of_int x) ^ "," ^ (string_of_int y) |> print_endline;
         let t_mine = add_mines (set_box t (x,y) (Hidden,Mine)) rem in
         update_numbers t_mine (number_neighbors t_mine (x,y))
       end
@@ -106,6 +105,14 @@ let new_game () : state =
   let empty_grid = generate_empty_boxes [] in
   let mines = generate_mines [] in
   add_mines empty_grid mines
+
+let new_game () : state =
+  Random.self_init ();
+  initialize_game ()
+
+let seed_new_game seed : state =
+  Random.init seed;
+  initialize_game ()
 
 let flag t (x,y) : state =
   if game_result t <> Incomplete then t else

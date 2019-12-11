@@ -1,4 +1,0 @@
-#directory "_build";;
-#require "graphics";;
-#load "gface.cmo";;
-#load "widget.cmo";;
