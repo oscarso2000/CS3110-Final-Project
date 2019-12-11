@@ -42,6 +42,9 @@ Process:
     - Input `emojis` to see a list of emojis that you can send.
     - Input `recent`, you will get the most recent line of message.
     - If you want to send simple emojis, you can use "1: send ____" like a normal messenger. Eg. "1: send hi :)" and the emoji will appear in dialogue when read.
+    - To play local multiplayer checkers, type `checkers` and follow the instructions given.
+    - If you're a loner, play with the AI by typing `ai` instead. 
+    - To play minesweeper, type `minesweeper`. 
     - To quit the client, just cmd+w (mac) or ctrl+w (windows) and terminate the client. 
     - To quit server if needed, just ctrl+c on the terminal itself. 
 
