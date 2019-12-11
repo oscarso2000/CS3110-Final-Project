@@ -14,6 +14,8 @@ let names = ref []
 let enc = ref []
 let passwords = ref []
 let emojis = ref []
+let multiplayer = Array.make 10 Checkers.new_game
+let mult_count = ref 0
 
 let listen_address = Unix.inet_addr_loopback
 let port = 9000
@@ -198,7 +200,6 @@ let rec handle_message input_console output_console msg =
     match String.lowercase_ascii(List.hd arrays) with
     | "emojis" -> print_emojis
     | "checkers" -> "Starting Checkers..."
-    (* | "quit" -> (string_of_int (Sys.command "^C") ^ " Quitting Now") (*fix*) *)
     | "minesweeper" -> "Starting Minesweeper..."
     | "read" -> 
       if List.length !enc = 0 then
@@ -344,6 +345,57 @@ and handle_minesweeper input_console output_console game_state () =
                  >>= return)))
 
 
+and handle_multiplayer input_console output_console game_state num player () = 
+  let pl = player mod 2 in 
+  while pl = 1 && Checkers.get_player multiplayer.(num-1) <> Checkers.Red do
+    ();
+  done;
+  (* handle_multiplayer input_console output_console multiplayer.(num-1) num player () *)
+  while pl = 0 && Checkers.get_player multiplayer.(num-1) <> Checkers.Black do
+    (* handle_multiplayer input_console output_console multiplayer.(num-1) num player () *)
+    ();
+  done;
+  (Lwt_io.write_line output_console ("\nExample Input: `move 5 2 to 3 1`");
+   Lwt_io.write_line output_console ("Type `close` to close game");
+   let t = game_state in 
+   Lwt_io.write_line output_console (t |> Checkers.to_string);
+   Lwt_io.read_line_opt input_console >>= 
+   (fun input -> 
+      match input with
+      | Some i when i = "close" ->
+        (Lwt_io.write_line output_console ("Closing Checkers..."); 
+         handle_connection input_console output_console 2 ())
+      | Some i when i <> "" -> 
+        let arrays = Str.split_delim (Str.regexp " ") i in
+        if List.length arrays = 6 then 
+          begin
+            if List.nth arrays 0 = "move" && List.nth arrays 3 = "to" then 
+              try 
+                let a1 = int_of_string (List.nth arrays 1) in 
+                let a2 = int_of_string (List.nth arrays 2) in 
+                let b1 = int_of_string (List.nth arrays 4) in 
+                let b2 = int_of_string (List.nth arrays 5) in 
+                let new_t = Checkers.move t (a1,a2) (b1,b2) in 
+                multiplayer.(num - 1) <- new_t;
+                Lwt_io.write_line output_console (t |> Checkers.to_string);
+                Lwt_io.write_line output_console ("Please Wait...") >>= 
+                handle_multiplayer input_console output_console multiplayer.(num-1) num player
+              with _ -> 
+                (Lwt_io.write_line output_console ("Invalid Input");
+                 handle_multiplayer input_console output_console t num player ())
+            else
+              ( Lwt_io.write_line output_console ("Invalid Input");
+                handle_multiplayer input_console output_console t num player ())
+          end
+        else
+          (Lwt_io.write_line output_console ("Invalid Input"); 
+           handle_multiplayer input_console output_console t num player ())
+      | Some _ -> (Lwt_io.write_line output_console ("Invalid Input");
+                   Logs_lwt.info (fun m -> m "Nothing happened") 
+                   >>= handle_checkers input_console output_console t)
+      | None -> (Logs_lwt.info (fun m -> m "Connection closed") 
+                 >>= return)))
+
 and handle_connection input_console output_console num () =
   let handle_name name = 
     if List.mem name !names then 
@@ -410,6 +462,22 @@ and handle_connection input_console output_console num () =
           else if reply = "Starting Minesweeper..." then 
             Lwt_io.write_line output_console reply >>=
             handle_minesweeper input_console output_console (Minesweeper.new_game ())
+          else if reply = "Starting Multiplayer Checkers..." then 
+            (mult_count := !mult_count + 1;
+             let num = (!mult_count + 1) / 2 in
+             if !mult_count mod 2 = 1 then
+               (multiplayer.(num - 1) <- Checkers.new_game;
+                let t = multiplayer.(num - 1) in
+                Lwt_io.write_line output_console reply;
+                Lwt_io.write_line output_console ("You are Red");
+                Lwt_io.write_line output_console ("Please Wait...") >>=
+                handle_multiplayer input_console output_console (t) num !mult_count)
+             else 
+               let t = multiplayer.(num - 1) in 
+               Lwt_io.write_line output_console reply;
+               Lwt_io.write_line output_console ("You are Black"); 
+               Lwt_io.write_line output_console ("Please Wait...") >>=
+               handle_multiplayer input_console output_console (t) num !mult_count)
           else
             Lwt_io.write_line output_console reply >>= 
             handle_connection input_console output_console 2
